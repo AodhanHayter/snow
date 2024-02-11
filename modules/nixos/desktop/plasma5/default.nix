@@ -1,0 +1,37 @@
+{ options
+, config
+, lib
+, pkgs
+, ...
+}:
+with lib;
+with lib.modernage; let
+  cfg = config.modernage.desktop.plasma5;
+in
+{
+  options.modernage.desktop.plasma5 = with types; {
+    enable =
+      mkBoolOpt false "Whether or not to use KDE Plasma5 as the desktop environment.";
+  };
+
+  config = mkIf cfg.enable {
+    modernage.system.xkb.enable = true;
+
+    services.xserver = {
+      enable = true;
+
+      libinput.enable = true;
+
+      displayManager.sddm.enable = true;
+
+      desktopManager = {
+        plasma5 = {
+          enable = true;
+          useQtScaling = true;
+        };
+      };
+    };
+
+    programs.kdeconnect.enable = true;
+  };
+}
