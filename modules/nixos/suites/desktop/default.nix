@@ -21,15 +21,21 @@ in
         plasma5 = enabled;
       };
 
+      apps = {
+        brave = enabled;
+      };
+
+      cli-apps = {
+        neovim = enabled;
+        tmux = enabled;
+      };
+
       services = {
         interception-tools = enabled;
         printing = enabled;
         openssh = enabled;
       };
 
-      apps = {
-        brave = enabled;
-      };
     };
   };
 }

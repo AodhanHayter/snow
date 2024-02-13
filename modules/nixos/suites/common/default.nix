@@ -22,6 +22,10 @@ in
         networking = enabled;
       };
 
+      security = {
+        gpg = enabled;
+      };
+
       system = {
         boot = enabled;
         fonts = enabled;

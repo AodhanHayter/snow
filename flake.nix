@@ -30,6 +30,12 @@
     # Snowfall Flake
     flake.url = "github:snowfallorg/flake?ref=v1.1.0";
     flake.inputs.nixpkgs.follows = "unstable";
+
+    # GPG default config
+    gpg-base-conf = {
+      url = "github:drduh/config";
+      flake = false;
+    };
   };
 
   outputs = inputs:

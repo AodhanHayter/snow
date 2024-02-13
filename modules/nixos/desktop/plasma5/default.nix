@@ -15,6 +15,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    environment.systemPackages = with pkgs; [
+      libsForQt5.bismuth
+    ];
+
     modernage.system.xkb.enable = true;
 
     services.xserver = {
