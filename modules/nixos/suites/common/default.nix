@@ -17,13 +17,14 @@ in
     modernage = {
       nix = enabled;
 
+      security = {
+        gpg = enabled;
+        doas = enabled;
+      };
+
       hardware = {
         audio = enabled;
         networking = enabled;
-      };
-
-      security = {
-        gpg = enabled;
       };
 
       system = {

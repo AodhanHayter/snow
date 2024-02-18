@@ -15,7 +15,7 @@ in
   imports = with nixos-hardware.nixosModules; [
     (modulesPath + "/installer/scan/not-detected.nix")
     common-cpu-amd
-    common-gpu-nvidia
+    common-gpu-nvidia-nonprime
     common-pc
     common-pc-ssd
   ];

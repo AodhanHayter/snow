@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 with lib;
 with lib.modernage;
 let
@@ -10,6 +10,8 @@ in
   };
 
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [ gcc ]; # treesitter needs a c compiler
+
     programs.neovim = {
       enable = true;
       viAlias = true;

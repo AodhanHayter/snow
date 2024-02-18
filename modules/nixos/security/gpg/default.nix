@@ -1,10 +1,8 @@
-# This should probably move to home-manager context
 { options
 , config
 , pkgs
 , lib
 , inputs
-, home-manager
 , ...
 }:
 with lib;
@@ -37,7 +35,7 @@ in
     modernage = {
       home.file = {
         ".gnupg/.keep".text = "";
-        ".gnupg/gpg.conf".source = home-manager.users.${config.user}.lib.file.mkOutOfStoreSymlink gpgConf;
+        ".gnupg/gpg.conf".source = gpgConf;
         ".gnupg/gpg-agent.conf".text = gpgAgentConf;
       };
     };

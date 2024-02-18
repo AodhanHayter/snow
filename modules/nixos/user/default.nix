@@ -27,6 +27,7 @@ in
     environment.systemPackages = with pkgs; [
       cowsay
       fortune
+      xclip
     ];
 
     programs.zsh = {
@@ -56,6 +57,9 @@ in
             syntaxHighlighting.enable = true;
 
             initExtra = ''
+              # Fix an issue with tmux.
+              export KEYTIMOUT=1
+
               function pg() {
                 if [ $1 ]; then
                   PGSERVICE=$1 $HOME/.nix-profile/bin/pgcli

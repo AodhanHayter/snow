@@ -28,7 +28,6 @@ require("lazy").setup({
   { "rebelot/kanagawa.nvim" },
   { "nordtheme/vim" },
   { "numToStr/Comment.nvim",       lazy = false, config = true },
-  { "windwp/nvim-autopairs",       lazy = false, config = true },
   { "tmhedberg/matchit",           lazy = false },
   { "tpope/vim-surround",          lazy = false },
   { "tpope/vim-endwise",           lazy = false },
@@ -39,6 +38,7 @@ require("lazy").setup({
   { "junegunn/vim-slash",          lazy = false },
   { "sheerun/vim-polyglot",        lazy = false },
   { "lithammer/nvim-diagnosticls", lazy = false },
+  { "m4xshen/autoclose.nvim", config = true, lazy = false},
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
@@ -98,6 +98,7 @@ require("lazy").setup({
     config = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
+
       local has_words_before = function()
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
