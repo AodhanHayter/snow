@@ -34,6 +34,7 @@ in
         interception-tools = enabled;
         printing = enabled;
         openssh = enabled;
+        protonvpn = enabled;
       };
 
     };

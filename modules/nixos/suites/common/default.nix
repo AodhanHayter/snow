@@ -17,6 +17,10 @@ in
     modernage = {
       nix = enabled;
 
+      tools = {
+        git = enabled;
+      };
+
       security = {
         gpg = enabled;
         doas = enabled;
