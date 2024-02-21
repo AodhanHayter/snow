@@ -22,6 +22,9 @@ in
   };
 
   config = mkIf cfg.enable {
+    services.pcscd.enable = true;
+    environment.systemPackages = with pkgs; [ paperkey ];
+
     programs = {
       ssh.startAgent = false;
 
