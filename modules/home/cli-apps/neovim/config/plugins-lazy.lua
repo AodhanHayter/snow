@@ -226,7 +226,19 @@ require('lspconfig')['tsserver'].setup {
 require('lspconfig')['pyright'].setup {
   on_attach = on_attach,
   flags = lsp_flags,
-  capabilities = capabilities
+  capabilities = capabilities,
+  settings = {
+    pyright = {
+      -- Using Ruff's import organizer
+      disableOrganizeImports = true,
+    },
+    python = {
+      analysis = {
+        -- Ignore all files for analysis to exclusively use Ruff for linting
+        ignore = { '*' }
+      }
+    }
+  }
 }
 
 require('lspconfig')['elixirls'].setup {
@@ -315,6 +327,12 @@ require('lspconfig')['dockerls'].setup {
 }
 
 require('lspconfig')['rust_analyzer'].setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities
+}
+
+require('lspconfig')['ruff_lsp'].setup {
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities
