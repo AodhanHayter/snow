@@ -8,7 +8,7 @@
     # NixPkgs Unstable (nixos-unstable)
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # Home Manager (release-22.05)
+    # Home Manager (release-23.11)
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -65,6 +65,10 @@
 
       systems.modules.nixos = with inputs; [
         home-manager.nixosModules.home-manager
+      ];
+
+      systems.modules.darwin = with inputs; [
+        home-manager.darwinModules.home-manager
       ];
     };
 }
