@@ -17,6 +17,7 @@ in
     modernage = {
       suites = {
         common = enabled;
+        development = enabled;
       };
     };
   };

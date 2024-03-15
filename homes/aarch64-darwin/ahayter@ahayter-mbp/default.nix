@@ -15,7 +15,10 @@ with lib.modernage;
     };
 
     apps = {
-      alacritty = enabled;
+      alacritty = {
+        enable = true;
+        theme = "solarized_light";
+      };
     };
 
     cli-apps = {

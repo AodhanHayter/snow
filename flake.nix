@@ -36,7 +36,13 @@
       url = "github:drduh/config";
       flake = false;
     };
+
+    alacritty-themes = {
+      url = "github:alacritty/alacritty-theme?ref=yaml";
+      flake = false;
+    };
   };
+
 
   outputs = inputs:
     let
