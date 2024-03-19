@@ -10,11 +10,12 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ saml2aws ];
+    home.packages = with pkgs; [ awscli2 saml2aws ];
 
-    programs.awscli = {
-      enable = true;
-    };
+    # The home-manager setup requires more involved credentials handling
+    # programs.awscli = {
+    #   enable = true;
+    # };
 
     programs.zsh.initExtra = ''
       function aws_env() {
