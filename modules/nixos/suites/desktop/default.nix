@@ -23,6 +23,7 @@ in
 
       apps = {
         brave = enabled;
+        protonvpn = enabled;
       };
 
       cli-apps = {
@@ -34,7 +35,6 @@ in
         interception-tools = enabled;
         printing = enabled;
         openssh = enabled;
-        protonvpn = enabled;
       };
 
     };
