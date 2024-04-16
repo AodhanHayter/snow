@@ -38,6 +38,7 @@ with lib.modernage;
       git = enabled;
       direnv = enabled;
       tmux = enabled;
+      devenv = enabled;
     };
   };
 
