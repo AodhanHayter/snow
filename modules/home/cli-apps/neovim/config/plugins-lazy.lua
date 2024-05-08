@@ -74,8 +74,6 @@ require("lazy").setup({
   { "m4xshen/autoclose.nvim",      config = true, lazy = false },
   {
     "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
     config = function()
       require("copilot").setup({})
     end,
@@ -173,13 +171,14 @@ require("lazy").setup({
             end
           end, { "i", "s" })
         }),
-        sources = cmp.config.sources({
-          { name = "copilot" },
-          { name = "nvim_lsp" },
-          { name = "luasnip" }
-        }, {
-          { name = "buffer" },
-        })
+        sources = {
+          -- Copilot Source
+          { name = "copilot",  group_index = 2 },
+          -- Other Sources
+          { name = "nvim_lsp", group_index = 2 },
+          { name = "path",     group_index = 2 },
+          { name = "luasnip",  group_index = 2 },
+        }
       })
     end
   },

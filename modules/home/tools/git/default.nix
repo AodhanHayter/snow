@@ -18,6 +18,20 @@ in
     programs.git = {
       enable = true;
       inherit (cfg) userName userEmail;
+      aliases = {
+        sync = "!sh -c 'git fetch origin \"$0\":\"$0\"'";
+        prune = "fetch --prune";
+        undo = "reset --soft HEAD^";
+        stash-all = "stash save --include-untracked";
+        glog = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'";
+        clean-remotes = "remote prune origin";
+        clean-remotes-dry = "remote prune origin --dry-run";
+        clean-locals = "!git branch -vv | rg 'origin/.+: gone]' | awk '{print $1}' | xargs git branch -d";
+        clean-locals-dry = "!git branch -vv | rg 'origin/.+: gone]' | awk '{print $1}'";
+      };
+      diff-so-fancy = {
+        enable = true;
+      };
       lfs = enabled;
       signing = {
         key = cfg.signingKey;
