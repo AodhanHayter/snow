@@ -41,6 +41,7 @@ in
         pull = { rebase = true; };
         push = { autoSetupRemote = true; };
         core = { whitespace = "trailing-space,space-before-tab"; };
+        rerere = { enabled = true; };
       };
     };
   };
