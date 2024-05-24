@@ -13,6 +13,7 @@ in
     programs.eza = {
       enable = true;
       enableAliases = true;
+      extraOptions = [ "--icons" ];
     };
   };
 }

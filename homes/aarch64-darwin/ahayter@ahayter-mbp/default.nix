@@ -5,17 +5,20 @@
 , format ? "unknown"
 , ...
 }:
+
 with lib.modernage;
 {
   modernage = {
     user = {
       enable = true;
+      name = "ahayter";
     };
 
     apps = {
-      alacritty = enabled;
-      obs-studio = enabled;
-      gnucash = enabled;
+      alacritty = {
+        enable = true;
+        theme = "solarized_light";
+      };
     };
 
     cli-apps = {
@@ -28,6 +31,7 @@ with lib.modernage;
       home-manager = enabled;
       neovim = enabled;
       password-store = enabled;
+      zsh = enabled;
     };
 
     tools = {
@@ -37,4 +41,6 @@ with lib.modernage;
       devenv = enabled;
     };
   };
+
+  home.stateVersion = "22.11";
 }

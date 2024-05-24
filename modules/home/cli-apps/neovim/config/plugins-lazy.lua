@@ -16,14 +16,35 @@ vim.opt.rtp:prepend(lazypath)
 
 
 require("lazy").setup({
+  -- {
+  --   "trevordmiller/nova-vim",
+  --   priority = 1000,
+  --   lazy = false,
+  --   config = function()
+  --     vim.cmd([[colorscheme nova]])
+  --     vim.cmd([[highlight clear SignColumn]])
+  --   end
+  -- },
   {
-    "trevordmiller/nova-vim",
-    priority = 1000,
+    'maxmx03/solarized.nvim',
     lazy = false,
+    priority = 1000,
     config = function()
-      vim.cmd([[colorscheme nova]])
-      vim.cmd([[highlight clear SignColumn]])
+      vim.o.background = 'light'
+      vim.cmd('colorscheme solarized')
     end
+  },
+  {
+    'projekt0n/github-nvim-theme',
+    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
+    config = function()
+      require('github-theme').setup({
+        -- ...
+      })
+
+      -- vim.cmd('colorscheme github_dark')
+    end,
   },
   { "rebelot/kanagawa.nvim" },
   { "nordtheme/vim" },
@@ -33,16 +54,26 @@ require("lazy").setup({
   { "tpope/vim-endwise",           lazy = false },
   { "tpope/vim-dadbod" },
   { "kristijanhusak/vim-dadbod-ui" },
-  { "ojroques/nvim-hardline",      lazy = false, config = true },
-  { "norcalli/nvim-colorizer.lua", lazy = false, config = true },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    lazy = false,
+    config = function()
+      require('lualine').setup({
+        options = {
+          theme = 'auto'
+        },
+        extensions = { 'nvim-tree', 'fugitive', 'fzf', 'lazy', 'quickfix' }
+      })
+    end
+  },
+  { "norcalli/nvim-colorizer.lua", lazy = false,  config = true },
   { "junegunn/vim-slash",          lazy = false },
   { "sheerun/vim-polyglot",        lazy = false },
   { "lithammer/nvim-diagnosticls", lazy = false },
-  { "m4xshen/autoclose.nvim", config = true, lazy = false},
+  { "m4xshen/autoclose.nvim",      config = true, lazy = false },
   {
     "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
     config = function()
       require("copilot").setup({})
     end,
@@ -140,18 +171,87 @@ require("lazy").setup({
             end
           end, { "i", "s" })
         }),
-        sources = cmp.config.sources({
-          { name = "copilot" },
-          { name = "nvim_lsp" },
-          { name = "luasnip" }
-        }, {
-          { name = "buffer" },
-        })
+        sources = {
+          -- Copilot Source
+          { name = "copilot",  group_index = 2 },
+          -- Other Sources
+          { name = "nvim_lsp", group_index = 2 },
+          { name = "path",     group_index = 2 },
+          { name = "luasnip",  group_index = 2 },
+        }
       })
     end
   },
-  { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
-  { "lewis6991/gitsigns.nvim",       config = true,                             dependencies = { "nvim-lua/plenary.nvim" } },
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      local telescope = require('telescope')
+      local telescopeConfig = require('telescope.config')
+
+      local vimgrep_args = { unpack(telescopeConfig.values.vimgrep_arguments) }
+      table.insert(vimgrep_args, '--hidden') -- Search for hidden files
+
+      -- Don't search these
+      table.insert(vimgrep_args, '--glob')
+      table.insert(vimgrep_args, '!**/.git/*')
+
+      table.insert(vimgrep_args, '--glob')
+      table.insert(vimgrep_args, '!**/.idea/*')
+
+      table.insert(vimgrep_args, '--glob')
+      table.insert(vimgrep_args, '!**/.vscode/*')
+
+      table.insert(vimgrep_args, '--glob')
+      table.insert(vimgrep_args, '!**/build/*')
+
+      table.insert(vimgrep_args, '--glob')
+      table.insert(vimgrep_args, '!**/dist/*')
+
+      table.insert(vimgrep_args, '--glob')
+      table.insert(vimgrep_args, '!**/yarn.lock')
+
+      table.insert(vimgrep_args, '--glob')
+      table.insert(vimgrep_args, '!**/package-lock.json')
+
+      table.insert(vimgrep_args, '--glob')
+      table.insert(vimgrep_args, '!**/devenv.lock')
+
+      table.insert(vimgrep_args, '--glob')
+      table.insert(vimgrep_args, '!**/node_modules/*')
+      --
+
+      telescope.setup({
+        defaults = {
+          vimgrep_arguments = vimgrep_args
+        },
+        pickers = {
+          find_files = {
+            -- needed to exclude some files & dirs from general search
+            -- when not included or specified in .gitignore
+            find_command = {
+              'rg',
+              '--files',
+              '--hidden',
+              '--glob=!**/.git/*',
+              '--glob=!**/.idea/*',
+              '--glob=!**/.vscode/*',
+              '--glob=!**/build/*',
+              '--glob=!**/dist/*',
+              '--glob=!**/yarn.lock',
+              '--glob=!**/package-lock.json',
+              '--glob=!**/devenv.lock'
+            }
+          }
+        }
+      })
+    end
+  },
+  {
+    "lewis6991/gitsigns.nvim",
+    config = true,
+    dependencies = { "nvim-lua/plenary.nvim" }
+  },
   "tpope/vim-fugitive",
   "ellisonleao/glow.nvim",
   {
@@ -163,17 +263,17 @@ require("lazy").setup({
     end
   },
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
-  {
-    "folke/lsp-colors.nvim",
-    config = function()
-      require('lsp-colors').setup({
-        Error = "#e26a6a",
-        Warning = "#e0af68",
-        Information = "#0db9d7",
-        Hint = "#10B981"
-      })
-    end
-  }
+  -- {
+  --   "folke/lsp-colors.nvim",
+  --   config = function()
+  --     require('lsp-colors').setup({
+  --       Error = "#e26a6a",
+  --       Warning = "#e0af68",
+  --       Information = "#0db9d7",
+  --       Hint = "#10B981"
+  --     })
+  --   end
+  -- }
 })
 
 -- Mappings.
@@ -187,6 +287,10 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
+  -- Disable hover in favor of Pyright for python files
+  if client.name == 'ruff_lsp' then
+    client.server_capabilities.hoverProvider = false
+  end
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -226,7 +330,13 @@ require('lspconfig')['tsserver'].setup {
 require('lspconfig')['pyright'].setup {
   on_attach = on_attach,
   flags = lsp_flags,
-  capabilities = capabilities
+  capabilities = capabilities,
+  settings = {
+    pyright = {
+      -- Using Ruff's import organizer
+      disableOrganizeImports = true,
+    },
+  }
 }
 
 require('lspconfig')['elixirls'].setup {
@@ -315,6 +425,12 @@ require('lspconfig')['dockerls'].setup {
 }
 
 require('lspconfig')['rust_analyzer'].setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities
+}
+
+require('lspconfig')['ruff_lsp'].setup {
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities
