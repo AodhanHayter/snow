@@ -31,7 +31,7 @@ require("lazy").setup({
     priority = 1000,
     config = function()
       vim.o.background = 'light'
-      vim.cmd('colorscheme solarized')
+      -- vim.cmd('colorscheme solarized')
     end
   },
   {
@@ -43,7 +43,7 @@ require("lazy").setup({
         -- ...
       })
 
-      -- vim.cmd('colorscheme github_dark')
+      vim.cmd('colorscheme github_dark')
     end,
   },
   { "rebelot/kanagawa.nvim" },
@@ -103,6 +103,9 @@ require("lazy").setup({
         }
       })
     end,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    }
   },
   {
     "nvim-tree/nvim-tree.lua",
