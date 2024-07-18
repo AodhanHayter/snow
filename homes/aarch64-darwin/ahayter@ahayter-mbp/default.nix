@@ -17,7 +17,6 @@ with lib.modernage;
     apps = {
       alacritty = {
         enable = true;
-        theme = "solarized_light";
       };
     };
 

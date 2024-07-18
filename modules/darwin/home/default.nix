@@ -29,7 +29,7 @@ in
       xdg.configFile = mkAliasDefinitions options.modernage.home.configFile;
     };
 
-    snowfallorg.user.${config.modernage.user.name}.home.config = mkAliasDefinitions options.modernage.home.extraOptions;
+    snowfallorg.users.${config.modernage.user.name}.home.config = mkAliasDefinitions options.modernage.home.extraOptions;
 
     home-manager = {
       useUserPackages = true;

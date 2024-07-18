@@ -2,14 +2,14 @@
   description = "Modern Age";
 
   inputs = {
-    # NixPkgs (nixos-23.11)
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    # NixPkgs (nixos-24.05)
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
 
     # NixPkgs Unstable (nixos-unstable)
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # Home Manager (release-23.11)
-    home-manager.url = "github:nix-community/home-manager/release-23.11";
+    # Home Manager (release-24.05)
+    home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # macOS Support (master)
@@ -24,11 +24,13 @@
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
     # Snowfall Lib
-    snowfall-lib.url = "github:snowfallorg/lib";
-    snowfall-lib.inputs.nixpkgs.follows = "nixpkgs";
+    snowfall-lib = {
+      url = "github:snowfallorg/lib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Snowfall Flake
-    flake.url = "github:snowfallorg/flake?ref=v1.1.0";
+    flake.url = "github:snowfallorg/flake?ref=v1.4.1";
     flake.inputs.nixpkgs.follows = "unstable";
 
     # GPG default config

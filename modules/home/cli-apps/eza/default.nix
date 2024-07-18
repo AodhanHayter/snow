@@ -12,7 +12,6 @@ in
   config = mkIf cfg.enable {
     programs.eza = {
       enable = true;
-      enableAliases = true;
       extraOptions = [ "--icons" ];
     };
   };

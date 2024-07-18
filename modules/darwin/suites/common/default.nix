@@ -21,6 +21,10 @@ in
     modernage = {
       nix = enabled;
 
+      apps = {
+        mos = enabled;
+      };
+
       cli-apps = {
         neovim = enabled;
       };
