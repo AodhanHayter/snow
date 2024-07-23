@@ -39,7 +39,7 @@ in
       cfg.extra-substituters;
 
     environment.systemPackages = with pkgs; [
-      nixfmt
+      nixfmt-rfc-style
       nix-index
       nix-prefetch-git
       nix-output-monitor

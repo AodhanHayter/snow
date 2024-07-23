@@ -20,7 +20,7 @@ in
       enable = true;
       settings = {
 
-        import = [ "~/.config/alacritty/themes/${cfg.theme}.yaml" ];
+        import = [ "~/.config/alacritty/themes/${cfg.theme}.toml" ];
 
         font = {
           size = 16;

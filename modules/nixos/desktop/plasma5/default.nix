@@ -24,10 +24,6 @@ in
     services.xserver = {
       enable = true;
 
-      libinput.enable = true;
-
-      displayManager.sddm.enable = true;
-
       desktopManager = {
         plasma5 = {
           enable = true;
@@ -35,6 +31,9 @@ in
         };
       };
     };
+
+    services.libinput.enable = true;
+    services.displayManager.sddm.enable = true;
 
     programs.kdeconnect.enable = true;
   };

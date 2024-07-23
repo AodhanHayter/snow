@@ -40,7 +40,7 @@
     };
 
     alacritty-themes = {
-      url = "github:alacritty/alacritty-theme?ref=yaml";
+      url = "github:alacritty/alacritty-theme?ref=master"
       flake = false;
     };
   };

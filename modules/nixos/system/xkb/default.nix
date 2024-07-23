@@ -15,7 +15,7 @@ in
 
   config = mkIf cfg.enable {
     console.useXkbConfig = true;
-    services.xserver = {
+    services.xserver.xkb = {
       layout = "us";
     };
   };
