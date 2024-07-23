@@ -10,7 +10,19 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ gcc ]; # treesitter needs a c compiler
+    home.packages = with pkgs; [
+      gcc # treesitter needs a c compiler
+      # Various language servers
+      dockerfile-language-server-nodejs
+      lua-language-server
+      marksman
+      nodePackages.bash-language-server
+      nodePackages.diagnostic-languageserver
+      nodePackages.typescript-language-server
+      pyright
+      terraform-ls
+      ###
+    ];
 
     programs.neovim = {
       enable = true;
