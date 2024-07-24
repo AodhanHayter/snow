@@ -10,6 +10,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ pulumi-bin ];
+    home.packages = with pkgs; [ pulumi ];
   };
 }
