@@ -31,6 +31,7 @@ with lib.modernage;
       fzf = enabled;
       gh = enabled;
       home-manager = enabled;
+      jq = enabled;
       neovim = enabled;
       password-store = enabled;
       pulumi = enabled;
