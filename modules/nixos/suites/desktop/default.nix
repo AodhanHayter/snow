@@ -32,6 +32,7 @@ in
       };
 
       services = {
+        avahi = enabled;
         interception-tools = enabled;
         printing = enabled;
         openssh = enabled;
