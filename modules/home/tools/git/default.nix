@@ -37,6 +37,7 @@ in
         key = cfg.signingKey;
         signByDefault = cfg.signByDefault;
       };
+      ignores = ["aodhanlocal"];
       extraConfig = {
         pull = { rebase = true; };
         push = { autoSetupRemote = true; };
