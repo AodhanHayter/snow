@@ -24,6 +24,8 @@ opt.smartindent = true
 opt.autoindent = true
 opt.undofile = true
 opt.listchars = { tab = '>~', trail = '·' }
+opt.laststatus = 3
+opt.splitkeep = "screen"
 
 -- window-local options
 wo.number = true

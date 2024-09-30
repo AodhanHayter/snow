@@ -71,7 +71,7 @@ require("lazy").setup({
   { "junegunn/vim-slash",          lazy = false },
   { "sheerun/vim-polyglot",        lazy = false },
   { "lithammer/nvim-diagnosticls", lazy = false },
-  { "m4xshen/autoclose.nvim",      config = true, lazy = false },
+  { "windwp/nvim-autopairs", event = "InsertEnter", config = true },
   {
     "zbirenbaum/copilot.lua",
     config = function()
@@ -266,17 +266,24 @@ require("lazy").setup({
     end
   },
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
-  -- {
-  --   "folke/lsp-colors.nvim",
-  --   config = function()
-  --     require('lsp-colors').setup({
-  --       Error = "#e26a6a",
-  --       Warning = "#e0af68",
-  --       Information = "#0db9d7",
-  --       Hint = "#10B981"
-  --     })
-  --   end
-  -- }
+  {
+    "yetone/avante.nvim",
+    event = "VeryLazy",
+    opts = { provider = "copilot" },
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      {
+        "MeanderingProgrammer/render-markdown.nvim",
+        opts = {
+          file_types = { "markdown", "Avante" },
+        },
+        ft = { "markdown", "Avante" },
+      }
+    }
+  }
 })
 
 -- Mappings.
