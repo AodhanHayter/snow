@@ -270,7 +270,7 @@ require("lazy").setup({
     "yetone/avante.nvim",
     event = "VeryLazy",
     opts = { provider = "copilot" },
-    build = "make"
+    build = "make",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
       "stevearc/dressing.nvim",
