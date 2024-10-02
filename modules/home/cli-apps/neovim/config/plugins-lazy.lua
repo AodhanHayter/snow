@@ -333,7 +333,7 @@ local lsp_flags = {
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-require('lspconfig')['tsserver'].setup {
+require('lspconfig')['ts_ls'].setup {
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities
