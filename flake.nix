@@ -23,6 +23,9 @@
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+
     # Snowfall Lib
     snowfall-lib = {
       url = "github:snowfallorg/lib";
@@ -73,6 +76,7 @@
 
       systems.modules.nixos = with inputs; [
         home-manager.nixosModules.home-manager
+        disko.nixosModules.disko
       ];
 
       systems.modules.darwin = with inputs; [

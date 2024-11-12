@@ -1,7 +1,8 @@
-{pkgs, lib, namespace, ...}:
+{pkgs, lib, ...}:
 with lib;
-with lib.${namespace};
-{
+with lib.modernage; {
+
+  networking.wireless.enable = mkForce false;
 
   modernage = {
     nix = enabled;
@@ -23,10 +24,6 @@ with lib.${namespace};
       openssh = enabled;
     };
 
-    security = {
-      doas = enabled;
-    };
-
     system = {
       boot = enabled;
       fonts = enabled;
@@ -34,5 +31,5 @@ with lib.${namespace};
       time = enabled;
       xkb = enabled;
     };
-  }
+  };
 }
