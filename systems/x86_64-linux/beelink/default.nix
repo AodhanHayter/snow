@@ -2,11 +2,17 @@
 , config
 , lib
 , channel
+, modulesPath
 , ...
 }:
 with lib;
 with lib.modernage; {
-  imports = [ ./hardware.nix ./disk-config.nix ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    (modulesPath + "/profiles/qemu-guest.nix")
+    ./disk-config.nix
+    ./hardware.nix
+  ];
 
   boot.loader.grub = {
     efiSupport = true;
