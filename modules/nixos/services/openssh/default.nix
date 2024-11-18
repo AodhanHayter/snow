@@ -36,6 +36,6 @@ in
     };
 
     modernage.user.extraOptions.openssh.authorizedKeys.keys = cfg.authorizedKeys;
-    users.users.root.openssh.authorizedKeys.keys = if format == "install-iso" then cfg.authorizedKeys else [];
+    users.users.root.openssh.authorizedKeys.keys = if format == "install-iso" then cfg.authorizedKeys else [ ];
   };
 }
