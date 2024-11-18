@@ -1,7 +1,4 @@
-{ pkgs
-, config
-, lib
-, channel
+{ lib
 , ...
 }:
 with lib;
@@ -11,6 +8,13 @@ with lib.modernage; {
   modernage = {
     prototype = {
       lab-node = enabled;
+    };
+
+    services = {
+      kubernetes = {
+        enable = true;
+        role = "master";
+      };
     };
   };
 
