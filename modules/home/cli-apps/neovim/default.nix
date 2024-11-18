@@ -16,6 +16,8 @@ in
       dockerfile-language-server-nodejs
       lua-language-server
       marksman
+      nixd
+      nixpkgs-fmt
       nodePackages.bash-language-server
       nodePackages.diagnostic-languageserver
       nodePackages.typescript-language-server

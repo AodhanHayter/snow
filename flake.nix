@@ -23,8 +23,12 @@
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
+    # declaritive partitioning
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+
+    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
 
     # Snowfall Lib
     snowfall-lib = {
@@ -65,23 +69,28 @@
         };
       };
     in
-    lib.mkFlake {
-      channels-config = {
-        allowUnfree = true;
+    lib.mkFlake
+      {
+        channels-config = {
+          allowUnfree = true;
+        };
+
+        overlays = with inputs; [
+          flake.overlays.default
+        ];
+
+        systems.modules.nixos = with inputs; [
+          home-manager.nixosModules.home-manager
+          disko.nixosModules.disko
+        ];
+
+        systems.modules.darwin = with inputs; [
+          home-manager.darwinModules.home-manager
+        ];
+
+        deploy = lib.mkDeploy { inherit (inputs) self; };
+
+        checks = builtins.mapAttrs (system: deploy-lib: deploy-lib.deployChecks inputs.self.deploy) inputs.deploy-rs.lib;
       };
-
-      overlays = with inputs; [
-        flake.overlays.default
-      ];
-
-      systems.modules.nixos = with inputs; [
-        home-manager.nixosModules.home-manager
-        disko.nixosModules.disko
-      ];
-
-      systems.modules.darwin = with inputs; [
-        home-manager.darwinModules.home-manager
-      ];
-    };
 }
 

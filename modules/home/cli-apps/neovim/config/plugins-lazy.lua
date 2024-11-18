@@ -383,7 +383,7 @@ require('lspconfig')['bashls'].setup {
   capabilities = capabilities,
 }
 
-require('lspconfig')['rnix'].setup {
+require('lspconfig')['nixd'].setup {
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities,

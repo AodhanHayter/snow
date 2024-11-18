@@ -11,6 +11,7 @@ in
 {
   options.modernage.hardware.networking = with types; {
     enable = mkBoolOpt false "Whether or not to enable networking support.";
+    randomMacAddr = mkBoolOpt true "Wheter or not to randomize network card mac address for privacy.";
     hosts = mkOpt attrs { } (mdDoc "An attribute set to merge with `networking.hosts`");
   };
 
@@ -25,6 +26,9 @@ in
       networkmanager = {
         enable = true;
         dhcp = "internal";
+        wifi = {
+          scanRandMacAddress = cfg.randomMacAddr;
+        };
       };
     };
 

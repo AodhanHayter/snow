@@ -1,25 +1,20 @@
-{ pkgs
+{ options
 , config
 , lib
-, channel
-, modulesPath
+, pkgs
 , ...
 }:
 with lib;
-with lib.modernage; {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-    (modulesPath + "/profiles/qemu-guest.nix")
-    ./disk-config.nix
-    ./hardware.nix
-  ];
-
-  boot.loader.grub = {
-    efiSupport = true;
-    efiInstallAsRemovable = true;
+with lib.modernage; let
+  cfg = config.modernage.prototype.lab-node;
+in
+{
+  options.modernage.prototype.lab-node = with types; {
+    enable = mkBoolOpt false "Whether or not to enable the lab-node prototype.";
   };
 
-  modernage = {
+  config = mkIf cfg.enable {
+    modernage = {
       nix = enabled;
 
       tools = {
@@ -28,6 +23,7 @@ with lib.modernage; {
 
       hardware = {
         networking = enabled;
+        beelink-eq13 = enabled;
       };
 
       system = {
@@ -44,10 +40,12 @@ with lib.modernage; {
 
       services = {
         openssh = enabled;
+        avahi = enabled;
       };
 
+      security = {
+        doas = enabled;
+      };
+    };
   };
-
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "24.05";
 }
