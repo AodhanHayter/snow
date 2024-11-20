@@ -11,9 +11,20 @@ with lib.modernage; {
     };
 
     services = {
-      kubernetes = {
+      k3s = {
         enable = true;
-        role = "master";
+        role = "server";
+        clusterInit = true;
+      };
+
+      gluster = {
+        enable = true;
+        nodeAddress = "atlas.local";
+        isPrimary = true;
+        peerNodes = [ "apollo.local" "hermes.local" ];
+        volumeName = "k3s-vol";
+        brickPath = "/data/glusterfs/brick1";
+        replicaCount = 3;
       };
     };
   };
