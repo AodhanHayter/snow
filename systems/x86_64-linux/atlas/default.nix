@@ -5,6 +5,8 @@ with lib;
 with lib.modernage; {
   imports = [ ./disk-config.nix ];
 
+  networking.hostName = "atlas";
+
   modernage = {
     prototype = {
       lab-node = enabled;
