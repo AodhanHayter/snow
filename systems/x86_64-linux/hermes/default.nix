@@ -8,6 +8,8 @@ with lib;
 with lib.modernage; {
   imports = [ ./disk-config.nix ];
 
+  networking.hostName = "hermes";
+
   modernage = {
     prototype = {
       lab-node = enabled;
@@ -16,13 +18,12 @@ with lib.modernage; {
     services.k3s = {
       enable = true;
       role = "agent";
-      token = "K10221a5d12ace9b9472747b382a5a2639e63119d93bd451c8442bcc8cc76f319a4::server:3ef6f6053e126f0fd340fe772b205e47";
+      token = "K107c82aa11fd40bc86f6bf54c74604d2e5362219fc06fdf8cd6e021ae1eb27b087::server:50d968aeb9ad138010935aa1663cc212";
     };
 
-    gluster = {
+    services.gluster = {
       enable = true;
       nodeAddress = "hermes.local";
-      isPrimary = true;
       peerNodes = [ "atlas.local" "apollo.local" ];
       volumeName = "k3s-vol";
       brickPath = "/data/glusterfs/brick1";
