@@ -1,40 +1,46 @@
 {
   disko.devices = {
     disk = {
-      main = {
+      sda = {
         device = "/dev/sda";
         type = "disk";
         content = {
           type = "gpt";
           partitions = {
             boot = {
-              name = "boot";
               size = "1M";
-              type = "EF02";
+              type = "EF02"; # BIOS boot partition
             };
-            esp = {
-              name = "ESP";
-              type = "EF00";
-              size = "500M";
+            ESP = {
+              size = "512M";
+              type = "EF00"; # EFI System Partition
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
               };
             };
+            swap = {
+              size = "4G";
+              content = {
+                type = "swap";
+                discardPolicy = "both";
+              };
+            };
+            gluster = {
+              size = "100G";
+              content = {
+                type = "filesystem";
+                format = "xfs";
+                mountpoint = "/data/glusterfs/brick1";
+              };
+            };
             root = {
-              end = "-4G";
+              size = "100%";  # Use remaining space
               content = {
                 type = "filesystem";
                 format = "ext4";
                 mountpoint = "/";
-              };
-            };
-            swap = {
-              size = "100%";
-              content = {
-                type = "swap";
-                discardPolicy = "both";
               };
             };
           };
