@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gluster-cluster
+  namespace: default
+spec:
+  ports:
+    - port: 49152
