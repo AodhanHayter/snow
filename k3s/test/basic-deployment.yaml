@@ -1,0 +1,20 @@
+# basic-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+spec:
+  replicas: 2          # Start with 2 copies for reliability
+  selector:
+    matchLabels:
+      app: demo-app
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest    # Using nginx as an example web server
+        ports:
+        - containerPort: 80

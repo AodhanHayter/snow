@@ -1,0 +1,12 @@
+# add-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-app
+spec:
+  type: LoadBalancer     # Start with ClusterIP for internal access
+  selector:
+    app.kubernetes.io/name: grafana
+  ports:
+  - port: 80
+    targetPort: 3000
