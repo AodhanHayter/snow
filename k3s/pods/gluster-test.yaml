@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gluster-test
+spec:
+  containers:
+  - name: gluster-test
+    image: busybox
+    volumeMounts:
+    - name: shared-data
+      mountPath: /mnt/data
+    command: ["sh", "-c", "while true; do date >> /mnt/data/pod-test.txt; sleep 30; done"]
+  volumes:
+  - name: shared-data
+    hostPath:
+      path: /mnt/k3s-vol
+      type: Directory
