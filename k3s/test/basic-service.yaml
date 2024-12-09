@@ -1,0 +1,12 @@
+# add-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-app
+spec:
+  type: LoadBalancer     # Start with ClusterIP for internal access
+  selector:
+    app: demo-app    # Matches the labels in your Deployment
+  ports:
+  - port: 80
+    targetPort: 80
