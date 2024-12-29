@@ -11,7 +11,7 @@ in
 {
   options.modernage.nix = with types; {
     enable = mkBoolOpt true "Whether or not to manage nix configuration.";
-    package = mkOpt package pkgs.nixFlakes "Which nix package to use.";
+    package = mkOpt package pkgs.nixVersions.stable "Which nix package to use.";
   };
 
   config = mkIf cfg.enable {

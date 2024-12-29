@@ -34,7 +34,7 @@ with lib.modernage;
       jq = enabled;
       neovim = enabled;
       password-store = enabled;
-      pulumi = enabled;
+      # pulumi = enabled;
       ripgrep = enabled;
       zsh = enabled;
     };
