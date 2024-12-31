@@ -18,7 +18,7 @@ with lib.modernage; {
     services.k3s = {
       enable = true;
       role = "agent";
-      token = "K107c82aa11fd40bc86f6bf54c74604d2e5362219fc06fdf8cd6e021ae1eb27b087::server:50d968aeb9ad138010935aa1663cc212";
+      token = "K10d4c6e3a007386169463cb07da0492f1454b9ec49aa8f8d8ea8a47f6e338fe871::server:28f7b49327c3ba997d51673418c5fb15";
     };
 
     services.gluster = {
