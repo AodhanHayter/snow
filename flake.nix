@@ -46,6 +46,10 @@
       flake = false;
     };
 
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
+
     alacritty-themes = {
       url = "github:alacritty/alacritty-theme?ref=master";
       flake = false;

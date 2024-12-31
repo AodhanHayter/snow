@@ -16,7 +16,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    programs.zsh = enabled;
+    # programs.zsh = enabled;
 
     modernage = {
       nix = enabled;

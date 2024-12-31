@@ -1,9 +1,6 @@
-{ lib
-, pkgs
-, config
-, osConfig ? { }
-, format ? "unknown"
-, ...
+{
+  lib,
+  ...
 }:
 
 with lib.modernage;
@@ -18,6 +15,7 @@ with lib.modernage;
       alacritty = {
         enable = true;
       };
+      ghostty = enabled;
     };
 
     cli-apps = {
@@ -43,6 +41,7 @@ with lib.modernage;
       git = enabled;
       direnv = enabled;
       tmux = enabled;
+      zellij = enabled;
       devenv = enabled;
     };
   };
