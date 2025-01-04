@@ -39,6 +39,7 @@ in
       };
       ignores = ["aodhanlocal"];
       extraConfig = {
+        safe = { directory = "*"; };
         pull = { rebase = true; };
         push = { autoSetupRemote = true; };
         core = { whitespace = "trailing-space,space-before-tab"; };
