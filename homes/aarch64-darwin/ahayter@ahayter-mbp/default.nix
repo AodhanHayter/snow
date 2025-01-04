@@ -41,7 +41,10 @@ with lib.modernage;
       git = enabled;
       direnv = enabled;
       tmux = enabled;
-      zellij = enabled;
+      zellij = {
+        enable = true;
+        theme = "nord";
+      };
       devenv = enabled;
     };
   };
