@@ -15,7 +15,7 @@ in
   imports = with nixos-hardware.nixosModules; [
     (modulesPath + "/installer/scan/not-detected.nix")
     common-cpu-amd
-    common-gpu-nvidia-nonprime
+    common-gpu-nvidia
     common-pc
     common-pc-ssd
   ];
@@ -52,4 +52,11 @@ in
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   hardware.bluetooth.enable = true;
+  hardware.nvidia = {
+    open = true;
+    prime = {
+      offload.enable = false;
+      nvidiaBusId = "PCI:7:0:0";
+    };
+  };
 }
