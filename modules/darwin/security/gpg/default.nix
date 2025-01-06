@@ -14,6 +14,7 @@ let
     enable-ssh-support
     default-cache-ttl 60
     max-cache-ttl 120
+    pinentry-program ${pkgs.pinentry_mac}/bin/pinentry-mac
   '';
 in
 {
@@ -22,7 +23,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ gnupg paperkey ];
+    environment.systemPackages = with pkgs; [ gnupg paperkey pinentry_mac ];
 
     programs = {
       gnupg.agent = {
