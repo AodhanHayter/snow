@@ -15,26 +15,32 @@ let
     mouse-hide-while-typing = true
     macos-titlebar-style = transparent
     copy-on-select = clipboard
+    quick-terminal-position = bottom
+    shell-integration = zsh
+    shell-integration-features = cursor,sudo,title
 
     # keybindings
-
     ## windows
-    keybind = ctrl+a>n=new_window
+    keybind = ctrl+g>n=new_window
 
     ## tabs
-    keybind = ctrl+a>c=new_tab
-    keybind = ctrl+a>n=next_tab
-    keybind = ctrl+a>p=previous_tab
+    keybind = ctrl+g>c=new_tab
+    keybind = ctrl+g>n=next_tab
+    keybind = ctrl+g>p=previous_tab
 
     ## splits
 
-    keybind = ctrl+a>shift+'=new_split:down
-    keybind = ctrl+a>shift+5=new_split:right
+    keybind = ctrl+g>shift+'=new_split:down
+    keybind = ctrl+g>shift+5=new_split:right
+    keybind = ctrl+g>e=equalize_splits
 
-    keybind = ctrl+a>j=goto_split:bottom
-    keybind = ctrl+a>k=goto_split:top
-    keybind = ctrl+a>h=goto_split:left
-    keybind = ctrl+a>l=goto_split:right
+    keybind = ctrl+g>j=goto_split:bottom
+    keybind = ctrl+g>k=goto_split:top
+    keybind = ctrl+g>h=goto_split:left
+    keybind = ctrl+g>l=goto_split:right
+
+    # shortcuts
+    keybind = ctrl+g>q=toggle_quick_terminal
   '';
 in
 {
