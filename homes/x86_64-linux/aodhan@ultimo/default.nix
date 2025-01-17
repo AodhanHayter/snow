@@ -16,6 +16,7 @@ with lib.modernage;
       alacritty = enabled;
       obs-studio = enabled;
       gnucash = enabled;
+      ghostty = enabled;
     };
 
     cli-apps = {
