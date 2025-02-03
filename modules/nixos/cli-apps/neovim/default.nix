@@ -23,6 +23,7 @@ in
       PAGER = "less";
       MANPAGER = "less";
       EDITOR = "nvim";
+      VISUAL = "nvim";
     };
 
     modernage.home = {
