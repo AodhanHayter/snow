@@ -21,7 +21,7 @@ in
       nodePackages.bash-language-server
       nodePackages.diagnostic-languageserver
       nodePackages.typescript-language-server
-      pyright
+      basedpyright
       terraform-ls
       ###
     ];

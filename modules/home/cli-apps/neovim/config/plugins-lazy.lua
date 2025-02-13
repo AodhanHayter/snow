@@ -300,9 +300,9 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   -- Disable hover in favor of Pyright for python files
-  if client.name == 'ruff_lsp' then
-    client.server_capabilities.hoverProvider = false
-  end
+  -- if client.name == 'ruff' then
+  --   client.server_capabilities.hoverProvider = false
+  -- end
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -339,7 +339,7 @@ require('lspconfig')['ts_ls'].setup {
   capabilities = capabilities
 }
 
-require('lspconfig')['pyright'].setup {
+require('lspconfig')['basedpyright'].setup {
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities,
@@ -442,7 +442,7 @@ require('lspconfig')['rust_analyzer'].setup {
   capabilities = capabilities
 }
 
-require('lspconfig')['ruff_lsp'].setup {
+require('lspconfig')['ruff'].setup {
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities
