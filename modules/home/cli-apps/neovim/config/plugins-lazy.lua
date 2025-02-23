@@ -277,6 +277,9 @@ require("lazy").setup({
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
       "zbirenbaum/copilot.lua",
+      "echasnovski/mini.pick",
+      "nvim-telescope/telescope.nvim",
+      "ibhagwan/fzf-lua",
       {
         "MeanderingProgrammer/render-markdown.nvim",
         opts = {
