@@ -269,7 +269,13 @@ require("lazy").setup({
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
-    opts = { provider = "copilot" },
+    lazy = "false",
+    opts = {
+      provider = "copilot",
+      file_selector = {
+        provider = "telescope",
+      }
+    },
     build = "make",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
