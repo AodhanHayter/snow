@@ -16,15 +16,6 @@ vim.opt.rtp:prepend(lazypath)
 
 
 require("lazy").setup({
-  -- {
-  --   "trevordmiller/nova-vim",
-  --   priority = 1000,
-  --   lazy = false,
-  --   config = function()
-  --     vim.cmd([[colorscheme nova]])
-  --     vim.cmd([[highlight clear SignColumn]])
-  --   end
-  -- },
   {
     'maxmx03/solarized.nvim',
     lazy = false,
@@ -48,7 +39,16 @@ require("lazy").setup({
   },
   { "rebelot/kanagawa.nvim" },
   { "nordtheme/vim" },
-  { "numToStr/Comment.nvim",       lazy = false, config = true },
+  {
+    "numToStr/Comment.nvim",
+    dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
+    lazy = false,
+    config = function()
+      require('Comment').setup({
+        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook()
+      })
+    end
+  },
   { "tmhedberg/matchit",           lazy = false },
   { "tpope/vim-surround",          lazy = false },
   { "tpope/vim-endwise",           lazy = false },
@@ -67,11 +67,11 @@ require("lazy").setup({
       })
     end
   },
-  { "norcalli/nvim-colorizer.lua", lazy = false,  config = true },
+  { "norcalli/nvim-colorizer.lua", lazy = false,          config = true },
   { "junegunn/vim-slash",          lazy = false },
   { "sheerun/vim-polyglot",        lazy = false },
   { "lithammer/nvim-diagnosticls", lazy = false },
-  { "windwp/nvim-autopairs", event = "InsertEnter", config = true },
+  { "windwp/nvim-autopairs",       event = "InsertEnter", config = true },
   {
     "zbirenbaum/copilot.lua",
     config = function()
@@ -116,7 +116,6 @@ require("lazy").setup({
       })
     end,
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    tag = "nightly"
   },
   {
     "L3MON4D3/LuaSnip",
@@ -294,13 +293,20 @@ require("lazy").setup({
         ft = { "markdown", "Avante" },
       }
     }
+  },
+  {
+    'pwntester/octo.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim', 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require('octo').setup()
+    end
   }
 })
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '<leader>ap', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', '<leader>an', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)

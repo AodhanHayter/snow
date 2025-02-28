@@ -12,18 +12,6 @@ map('n', '<leader>co', ':set cursorcolumn!<CR>', options)
 map('v', '<', '<gv', options)
 map('v', '>', '>gv', options)
 
--- coc.nvim maps
--- map('n', '<leader>gd', '<Plug>(coc-definition)', {})
--- map('n', '<leader>gt', '<Plug>(coc-type-definition)', {})
--- map('n', '<leader>gr', '<Plug>(coc-references)', {})
--- map('n', '<leader>gi', '<Plug>(coc-implementation)', {})
--- map('n', '<leader>rn', '<Plug>(coc-rename)', {})
--- map('n', '<leader>st', ':call CocAction("doHover")<cr>', options)
--- map('n', '<leader>qf', '<Plug>(coc-fix-current)', {})
-
--- cmd('command! -nargs=0 Format :call CocActionAsync("format")')
--- map('n', '<leader>af', ':Format<cr>', options)
-
 -- file tree
 map('n', '<leader>ff', ':NvimTreeFindFile<CR>', options)
 map('n', '<C-\\>', ':NvimTreeToggle<CR>', options)

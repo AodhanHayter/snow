@@ -4,6 +4,7 @@ local wo = vim.wo
 local bo = vim.bo
 local cmd = vim.cmd
 local api = vim.api
+local diagnostic = vim.diagnostic
 
 -- global options
 o.termguicolors = true
@@ -41,6 +42,13 @@ bo.expandtab = true
 bo.smartindent = true
 bo.autoindent = true
 bo.undofile = true
+
+-- diagnostic options
+-- diagnostic.config({
+--   virtual_text = false,
+--   virtual_lines = true,
+--   severity_sort = true
+-- })
 
 cmd('syntax enable')
 
@@ -82,15 +90,8 @@ api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- autocomplete
--- vim.g.coq_settings = {
---   auto_start = 'shut-up',
---   limits = {
---     completion_manual_timeout = 500
---   }
--- }
-
 -- ALE settings
+-- 2025-02-28: This can probably be removed as ALE is not really needed in nvim
 vim.g.ale_virtualtext_cursor = 1
 vim.g.ale_disable_lsp = 1
 vim.g.ale_completion_enabled = 0

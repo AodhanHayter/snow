@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 with lib.modernage;
 let
@@ -10,7 +15,9 @@ in
     enable = mkBoolOpt false "Whether or not to install and configure git.";
     userName = mkOpt types.str user.fullName "The name to configure git with.";
     userEmail = mkOpt types.str user.email "The email to configure git with";
-    signingKey = mkOpt types.str "3FBACD0B82D05567FC1BB765FD58CC579E91D1C5" "The key ID to sign commits with.";
+    signingKey =
+      mkOpt types.str "3FBACD0B82D05567FC1BB765FD58CC579E91D1C5"
+        "The key ID to sign commits with.";
     signByDefault = mkOpt types.bool true "Whether to sign commits by default";
   };
 
@@ -37,12 +44,63 @@ in
         key = cfg.signingKey;
         signByDefault = cfg.signByDefault;
       };
-      ignores = ["aodhanlocal"];
+      ignores = [ "aodhanlocal" ];
       extraConfig = {
-        pull = { rebase = true; };
-        push = { autoSetupRemote = true; };
-        core = { whitespace = "trailing-space,space-before-tab"; };
-        rerere = { enabled = true; };
+        branch = {
+          # Sort branches by the most recent commit date
+          sort = "-committerdate";
+        };
+        commit = {
+          verbose = true;
+        };
+        column = {
+          # represent branch names in column formate so we can see more of them
+          ui = "auto";
+        };
+        core = {
+          fsmonitor = true;
+          untrackedCache = true;
+          whitespace = "trailing-space,space-before-tab";
+        };
+        diff = {
+          # Use an improved diff algorithm
+          algorithm = "histogram";
+          # show code movement in different colors
+          colorMoved = "plain";
+          # replace diff headers output with where the diff is coming from
+          mnemonicPrefix = true;
+          # detect if a file has been renamed
+          renames = true;
+        };
+        fetch = {
+          # automatically prune
+          prune = true;
+          pruneTags = true;
+          all = true;
+        };
+        help = {
+          autocorrect = "prompt";
+        };
+        merge = {
+          conflictStyle = "zdiff3";
+        };
+        pull = {
+          rebase = true;
+        };
+        push = {
+          # if remote doesn't exist automatically create and push to it
+          autoSetupRemote = true;
+          # push all tags that are not on the remote
+          followTags = true;
+        };
+        rerere = {
+          enabled = true;
+          autoupdate = true;
+        };
+        tag = {
+          # sort version numbers as a series of integers
+          sort = "version:refname";
+        };
       };
     };
   };
