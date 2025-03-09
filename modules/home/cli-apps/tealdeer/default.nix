@@ -12,7 +12,6 @@ in
   config = mkIf cfg.enable {
     programs.tealdeer = {
       enable = true;
-      enableAutoUpdates = true;
     };
   };
 }
