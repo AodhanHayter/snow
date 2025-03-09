@@ -28,6 +28,7 @@ with lib.modernage;
       home-manager = enabled;
       neovim = enabled;
       password-store = enabled;
+      tealdeer = enabled;
     };
 
     tools = {

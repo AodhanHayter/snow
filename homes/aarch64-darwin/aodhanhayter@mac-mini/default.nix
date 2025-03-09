@@ -33,6 +33,7 @@ with lib.modernage;
       neovim = enabled;
       password-store = enabled;
       # pulumi = enabled;
+      tealdeer = enabled;
       ripgrep = enabled;
       zsh = enabled;
     };
