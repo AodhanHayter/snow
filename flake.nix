@@ -47,7 +47,7 @@
     };
 
     ghostty = {
-      url = "github:ghostty-org/ghostty";
+      url = "github:ghostty-org/ghostty/v1.1.0";
     };
 
     alacritty-themes = {
