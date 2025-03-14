@@ -37,7 +37,6 @@ require("lazy").setup({
       vim.cmd('colorscheme github_dark')
     end,
   },
-  { "rebelot/kanagawa.nvim" },
   { "nordtheme/vim" },
   {
     "numToStr/Comment.nvim",
@@ -67,15 +66,19 @@ require("lazy").setup({
       })
     end
   },
-  { "norcalli/nvim-colorizer.lua", lazy = false,          config = true },
   { "junegunn/vim-slash",          lazy = false },
   { "sheerun/vim-polyglot",        lazy = false },
   { "lithammer/nvim-diagnosticls", lazy = false },
   { "windwp/nvim-autopairs",       event = "InsertEnter", config = true },
   {
     "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
     config = function()
-      require("copilot").setup({})
+      require("copilot").setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false}
+      })
     end,
   },
   {
@@ -133,8 +136,9 @@ require("lazy").setup({
       local luasnip = require("luasnip")
 
       local has_words_before = function()
+        if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+        return col ~= 0 and vim.api.nvim_buf_get_text(0, line-1, 0, line-1, col, {})[1]:match("^%s*$") == nil
       end
 
       cmp.setup({
@@ -153,12 +157,12 @@ require("lazy").setup({
           ['<C-e>'] = cmp.mapping.abort(),
           ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
           ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
+            if cmp.visible() and has_words_before() then
+              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+            elseif cmp.visible() then
               cmp.select_next_item()
             elseif luasnip.expand_or_jumpable() then
               luasnip.expand_or_jump()
-            elseif has_words_before() then
-              cmp.complete()
             else
               fallback()
             end
@@ -255,19 +259,17 @@ require("lazy").setup({
     dependencies = { "nvim-lua/plenary.nvim" }
   },
   "tpope/vim-fugitive",
-  "ellisonleao/glow.nvim",
   {
     "iamcco/markdown-preview.nvim",
-    build = ":call mkdp#util#install()",
-    ft = "markdown",
-    config = function()
-      vim.g.mkdp_filetypes = { "markdown" }
-    end
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = function() vim.fn["mkdp#util#install"]() end,
   },
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
+    version = "*",
     lazy = "false",
     opts = {
       provider = "copilot",
@@ -293,13 +295,6 @@ require("lazy").setup({
         ft = { "markdown", "Avante" },
       }
     }
-  },
-  {
-    'pwntester/octo.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim', 'nvim-tree/nvim-web-devicons' },
-    config = function()
-      require('octo').setup()
-    end
   }
 })
 
