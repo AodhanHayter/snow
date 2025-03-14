@@ -53,7 +53,7 @@ in
 
   hardware.bluetooth.enable = true;
   hardware.nvidia = {
-    open = true;
+    open = false;
     prime = {
       offload.enable = false;
       nvidiaBusId = "PCI:7:0:0";
