@@ -54,6 +54,10 @@
       url = "github:alacritty/alacritty-theme?ref=master";
       flake = false;
     };
+
+    devenv = {
+      url = "github:cachix/devenv?ref=v1.4.1";
+    };
   };
 
 
