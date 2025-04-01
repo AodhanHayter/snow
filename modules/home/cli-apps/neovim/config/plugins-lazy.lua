@@ -82,12 +82,6 @@ require("lazy").setup({
     end,
   },
   {
-    "zbirenbaum/copilot-cmp",
-    config = function()
-      require("copilot_cmp").setup()
-    end,
-  },
-  {
     "elixir-tools/elixir-tools.nvim",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
@@ -120,73 +114,24 @@ require("lazy").setup({
     end,
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
+  "neovim/nvim-lspconfig",
   {
-    "L3MON4D3/LuaSnip",
-    lazy = false,
-    version = "1.2.1",
-    dependencies = { "rafamadriz/friendly-snippets" },
-    config = function() require("luasnip.loaders.from_vscode").lazy_load() end
-  },
-  {
-    "hrsh7th/nvim-cmp",
-    dependencies = { "neovim/nvim-lspconfig", "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-buffer", "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline", "saadparwaiz1/cmp_luasnip" },
-    config = function()
-      local cmp = require("cmp")
-      local luasnip = require("luasnip")
+    'saghen/blink.cmp',
+    dependencies = { 'rafamadriz/friendly-snippets' },
 
-      local has_words_before = function()
-        if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_text(0, line-1, 0, line-1, col, {})[1]:match("^%s*$") == nil
-      end
-
-      cmp.setup({
-        snippet = {
-          expand = function(args)
-            require('luasnip').lsp_expand(args.body)
-          end
-        },
-        window = {
-          completion = cmp.config.window.bordered()
-        },
-        mapping = cmp.mapping.preset.insert({
-          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-e>'] = cmp.mapping.abort(),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-          ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() and has_words_before() then
-              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-            elseif cmp.visible() then
-              cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-              luasnip.expand_or_jump()
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          end, { "i", "s" })
-        }),
-        sources = {
-          -- Copilot Source
-          { name = "copilot",  group_index = 2 },
-          -- Other Sources
-          { name = "nvim_lsp", group_index = 2 },
-          { name = "path",     group_index = 2 },
-          { name = "luasnip",  group_index = 2 },
-        }
-      })
-    end
+    version = '1.*',
+    opts = {
+      keymap = { preset = 'enter' },
+      appearance = {
+        nerd_font_variant = 'mono'
+      },
+      completion = { documentation = { auto_show = false } },
+      sources = {
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
+      },
+      fuzzy = { implementation = "prefer_rust_with_warning" }
+    },
+    opts_extend = { "sources.default" }
   },
   {
     "nvim-telescope/telescope.nvim",
@@ -314,7 +259,7 @@ local on_attach = function(client, bufnr)
   --   client.server_capabilities.hoverProvider = false
   -- end
   -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -341,7 +286,7 @@ local lsp_flags = {
   debounce_text_changes = 150,
 }
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 require('lspconfig')['ts_ls'].setup {
   on_attach = on_attach,
