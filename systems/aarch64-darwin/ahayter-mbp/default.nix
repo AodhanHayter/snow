@@ -15,6 +15,10 @@ with lib.modernage; {
     prototype = {
       workstation = enabled;
     };
+
+    tools = {
+      sops = enabled;
+    };
   };
 
   # Used for backwards compatibility, please read the changelog before changing
