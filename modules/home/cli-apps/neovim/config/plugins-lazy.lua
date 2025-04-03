@@ -74,12 +74,14 @@ require("lazy").setup({
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
-    config = function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false}
-      })
-    end,
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+      filetypes = {
+        markdown = true,
+        help = true,
+      }
+    }
   },
   {
     "elixir-tools/elixir-tools.nvim",
@@ -117,7 +119,7 @@ require("lazy").setup({
   "neovim/nvim-lspconfig",
   {
     'saghen/blink.cmp',
-    dependencies = { 'rafamadriz/friendly-snippets' },
+    dependencies = { 'rafamadriz/friendly-snippets', "fang2hou/blink-copilot" },
 
     version = '1.*',
     opts = {
@@ -127,7 +129,15 @@ require("lazy").setup({
       },
       completion = { documentation = { auto_show = false } },
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'copilot', 'lsp', 'path', 'snippets', 'buffer' },
+        providers = {
+          copilot = {
+            name = 'copilot',
+            module = 'blink-copilot',
+            score_offset = 100,
+            async = true,
+          }
+        }
       },
       fuzzy = { implementation = "prefer_rust_with_warning" }
     },
@@ -214,10 +224,12 @@ require("lazy").setup({
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
-    version = "*",
-    lazy = "false",
+    version = false,
     opts = {
       provider = "copilot",
+      behavior = {
+        enable_cursor_planning_mode = true
+      },
       file_selector = {
         provider = "telescope",
       }
