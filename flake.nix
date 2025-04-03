@@ -58,6 +58,11 @@
     devenv = {
       url = "github:cachix/devenv?ref=v1.4.1";
     };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
 
@@ -90,10 +95,12 @@
         systems.modules.nixos = with inputs; [
           home-manager.nixosModules.home-manager
           disko.nixosModules.disko
+          sops-nix.nixosModules.sops
         ];
 
         systems.modules.darwin = with inputs; [
           home-manager.darwinModules.home-manager
+          sops-nix.darwinModules.sops
         ];
 
         deploy = lib.mkDeploy { inherit (inputs) self; };
