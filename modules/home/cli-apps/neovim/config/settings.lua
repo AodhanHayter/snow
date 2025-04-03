@@ -17,6 +17,7 @@ o.mouse = 'a'
 o.updatetime = 300
 o.showmatch = true
 o.clipboard = 'unnamedplus'
+o.winborder = 'rounded'
 opt.shortmess = opt.shortmess + { ['c'] = true }
 opt.tabstop = 2
 opt.shiftwidth = 2
@@ -44,11 +45,11 @@ bo.autoindent = true
 bo.undofile = true
 
 -- diagnostic options
--- diagnostic.config({
---   virtual_text = false,
---   virtual_lines = true,
---   severity_sort = true
--- })
+diagnostic.config({
+  virtual_text = false,
+  virtual_lines = { current_line = true },
+  severity_sort = true
+})
 
 cmd('syntax enable')
 
@@ -89,20 +90,3 @@ api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 -----------
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-
--- ALE settings
--- 2025-02-28: This can probably be removed as ALE is not really needed in nvim
-vim.g.ale_virtualtext_cursor = 1
-vim.g.ale_disable_lsp = 1
-vim.g.ale_completion_enabled = 0
-vim.g.ale_javascript_prettier_options = '--prose-wrap always'
-vim.g.ale_fixers = {
-  html = { 'prettier' },
-  css = { 'prettier' },
-  javascript = { 'prettier' },
-  less = { 'prettier' },
-  markdown = { 'prettier' },
-  typescript = { 'prettier' },
-  typescriptreact = { 'prettier' },
-  sql = { 'pgformatter' }
-}
