@@ -32,7 +32,9 @@ in
       age.keyFile = "${home-directory}/.config/sops/age/keys.txt";
 
       secrets = {
-        hello = { };
+        "llm/gemini_api_key"= {
+          owner = user.name;
+        };
       };
     };
   };
