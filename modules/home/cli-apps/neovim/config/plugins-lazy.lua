@@ -62,7 +62,7 @@ require("lazy").setup({
         options = {
           theme = 'auto'
         },
-        extensions = { 'nvim-tree', 'fugitive', 'fzf', 'lazy', 'quickfix' }
+        extensions = { 'fugitive', 'fzf', 'lazy', 'quickfix' }
       })
     end
   },
@@ -75,6 +75,7 @@ require("lazy").setup({
     cmd = "Copilot",
     event = "InsertEnter",
     opts = {
+      copilot_model = "gpt-4o-copilot",
       suggestion = { enabled = false },
       panel = { enabled = false },
       filetypes = {
@@ -106,16 +107,16 @@ require("lazy").setup({
       "nvim-lua/plenary.nvim",
     }
   },
-  {
-    "nvim-tree/nvim-tree.lua",
-    lazy = false,
-    config = function()
-      require('nvim-tree').setup({
-        view = { side = "right" }
-      })
-    end,
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-  },
+  -- {
+  --   "nvim-tree/nvim-tree.lua",
+  --   lazy = false,
+  --   config = function()
+  --     require('nvim-tree').setup({
+  --       view = { side = "right" }
+  --     })
+  --   end,
+  --   dependencies = { "nvim-tree/nvim-web-devicons" },
+  -- },
   "neovim/nvim-lspconfig",
   {
     'saghen/blink.cmp',
@@ -227,9 +228,6 @@ require("lazy").setup({
     version = false,
     opts = {
       provider = "copilot",
-      behavior = {
-        enable_cursor_planning_mode = true
-      },
       file_selector = {
         provider = "telescope",
       }
@@ -252,7 +250,55 @@ require("lazy").setup({
         ft = { "markdown", "Avante" },
       }
     }
-  }
+  },
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = {
+      lsp = {
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+        }
+      },
+      presets = {
+        bottom_search = true,
+        command_palette = true,
+        long_message_to_split = true,
+        inc_rename = false,
+        lsp_doc_border = true,
+      },
+    },
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    }
+  },
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      bigfile = { enabled = true },
+      dashboard = { enabled = false },
+      explorer = { enabled = false },
+      indent = {
+        enabled = false,
+      },
+      input = { enabled = true },
+      picker = { enabled = true },
+      notifier = { enabled = false },
+      quickfile = { enabled = true },
+      scope = { enabled = true },
+      scroll = { enabled = true },
+      statuscolumn = { enabled = true },
+      words = { enabled = true },
+    },
+  },
+  { 'echasnovski/mini.files', version = '*', opts = { use_as_default_explorer = true } }
 })
 
 -- Mappings.

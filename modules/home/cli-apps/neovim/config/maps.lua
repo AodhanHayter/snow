@@ -1,6 +1,10 @@
 local map = vim.api.nvim_set_keymap
 local cmd = vim.cmd
 
+local minifiles_toggle = function(...)
+  if not MiniFiles.close() then MiniFiles.open(...) end
+end
+
 -- leader maps
 ----------------
 map('n', '<Space>', '', {})
@@ -13,8 +17,8 @@ map('v', '<', '<gv', options)
 map('v', '>', '>gv', options)
 
 -- file tree
-map('n', '<leader>ff', ':NvimTreeFindFile<CR>', options)
-map('n', '<C-\\>', ':NvimTreeToggle<CR>', options)
+map('n', '<leader>ff', ':lua MiniFiles.open(vim.api.nvim_buf_get_name(0))<cr>', options)
+map('n', '<C-\\>', ':lua if not MiniFiles.close() then MiniFiles.open() end<cr>', options)
 
 -- fuzzy finder
 map('n', '<leader>t', ':lua require("telescope.builtin").find_files()<cr>', options)
@@ -25,4 +29,3 @@ map('n', '<leader>sh', ':lua require("telescope.builtin").search_history()<cr>',
 
 -- format
 -- map('n', '<leader>an', ':ALENext<cr>', options)
-
