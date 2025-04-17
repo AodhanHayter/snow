@@ -36,8 +36,8 @@ in
       extraConfig = ''
         lua << EOF
         ${lib.strings.fileContents ./config/settings.lua}
-        ${lib.strings.fileContents ./config/maps.lua}
         ${lib.strings.fileContents ./config/plugins-lazy.lua}
+        ${lib.strings.fileContents ./config/maps.lua}
       '';
     };
   };
