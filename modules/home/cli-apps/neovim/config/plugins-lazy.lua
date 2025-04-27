@@ -57,14 +57,12 @@ require("lazy").setup({
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     lazy = false,
-    config = function()
-      require('lualine').setup({
-        options = {
-          theme = 'auto'
-        },
-        extensions = { 'fugitive', 'fzf', 'lazy', 'quickfix' }
-      })
-    end
+    opts = {
+      options = {
+        theme = 'auto'
+      },
+      extensions = { 'fugitive', 'fzf', 'lazy', 'quickfix' }
+    }
   },
   { "junegunn/vim-slash",          lazy = false },
   { "sheerun/vim-polyglot",        lazy = false },
@@ -107,21 +105,14 @@ require("lazy").setup({
       "nvim-lua/plenary.nvim",
     }
   },
-  -- {
-  --   "nvim-tree/nvim-tree.lua",
-  --   lazy = false,
-  --   config = function()
-  --     require('nvim-tree').setup({
-  --       view = { side = "right" }
-  --     })
-  --   end,
-  --   dependencies = { "nvim-tree/nvim-web-devicons" },
-  -- },
   "neovim/nvim-lspconfig",
   {
     'saghen/blink.cmp',
-    dependencies = { 'rafamadriz/friendly-snippets', "fang2hou/blink-copilot" },
-
+    dependencies = {
+      'rafamadriz/friendly-snippets',
+      'fang2hou/blink-copilot',
+      'Kaiser-Yang/blink-cmp-avante',
+    },
     version = '1.*',
     opts = {
       keymap = { preset = 'enter' },
@@ -130,8 +121,12 @@ require("lazy").setup({
       },
       completion = { documentation = { auto_show = false } },
       sources = {
-        default = { 'copilot', 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'avante', 'copilot', 'lsp', 'path', 'snippets', 'buffer' },
         providers = {
+          avante = {
+            module = 'blink-cmp-avante',
+            name = 'Avante',
+          },
           copilot = {
             name = 'copilot',
             module = 'blink-copilot',
@@ -228,20 +223,23 @@ require("lazy").setup({
     version = false,
     opts = {
       provider = "copilot",
-      file_selector = {
-        provider = "telescope",
-      }
+      ask = {
+        start_insert = false,
+      },
     },
     build = "make",
     dependencies = {
-      "nvim-tree/nvim-web-devicons",
+      "nvim-treesitter/nvim-treesitter",
       "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
-      "zbirenbaum/copilot.lua",
-      "echasnovski/mini.pick",
-      "nvim-telescope/telescope.nvim",
-      "ibhagwan/fzf-lua",
+      -- Below are optional dependencies
+      "echasnovski/mini.pick",         -- for file_selector provider mini.pick
+      "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+      "hrsh7th/nvim-cmp",              -- autocompletion for avante commands and mentions
+      "ibhagwan/fzf-lua",              -- for file_selector provider fzf-lua
+      "nvim-tree/nvim-web-devicons",
+      "zbirenbaum/copilot.lua",        -- for providers='copilot'
       {
         "MeanderingProgrammer/render-markdown.nvim",
         opts = {
@@ -298,7 +296,7 @@ require("lazy").setup({
       words = { enabled = true },
     },
   },
-  { 'echasnovski/mini.files', version = '*', opts = { use_as_default_explorer = true } }
+  { 'echasnovski/mini.files',          version = '*',      opts = { use_as_default_explorer = true } }
 })
 
 -- Mappings.
