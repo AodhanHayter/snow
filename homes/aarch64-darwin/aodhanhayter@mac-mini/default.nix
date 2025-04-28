@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   ...
 }:
 
@@ -46,6 +47,8 @@ with lib.modernage;
       devenv = enabled;
     };
   };
+
+  home.packages = [pkgs.opencode];
 
   home.stateVersion = "22.11";
 }
