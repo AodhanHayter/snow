@@ -56,7 +56,7 @@
     };
 
     devenv = {
-      url = "github:cachix/devenv?ref=v1.4.1";
+      url = "github:cachix/devenv?ref=v1.6";
     };
 
     sops-nix = {
