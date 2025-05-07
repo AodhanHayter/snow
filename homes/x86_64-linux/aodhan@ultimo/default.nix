@@ -30,6 +30,7 @@ with lib.modernage;
       home-manager = enabled;
       kubectl = enabled;
       neovim = enabled;
+      opencode = enabled;
       password-store = enabled;
       tealdeer = enabled;
     };

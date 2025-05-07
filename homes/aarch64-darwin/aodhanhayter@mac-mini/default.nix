@@ -32,6 +32,7 @@ with lib.modernage;
       home-manager = enabled;
       jq = enabled;
       neovim = enabled;
+      opencode = enabled;
       password-store = enabled;
       # pulumi = enabled;
       tealdeer = enabled;
@@ -47,8 +48,6 @@ with lib.modernage;
       devenv = enabled;
     };
   };
-
-  home.packages = [pkgs.opencode];
 
   home.stateVersion = "22.11";
 }
