@@ -18,7 +18,7 @@ with lib.modernage; {
     services.k3s = {
       enable = true;
       role = "agent";
-      token = "K10d4c6e3a007386169463cb07da0492f1454b9ec49aa8f8d8ea8a47f6e338fe871::server:28f7b49327c3ba997d51673418c5fb15";
+      tokenFile = config.sops.secrets."k3s/token".path;
     };
 
     services.gluster = {

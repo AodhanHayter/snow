@@ -1,18 +1,25 @@
-{ options
-, config
-, lib
-, ...
+{
+  options,
+  config,
+  lib,
+  ...
 }:
 with lib;
-with lib.modernage; let
+with lib.modernage;
+let
   cfg = config.modernage.services.k3s;
 in
 {
   options.modernage.services.k3s = with types; {
     enable = mkBoolOpt false "Whether or not to enable k3s configuration";
-    role = mkOpt (enum [ "server" "agent" ]) "server" "The role this k3s machine should take";
+    role = mkOpt (enum [
+      "server"
+      "agent"
+    ]) "server" "The role this k3s machine should take";
     clusterInit = mkBoolOpt false "Initialize HA cluster using an embedded etcd datastore";
-    token = mkOpt str "" "The token to be used by the agent to connect to the cluster";
+    tokenFile =
+      mkOpt path null
+        "Path to a file containing the token. If set, this will override the 'token' option. This is useful for security purposes, as it avoids storing the token in the configuration file.";
   };
 
   config = mkIf cfg.enable {
@@ -33,11 +40,8 @@ in
       enable = true;
       role = cfg.role;
       clusterInit = cfg.clusterInit;
-      serverAddr =
-        if cfg.role == "agent"
-        then "https://atlas.local:6443"
-        else "";
-      token = cfg.token;
+      serverAddr = if cfg.role == "agent" then "https://atlas.local:6443" else "";
+      tokenFile = cfg.tokenFile;
     };
 
     # support for longhorn storage system

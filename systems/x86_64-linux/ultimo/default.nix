@@ -12,6 +12,10 @@ with lib.modernage; {
     prototype = {
       workstation = enabled;
     };
+
+    tools = {
+      sops = enabled;
+    };
   };
 
   # virtualisation.vmVariant = {
