@@ -18,9 +18,9 @@ in
       marksman
       nixd
       nixpkgs-fmt
-      nodePackages.bash-language-server
-      nodePackages.diagnostic-languageserver
-      nodePackages.typescript-language-server
+      diagnostic-languageserver
+      bash-language-server
+      typescript-language-server
       basedpyright
       terraform-ls
       ###

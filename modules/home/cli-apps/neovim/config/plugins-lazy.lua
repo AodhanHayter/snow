@@ -223,9 +223,6 @@ require("lazy").setup({
     version = false,
     opts = {
       provider = "copilot",
-      ask = {
-        start_insert = false,
-      },
     },
     build = "make",
     dependencies = {
