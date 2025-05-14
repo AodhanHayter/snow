@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 with lib.modernage;
 let
@@ -26,6 +31,12 @@ in
       ###
     ];
 
+    # link configuration files so nvim can find them.
+    xdg.configFile."nvim/lua" = {
+      source = ./config/lua;
+      recursive = true;
+    };
+
     programs.neovim = {
       enable = true;
       viAlias = true;
@@ -34,9 +45,7 @@ in
       withNodeJs = true;
       withPython3 = true;
       extraLuaConfig = ''
-        ${lib.strings.fileContents ./config/settings.lua}
-        ${lib.strings.fileContents ./config/plugins-lazy.lua}
-        ${lib.strings.fileContents ./config/maps.lua}
+        ${lib.strings.fileContents ./config/init.lua}
       '';
     };
   };
