@@ -223,6 +223,9 @@ require("lazy").setup({
     version = false,
     opts = {
       provider = "copilot",
+      web_search_engine = {
+        provider = "brave"
+      }
     },
     build = "make",
     dependencies = {
@@ -285,7 +288,7 @@ require("lazy").setup({
       },
       input = { enabled = true },
       picker = { enabled = true },
-      notifier = { enabled = false },
+      notifier = { enabled = true },
       quickfile = { enabled = true },
       scope = { enabled = true },
       scroll = { enabled = true },
