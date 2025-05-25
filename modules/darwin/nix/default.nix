@@ -1,11 +1,13 @@
-{ options
-, config
-, pkgs
-, lib
-, ...
+{
+  options,
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 with lib;
-with lib.modernage; let
+with lib.modernage;
+let
   cfg = config.modernage.nix;
 in
 {
@@ -24,9 +26,13 @@ in
 
     nix =
       let
-        users = [ "root" config.modernage.user.name ];
+        users = [
+          "root"
+          config.modernage.user.name
+        ];
       in
       {
+        enable = false;
         package = cfg.package;
 
         settings = {
@@ -58,15 +64,6 @@ in
         #  keep-derivations = true;
         #});
 
-        gc = {
-          automatic = true;
-          interval = { Day = 7; };
-          options = "--delete-older-than 30d";
-          user = config.modernage.user.name;
-        };
-
-        # flake-utils-plus
-        generateRegistryFromInputs = true;
         generateNixPathFromInputs = true;
         linkInputs = true;
       };

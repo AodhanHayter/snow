@@ -1,11 +1,13 @@
-{ options
-, config
-, pkgs
-, lib
-, ...
+{
+  options,
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 with lib;
-with lib.modernage; let
+with lib.modernage;
+let
   cfg = config.modernage.user;
 in
 {
@@ -18,9 +20,7 @@ in
         "The initial password to use when the user is first created.";
     prompt-init = mkBoolOpt true "Whether or not to show an initial message when opening a new shell.";
     extraGroups = mkOpt (listOf str) [ ] "Groups for the user to be assigned.";
-    extraOptions =
-      mkOpt attrs { }
-        (mdDoc "Extra options passed to `users.users.<name>`.");
+    extraOptions = mkOpt attrs { } (mdDoc "Extra options passed to `users.users.<name>`.");
   };
 
   config = {
@@ -56,7 +56,7 @@ in
             enableCompletion = true;
             syntaxHighlighting.enable = true;
 
-            initExtra = ''
+            initContent = ''
               # Fix an issue with tmux.
               export KEYTIMOUT=1
 
@@ -153,26 +153,24 @@ in
       };
     };
 
-    users.users.${cfg.name} =
-      {
-        isNormalUser = true;
+    users.users.${cfg.name} = {
+      isNormalUser = true;
 
-        inherit (cfg) name initialPassword;
+      inherit (cfg) name initialPassword;
 
-        home = "/home/${cfg.name}";
-        group = "users";
+      home = "/home/${cfg.name}";
+      group = "users";
 
-        shell = pkgs.zsh;
+      shell = pkgs.zsh;
 
-        # Arbitrary user ID to use for the user. Since I only
-        # have a single user on my machines this won't ever collide.
-        # However, if you add multiple users you'll need to change this
-        # so each user has their own unique uid (or leave it out for the
-        # system to select).
-        uid = 1000;
+      # Arbitrary user ID to use for the user. Since I only
+      # have a single user on my machines this won't ever collide.
+      # However, if you add multiple users you'll need to change this
+      # so each user has their own unique uid (or leave it out for the
+      # system to select).
+      uid = 1000;
 
-        extraGroups = [ "steamcmd" ] ++ cfg.extraGroups;
-      }
-      // cfg.extraOptions;
+      extraGroups = [ "steamcmd" ] ++ cfg.extraGroups;
+    } // cfg.extraOptions;
   };
 }

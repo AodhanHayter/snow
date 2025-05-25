@@ -23,6 +23,7 @@ in
   };
 
   config = {
+    system.primaryUser = config.modernage.user.name;
     users.users.${cfg.name} = {
       # NOTE: Setting the uid here is required for another
       # module to evaluate successfully since it reads

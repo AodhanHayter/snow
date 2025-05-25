@@ -1,11 +1,13 @@
-{ options
-, config
-, pkgs
-, lib
-, ...
+{
+  options,
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 with lib;
-with lib.modernage; let
+with lib.modernage;
+let
   cfg = config.modernage.system.fonts;
 in
 {
@@ -22,13 +24,16 @@ in
 
     environment.systemPackages = with pkgs; [ font-manager ];
 
-    fonts.packages = with pkgs;
+    fonts.packages =
+      with pkgs;
       [
         noto-fonts
         noto-fonts-cjk-sans
         noto-fonts-cjk-serif
         noto-fonts-emoji
-        (nerdfonts.override { fonts = [ "Hack" "FiraCode" "Meslo" ]; })
+        nerd-fonts.hack
+        nerd-fonts.fira-code
+        nerd-fonts.meslo-lg
       ]
       ++ cfg.fonts;
   };

@@ -30,7 +30,6 @@ in
       };
 
       tools = {
-        flake = enabled;
         git = enabled;
       };
 

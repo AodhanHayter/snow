@@ -19,7 +19,7 @@ in
       extraConfig = (builtins.readFile ./tmux.conf);
     };
 
-    programs.zsh.initExtra = ''
+    programs.zsh.initContent = ''
       function tm() {
         [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
         if [ $1 ]; then

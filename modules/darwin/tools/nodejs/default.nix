@@ -1,13 +1,15 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 
 with lib;
 with lib.modernage;
-let cfg = config.modernage.tools.nodejs;
+let
+  cfg = config.modernage.tools.nodejs;
 in
 {
   options.modernage.tools.nodejs = with types; {
@@ -16,7 +18,7 @@ in
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      nodejs_23
+      nodejs_24
     ];
   };
 }
