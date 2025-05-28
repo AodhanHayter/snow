@@ -29,24 +29,24 @@ local on_attach = function(client, bufnr)
 end
 
 local capabilities = require("blink.cmp").get_lsp_capabilities()
-vim.lsp.config("*", {
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
+-- vim.lsp.config("*", {
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+-- })
 
 local lsps = {
   "ts_ls",
   "lua_ls",
   "basedpyright",
-  "elixirls",
-  "bashls",
-  "nixd",
-  "marksman",
+  -- "elixirls",
+  -- "bashls",
+  -- "nixd",
+  -- "marksman",
   "diagnosticls",
-  "terraformls",
-  "dockerls",
-  "rust_analyzer",
-  "ruff",
+  -- "terraformls",
+  -- "dockerls",
+  -- "rust_analyzer",
+  -- "ruff",
 }
 
 for _, lsp in ipairs(lsps) do

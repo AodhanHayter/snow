@@ -1,7 +1,9 @@
 local diagnosticls = require("diagnosticls")
 
-vim.lsp.config('diagnosticls', {
-  filetypes = { table.unpack(diagnosticls.filetypes) },
+return {
+  cmd = { "diagnostic-languageserver", "--stdio" },
+  root_markers = { ".git" },
+  filetypes = { unpack(diagnosticls.filetypes) },
   init_options = {
     linters = diagnosticls.linters,
     formatters = diagnosticls.formatters,
@@ -11,7 +13,6 @@ vim.lsp.config('diagnosticls', {
       typescript = "eslint",
       typescriptreact = "eslint",
       sh = "shellcheck",
-      python = { "flake8" }
     },
     formatFiletypes = {
       javascript = "prettier",
@@ -20,7 +21,6 @@ vim.lsp.config('diagnosticls', {
       typescript = "prettier",
       typescriptreact = "prettier",
       markdown = "prettier",
-      python = { "isort", "black" }
     }
   },
-})
+}

@@ -17,6 +17,7 @@ in
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       gcc # treesitter needs a c compiler
+      yarn # used by the nvim nodejs provider
       # Various language servers
       dockerfile-language-server-nodejs
       lua-language-server
@@ -34,6 +35,11 @@ in
     # link configuration files so nvim can find them.
     xdg.configFile."nvim/lua" = {
       source = ./config/lua;
+      recursive = true;
+    };
+
+    xdg.configFile."nvim/lsp" = {
+      source = ./config/lsp;
       recursive = true;
     };
 
