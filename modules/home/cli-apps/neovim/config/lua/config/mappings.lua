@@ -82,6 +82,6 @@ map('n', '<leader>sh', ':lua require("telescope.builtin").search_history()<cr>',
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, options)
-vim.keymap.set('n', '<leader>ap', vim.diagnostic.get_next, options)
-vim.keymap.set('n', '<leader>an', vim.diagnostic.get_prev, options)
+vim.keymap.set('n', '<leader>en', vim.diagnostic.goto_next, options)
+vim.keymap.set('n', '<leader>ep', vim.diagnostic.goto_prev, options)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, options)

@@ -1,8 +1,12 @@
 vim.lsp.config('basedpyright',{
   settings = {
-    pyright = {
-      -- Using Ruff's import organizer
-      disableOrganizeImports = true,
+    basedpyright = {
+      analysis = {
+        diagnosticMode = "openFilesOnly",
+        inlayHints = {
+          callArgumentNames = true
+        }
+      }
     },
   }
 })

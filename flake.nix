@@ -71,7 +71,10 @@
     let
       lib = inputs.snowfall-lib.mkLib {
         inherit inputs;
-        src = ./.;
+        src = builtins.path {
+          path = ./.;
+          name = "sourc";
+        };
 
         snowfall = {
           meta = {
