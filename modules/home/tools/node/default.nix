@@ -15,7 +15,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ nodejs_23 ];
+    home.packages = with pkgs; [ nodejs_24 ];
   };
 }
 
