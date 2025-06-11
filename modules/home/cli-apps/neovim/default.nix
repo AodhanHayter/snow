@@ -29,6 +29,7 @@ in
       typescript-language-server
       basedpyright
       terraform-ls
+      vscode-langservers-extracted
       ###
     ];
 

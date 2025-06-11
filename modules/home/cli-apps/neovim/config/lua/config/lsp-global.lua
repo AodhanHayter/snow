@@ -35,18 +35,19 @@ local capabilities = require("blink.cmp").get_lsp_capabilities()
 -- })
 
 local lsps = {
-  "ts_ls",
-  "lua_ls",
   "basedpyright",
-  -- "elixirls",
-  -- "bashls",
-  -- "nixd",
-  -- "marksman",
+  "bashls",
   "diagnosticls",
-  -- "terraformls",
   -- "dockerls",
-  -- "rust_analyzer",
+  -- "elixirls",
+  "eslint",
+  "lua_ls",
+  -- "marksman",
+  "nixd",
+  -- "terraformls",
   -- "ruff",
+  -- "rust_analyzer",
+  "ts_ls",
 }
 
 for _, lsp in ipairs(lsps) do

@@ -32,10 +32,16 @@ in
       age.keyFile = "${home-directory}/.config/sops/age/keys.txt";
 
       secrets = {
+        "github/token" = {
+          owner = user.name;
+        };
         "llm/gemini_api_key" = {
           owner = user.name;
         };
         "llm/gemini_api_key_kyruus" = {
+          owner = user.name;
+        };
+        "llm/anthropic_api_key" = {
           owner = user.name;
         };
         "search/brave_api_key" = {

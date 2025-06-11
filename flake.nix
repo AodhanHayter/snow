@@ -53,7 +53,7 @@
     };
 
     devenv = {
-      url = "github:cachix/devenv?ref=v1.6";
+      url = "github:cachix/devenv?ref=v1.6.1";
     };
 
     sops-nix = {
@@ -64,6 +64,11 @@
     opencode = {
       url = "github:AodhanHayter/opencode-flake";
     };
+
+    mcp-servers-nix = {
+      url = "github:natsukium/mcp-servers-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -73,7 +78,7 @@
         inherit inputs;
         src = builtins.path {
           path = ./.;
-          name = "sourc";
+          name = "source";
         };
 
         snowfall = {
@@ -91,7 +96,9 @@
         allowUnfree = true;
       };
 
-      overlays = [ ];
+      overlays = with inputs; [
+        mcp-servers-nix.overlays.default
+      ];
 
       systems.modules.nixos = with inputs; [
         home-manager.nixosModules.home-manager

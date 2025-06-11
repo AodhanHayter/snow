@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   ...
 }:
 
@@ -22,6 +23,7 @@ with lib.modernage;
       autojump = enabled;
       awscli = enabled;
       bat = enabled;
+      claude-code = enabled;
       dog = enabled;
       entr = enabled;
       eza = enabled;
@@ -32,7 +34,7 @@ with lib.modernage;
       jq = enabled;
       neovim = enabled;
       password-store = enabled;
-      # pulumi = enabled;
+      pulumi = enabled;
       tealdeer = enabled;
       ripgrep = enabled;
       zsh = enabled;
@@ -47,6 +49,7 @@ with lib.modernage;
         theme = "nord";
       };
       devenv = enabled;
+      mcp-servers = enabled;
     };
   };
 

@@ -8,10 +8,6 @@ return {
     linters = diagnosticls.linters,
     formatters = diagnosticls.formatters,
     filetypes = {
-      javascript = "eslint",
-      javascriptreact = "eslint",
-      typescript = "eslint",
-      typescriptreact = "eslint",
       sh = "shellcheck",
     },
     formatFiletypes = {
