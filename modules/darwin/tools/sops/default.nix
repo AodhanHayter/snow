@@ -44,6 +44,9 @@ in
         "llm/anthropic_api_key" = {
           owner = user.name;
         };
+        "llm/anthropic_api_key_kyruus" = {
+          owner = user.name;
+        };
         "search/brave_api_key" = {
           owner = user.name;
         };
