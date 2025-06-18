@@ -103,12 +103,14 @@
       systems.modules.nixos = with inputs; [
         home-manager.nixosModules.home-manager
         disko.nixosModules.disko
-        sops-nix.nixosModules.sops
       ];
 
       systems.modules.darwin = with inputs; [
         home-manager.darwinModules.home-manager
-        sops-nix.darwinModules.sops
+      ];
+
+      homes.modules = with inputs; [
+        sops-nix.homeManagerModules.sops
       ];
 
       deploy = lib.mkDeploy { inherit (inputs) self; };

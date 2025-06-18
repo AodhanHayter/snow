@@ -1,8 +1,15 @@
-{ options, config, lib, pkgs, ... }:
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 with lib.modernage;
-let cfg = config.modernage.tools.direnv;
+let
+  cfg = config.modernage.tools.direnv;
 in
 {
   options.modernage.tools.direnv = with types; {

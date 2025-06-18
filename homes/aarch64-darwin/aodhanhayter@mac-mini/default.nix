@@ -13,9 +13,6 @@ with lib.modernage;
     };
 
     apps = {
-      alacritty = {
-        enable = true;
-      };
       ghostty = enabled;
     };
 
@@ -34,18 +31,19 @@ with lib.modernage;
       neovim = enabled;
       opencode = enabled;
       password-store = enabled;
-      # pulumi = enabled;
+      pulumi = enabled;
       tealdeer = enabled;
       ripgrep = enabled;
       zsh = enabled;
     };
 
     tools = {
-      git = enabled;
+      devenv = enabled;
       direnv = enabled;
+      git = enabled;
+      sops = enabled;
       tmux = enabled;
       zellij = enabled;
-      devenv = enabled;
     };
   };
 

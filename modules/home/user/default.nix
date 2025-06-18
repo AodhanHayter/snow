@@ -1,12 +1,18 @@
-{ lib
-, config
-, pkgs
-, osConfig ? { }
-, ...
+{
+  lib,
+  config,
+  pkgs,
+  osConfig ? { },
+  ...
 }:
 
 let
-  inherit (lib) types mkIf mkDefault mkMerge;
+  inherit (lib)
+    types
+    mkIf
+    mkDefault
+    mkMerge
+    ;
   inherit (lib.modernage) mkOpt;
 
   cfg = config.modernage.user;

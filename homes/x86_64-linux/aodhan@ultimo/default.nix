@@ -1,9 +1,10 @@
-{ lib
-, pkgs
-, config
-, osConfig ? { }
-, format ? "unknown"
-, ...
+{
+  lib,
+  pkgs,
+  config,
+  osConfig ? { },
+  format ? "unknown",
+  ...
 }:
 with lib.modernage;
 {
@@ -13,10 +14,9 @@ with lib.modernage;
     };
 
     apps = {
-      alacritty = enabled;
-      obs-studio = enabled;
-      gnucash = enabled;
       ghostty = enabled;
+      gnucash = enabled;
+      obs-studio = enabled;
     };
 
     cli-apps = {
@@ -36,11 +36,12 @@ with lib.modernage;
     };
 
     tools = {
-      git = enabled;
-      direnv = enabled;
-      tmux = enabled;
       devenv = enabled;
+      direnv = enabled;
+      git = enabled;
       node = enabled;
+      sops = enabled;
+      tmux = enabled;
     };
   };
 }

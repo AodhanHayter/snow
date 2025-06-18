@@ -1,11 +1,13 @@
-{ pkgs
-, config
-, lib
-, channel
-, ...
+{
+  pkgs,
+  config,
+  lib,
+  channel,
+  ...
 }:
 with lib;
-with lib.modernage; {
+with lib.modernage;
+{
   modernage = {
     user = {
       name = "ahayter";
@@ -14,10 +16,6 @@ with lib.modernage; {
 
     prototype = {
       workstation = enabled;
-    };
-
-    tools = {
-      sops = enabled;
     };
   };
 

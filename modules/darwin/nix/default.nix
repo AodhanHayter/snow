@@ -43,11 +43,11 @@ in
 
           # Large builds apparently fail due to an issue with darwin:
           # https://github.com/NixOS/nix/issues/4119
-          sandbox = false;
+          # sandbox = false;
 
           # This appears to break on darwin
           # https://github.com/NixOS/nix/issues/7273
-          auto-optimise-store = false;
+          # auto-optimise-store = false;
 
           allow-import-from-derivation = true;
 
