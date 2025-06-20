@@ -17,7 +17,6 @@ with lib.modernage; {
 
     tools = {
       nodejs = enabled;
-      sops = enabled;
     };
   };
 

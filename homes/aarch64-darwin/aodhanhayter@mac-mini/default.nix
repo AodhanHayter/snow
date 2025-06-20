@@ -29,7 +29,6 @@ with lib.modernage;
       home-manager = enabled;
       jq = enabled;
       neovim = enabled;
-      opencode = enabled;
       password-store = enabled;
       pulumi = enabled;
       tealdeer = enabled;
@@ -41,9 +40,9 @@ with lib.modernage;
       devenv = enabled;
       direnv = enabled;
       git = enabled;
+      mcp-servers = enabled;
       sops = enabled;
       tmux = enabled;
-      zellij = enabled;
     };
   };
 
