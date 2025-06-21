@@ -75,7 +75,7 @@ in
         fetch = {
           # automatically prune
           prune = true;
-          pruneTags = true;
+          # pruneTags = true;
           all = true;
         };
         help = {

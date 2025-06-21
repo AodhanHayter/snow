@@ -30,6 +30,7 @@ with lib.modernage;
       home-manager = enabled;
       jq = enabled;
       neovim = enabled;
+      opencode = enabled;
       password-store = enabled;
       pulumi = enabled;
       ripgrep = enabled;
