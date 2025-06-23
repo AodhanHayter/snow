@@ -665,11 +665,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1750530121,
-        "narHash": "sha256-ndeIWIHPkUE38mKT91mPjL1jGV9pys62V06uW2fEsEM=",
+        "lastModified": 1750548678,
+        "narHash": "sha256-cfVgMithQjQp/UqYOxHk6b7PeWiNKlOZR6o7olRnh3k=",
         "owner": "AodhanHayter",
         "repo": "opencode-flake",
-        "rev": "1e7b1e5d9b7dac883e0884cce02d8d186bb95476",
+        "rev": "49e4a87f41ae37f3f3d26205aa7a577e73bf6977",
         "type": "github"
       },
       "original": {

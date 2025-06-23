@@ -24,6 +24,10 @@ in
       nix-prefetch-git
     ];
 
+    environment.etc."nix/nix.custom.conf".text = ''
+      trusted-users = root ${config.modernage.user.name}
+    '';
+
     nix =
       let
         users = [
@@ -32,6 +36,7 @@ in
         ];
       in
       {
+        # disabled because I'm using determinate-nix, which requires managing the nix installation itself
         enable = false;
         package = cfg.package;
 
