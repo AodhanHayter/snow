@@ -44,7 +44,7 @@ in
         key = cfg.signingKey;
         signByDefault = cfg.signByDefault;
       };
-      ignores = [ "aodhanlocal" ];
+      ignores = [ "aodhanlocal" "agentlocal" ];
       extraConfig = {
         branch = {
           # Sort branches by the most recent commit date

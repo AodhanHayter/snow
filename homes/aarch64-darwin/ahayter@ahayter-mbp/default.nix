@@ -17,6 +17,7 @@ with lib.modernage;
     };
 
     cli-apps = {
+      ast-grep = enabled;
       autojump = enabled;
       awscli = enabled;
       bat = enabled;
@@ -35,6 +36,7 @@ with lib.modernage;
       pulumi = enabled;
       ripgrep = enabled;
       tealdeer = enabled;
+      yq = enabled;
       zsh = enabled;
     };
 

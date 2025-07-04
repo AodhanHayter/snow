@@ -4,7 +4,7 @@ return {
     event = "VeryLazy",
     version = false,
     opts = {
-      provider = "claude",
+      provider = "copilot",
       web_search_engine = {
         provider = "brave"
       }

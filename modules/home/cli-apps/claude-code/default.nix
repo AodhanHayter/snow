@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 with lib.modernage;
 let
@@ -10,9 +15,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [claude-code];
-    programs.bat = {
-      enable = true;
-    };
+    home.packages = with pkgs; [ claude-code ];
   };
 }
