@@ -1,20 +1,18 @@
-{ pkgs
-, config
-, lib
-, channel
-, ...
+{
+  pkgs,
+  config,
+  lib,
+  channel,
+  ...
 }:
 with lib;
-with lib.modernage; {
+with lib.modernage;
+{
   imports = [ ./hardware.nix ];
 
   modernage = {
     prototype = {
       workstation = enabled;
-    };
-
-    tools = {
-      sops = enabled;
     };
   };
 

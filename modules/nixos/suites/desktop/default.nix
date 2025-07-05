@@ -18,7 +18,7 @@ in
     modernage = {
 
       desktop = {
-        plasma5 = enabled;
+        plasma6 = enabled;
       };
 
       apps = {
