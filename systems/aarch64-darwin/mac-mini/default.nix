@@ -1,11 +1,13 @@
-{ pkgs
-, config
-, lib
-, channel
-, ...
+{
+  pkgs,
+  config,
+  lib,
+  channel,
+  ...
 }:
 with lib;
-with lib.modernage; {
+with lib.modernage;
+{
   modernage = {
     user = {
       name = "aodhanhayter";
@@ -17,6 +19,10 @@ with lib.modernage; {
 
     tools = {
       nodejs = enabled;
+    };
+
+    services = {
+      tailscale = enabled;
     };
   };
 
