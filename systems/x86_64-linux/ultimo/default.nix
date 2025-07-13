@@ -14,6 +14,13 @@ with lib.modernage;
     prototype = {
       workstation = enabled;
     };
+
+    services = {
+      tailscale = {
+        enable = true;
+        openFirewall = true;
+      };
+    };
   };
 
   # virtualisation.vmVariant = {
