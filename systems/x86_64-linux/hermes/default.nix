@@ -19,19 +19,26 @@ with lib.modernage; {
       sops = enabled;
     };
 
-    services.k3s = {
-      enable = true;
-      role = "agent";
-      tokenFile = config.sops.secrets."k3s/token".path;
-    };
+    services = {
+      tailscale = {
+        enable = true;
+        openFirewall = true;
+      };
 
-    services.gluster = {
-      enable = true;
-      nodeAddress = "hermes.local";
-      peerNodes = [ "atlas.local" "apollo.local" ];
-      volumeName = "k3s-vol";
-      brickPath = "/data/glusterfs/brick1";
-      replicaCount = 3;
+      k3s = {
+        enable = true;
+        role = "agent";
+        tokenFile = config.sops.secrets."k3s/token".path;
+      };
+
+      gluster = {
+        enable = true;
+        nodeAddress = "hermes.local";
+        peerNodes = [ "atlas.local" "apollo.local" ];
+        volumeName = "k3s-vol";
+        brickPath = "/data/glusterfs/brick1";
+        replicaCount = 3;
+      };
     };
   };
 

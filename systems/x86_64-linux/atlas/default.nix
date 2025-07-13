@@ -13,6 +13,11 @@ with lib.modernage; {
     };
 
     services = {
+      tailscale = {
+        enable = true;
+        openFirewall = true;
+      };
+
       k3s = {
         enable = true;
         role = "server";
