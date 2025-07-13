@@ -1,28 +1,30 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
-with lib.modernage; let
+with lib.modernage;
+let
   cfg = config.modernage.suites.desktop;
 in
 {
   options.modernage.suites.desktop = with types; {
-    enable =
-      mkBoolOpt false "Whether or not to enable common desktop configuration.";
+    enable = mkBoolOpt false "Whether or not to enable common desktop configuration.";
   };
 
   config = mkIf cfg.enable {
     modernage = {
 
       desktop = {
-        plasma6 = enabled;
+        hyprland = enabled;
       };
 
       apps = {
         brave = enabled;
+        google-chrome = enabled;
         protonvpn = enabled;
       };
 

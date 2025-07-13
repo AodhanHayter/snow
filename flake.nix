@@ -69,6 +69,10 @@
       url = "github:elixir-lang/expert";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hyprddm = {
+      url = "github:maotseantonio/hyprddm";
+    };
   };
 
   outputs =
