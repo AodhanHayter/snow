@@ -12,11 +12,67 @@ let
   settings = {
     permissions = {
       allow = [
+        # Nix commands
         "Bash(nix flake check)"
         "Bash(nix build*)"
         "Bash(nix fmt)"
         "Bash(nix develop)"
         "Bash(deploy*)"
+        
+        # Read-only file operations
+        "Bash(ls*)"
+        "Bash(cat*)"
+        "Bash(head*)"
+        "Bash(tail*)"
+        "Bash(grep*)"
+        "Bash(rg*)"
+        "Bash(fd*)"
+        "Bash(find*)"
+        "Bash(which*)"
+        "Bash(pwd)"
+        "Bash(whoami)"
+        "Bash(uname*)"
+        
+        # Git read operations
+        "Bash(git status)"
+        "Bash(git log*)"
+        "Bash(git diff*)"
+        "Bash(git branch*)"
+        "Bash(git remote*)"
+        "Bash(git show*)"
+        
+        # Package manager read operations
+        "Bash(npm list*)"
+        "Bash(yarn list*)"
+        "Bash(cargo tree)"
+        "Bash(pip list)"
+        "Bash(gem list)"
+        
+        # System information
+        "Bash(date)"
+        "Bash(echo*)"
+        "Bash(env)"
+        "Bash(printenv)"
+        "Bash(locale*)"
+        
+        # File analysis
+        "Bash(file*)"
+        "Bash(wc*)"
+        "Bash(du*)"
+        "Bash(tree*)"
+        "Bash(stat*)"
+        
+        # Text processing
+        "Bash(sed*)"
+        "Bash(awk*)"
+        "Bash(sort*)"
+        "Bash(uniq*)"
+        "Bash(cut*)"
+        "Bash(tr*)"
+        
+        # JSON/YAML tools
+        "Bash(jq*)"
+        "Bash(yq*)"
       ];
       deny = [];
     };
