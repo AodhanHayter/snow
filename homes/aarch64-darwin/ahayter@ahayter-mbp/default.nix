@@ -27,6 +27,7 @@ with lib.modernage;
       eza = enabled;
       fd = enabled;
       fzf = enabled;
+      gemini-cli = enabled;
       gh = enabled;
       home-manager = enabled;
       jq = enabled;

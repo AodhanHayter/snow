@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ channels, ... }:
 final: prev: {
-  devenv = inputs.devenv.packages.${prev.system}.default;
+  inherit (channels.unstable) devenv;
 }

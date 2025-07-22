@@ -24,6 +24,9 @@ in
   };
 
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      sops
+    ];
     sops = {
       defaultSopsFile = snowfall.fs.get-file "secrets/secrets.yaml";
       defaultSopsFormat = "yaml";
@@ -34,6 +37,7 @@ in
         "llm/gemini_api_key_kyruus" = { };
         "llm/anthropic_api_key" = { };
         "llm/anthropic_api_key_kyruus" = { };
+        "llm/groq_api_key" = { };
         "search/brave_api_key" = { };
       };
     };

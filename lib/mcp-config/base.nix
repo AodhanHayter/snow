@@ -10,6 +10,14 @@
       extraServers ? { },
     }:
     {
+      nixos = {
+        command = "nix";
+        args = [
+          "run"
+          "github:utensils/mcp-nixos"
+          "--"
+        ];
+      };
       Context7 = {
         command = "${pkgs.context7-mcp}/bin/context7-mcp";
         args = [ ];
@@ -21,4 +29,3 @@
     }
     // extraServers;
 }
-

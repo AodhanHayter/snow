@@ -5,6 +5,17 @@ return {
     version = false,
     opts = {
       provider = "copilot",
+      providers = {
+        copilot = {
+          model = "claude-sonnet-4"
+        },
+        moonshot = {
+          __inherited_from = "openai",
+          api_key_name = "GROQ_API_KEY",
+          endpoint = "https://api.groq.com/openai/v1",
+          model = "moonshotai/kimi-k2-instruct"
+        },
+      },
       web_search_engine = {
         provider = "brave"
       }
