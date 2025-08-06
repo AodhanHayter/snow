@@ -12,12 +12,23 @@ let
   settings = {
     permissions = {
       allow = [
+        "Read(**)"
+        "Edit(**)"
+        "MultiEdit(**)"
+        "Write(**)"
+        "Glob(**)"
+        "Grep(**)"
+        "LS(**)"
+        "WebSearch(**)"
+        "TodoRead()"
+        "TodoWrite(**)"
+        "Task(**)"
+
         # Nix commands
         "Bash(nix flake check)"
         "Bash(nix build*)"
         "Bash(nix fmt)"
         "Bash(nix develop)"
-        "Bash(deploy*)"
 
         # Read-only file operations
         "Bash(ls*)"
@@ -34,7 +45,7 @@ let
         "Bash(uname*)"
 
         # Git read operations
-        "Bash(git status)"
+        "Bash(git status*)"
         "Bash(git log*)"
         "Bash(git diff*)"
         "Bash(git branch*)"
@@ -99,17 +110,26 @@ in
   config = mkIf cfg.enable {
     home.packages = with pkgs; [ claude-code ];
 
-    # This makes Claude Code compatible with direnv and devenv
-    # Claude Code sets the CLAUDECODE=1 environment variable.
-    # This conditional setup ensures direnv hooks are only installed for Claude Code sessions.
-    programs.zsh.envExtra = ''
-      if [[ -n "$CLAUDECODE" ]]; then
-        eval "$(devenv direnvrc)"
-      fi
+    home.file.".claude/CLAUDE.md".text = ''
+      When devenv.nix doesn't exist and a command/tool is missing, create ad-hoc environment:
+
+          $ devenv -O languages.rust.enable:bool true -O packages:pkgs "mypackage mypackage2" shell -- cli args
+
+      When the setup becomes complex create `devenv.nix` and run commands within:
+
+          $ devenv shell -- cli args
+
+      See https://devenv.sh/ad-hoc-developer-environments/
     '';
 
     home.file.".claude/settings.json" = {
       text = builtins.toJSON settings;
     };
+
+    home.file.".claude/commands" = {
+      source = ./commands;
+      recursive = true;
+    };
+
   };
 }

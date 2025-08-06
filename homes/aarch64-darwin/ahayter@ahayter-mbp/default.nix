@@ -48,6 +48,7 @@ with lib.modernage;
       mcp-servers = enabled;
       sops = enabled;
       tmux = enabled;
+      bun = enabled;
     };
   };
 

@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 with lib.modernage;
 let
@@ -10,12 +15,13 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ awscli2 saml2aws ];
+    # home.packages = with pkgs; [ awscli2 ];
 
     # The home-manager setup requires more involved credentials handling
-    # programs.awscli = {
-    #   enable = true;
-    # };
+    programs.awscli = {
+      enable = true;
+      package = pkgs.awscli2;
+    };
 
     programs.zsh.initContent = ''
       function aws_env() {
