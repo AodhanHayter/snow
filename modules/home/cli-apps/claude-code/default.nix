@@ -10,6 +10,11 @@ let
   cfg = config.modernage.cli-apps.claude-code;
 
   settings = {
+    statusline = {
+      type = "command";
+      command = "bunx ccusage statusline";
+      padding = 0;
+    };
     permissions = {
       allow = [
         "Read(**)"
