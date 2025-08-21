@@ -19,7 +19,7 @@ in
     clusterInit = mkBoolOpt false "Initialize HA cluster using an embedded etcd datastore";
     tokenFile =
       mkOpt path null
-        "Path to a file containing the token. If set, this will override the 'token' option. This is useful for security purposes, as it avoids storing the token in the configuration file.";
+        "Path to a file containing the k3s cluster token. Required for agents and recommended for servers.";
   };
 
   config = mkIf cfg.enable {

@@ -72,6 +72,7 @@
 
     hyprddm = {
       url = "github:maotseantonio/hyprddm";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -105,6 +106,7 @@
       ];
 
       systems.modules.nixos = with inputs; [
+        sops-nix.nixosModules.sops
         home-manager.nixosModules.home-manager
         disko.nixosModules.disko
       ];

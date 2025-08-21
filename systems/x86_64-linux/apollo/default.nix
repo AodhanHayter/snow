@@ -1,11 +1,13 @@
-{ pkgs
-, config
-, lib
-, channel
-, ...
+{
+  pkgs,
+  config,
+  lib,
+  channel,
+  ...
 }:
 with lib;
-with lib.modernage; {
+with lib.modernage;
+{
   imports = [ ./disk-config.nix ];
 
   networking.hostName = "apollo";
@@ -30,14 +32,16 @@ with lib.modernage; {
       gluster = {
         enable = true;
         nodeAddress = "apollo.local";
-        peerNodes = [ "atlas.local" "hermes.local" ];
+        peerNodes = [
+          "atlas.local"
+          "hermes.local"
+        ];
         volumeName = "k3s-vol";
         brickPath = "/data/glusterfs/brick1";
         replicaCount = 3;
       };
     };
   };
-
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05";

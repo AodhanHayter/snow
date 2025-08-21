@@ -19,6 +19,7 @@ in
 
       tools = {
         git = enabled;
+        make = enabled;
       };
 
       security = {

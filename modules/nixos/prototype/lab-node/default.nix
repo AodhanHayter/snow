@@ -1,11 +1,13 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
-with lib.modernage; let
+with lib.modernage;
+let
   cfg = config.modernage.prototype.lab-node;
 in
 {
@@ -19,6 +21,7 @@ in
 
       tools = {
         git = enabled;
+        sops = enabled;
       };
 
       hardware = {

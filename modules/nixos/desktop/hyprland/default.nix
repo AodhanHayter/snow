@@ -44,23 +44,27 @@ in
     };
 
     services.libinput.enable = true;
+    services.gnome.gnome-keyring.enable = true;
 
     environment.sessionVariables = {
       NIXOS_OZONE_WL = "1";
     };
 
     environment.systemPackages = with pkgs; [
-      kitty # required for the default Hyprland config
-      waybar # status bar for Hyprland
+      bluetui # Bluetooth management tool
+      btop # system resource monitor
       dunst # lightweight notification daemon
-      libnotify # needed for dunst
-      nautilus # file manager (optional, can be replaced with yazi)
       hyprpaper # wallpaper setter for Hyprland
+      hyprpicker # color picker for Hyprland
       hyprshot # screenshot tool for Hyprland
       hyprsunset # blue light filter for Hyprland
-      hyprpicker # color picker for Hyprland
-      (hyprddm.override { theme = "jake_the_dog"; })
+      kitty # required for the default Hyprland config
+      libnotify # needed for dunst
+      nautilus # file manager (optional, can be replaced with yazi)
+      pavucontrol # volume control GUI
       rofi-wayland # application launcher for Hyprland
+      waybar # status bar for Hyprland
+      (sddm-astronaut.override { embeddedTheme = "pixel_sakura"; })
       yazi # tui file manager for Hyprland
     ];
 
