@@ -10,7 +10,7 @@ let
   cfg = config.modernage.cli-apps.claude-code;
 
   settings = {
-    statusline = {
+    statusLine = {
       type = "command";
       command = "bunx ccusage statusline";
       padding = 0;
@@ -127,14 +127,18 @@ in
       See https://devenv.sh/ad-hoc-developer-environments/
     '';
 
-    home.file.".claude/settings.json" = {
-      text = builtins.toJSON settings;
+    home.file = {
+      ".claude/settings.json" = {
+        text = builtins.toJSON settings;
+      };
+      ".claude/agents" = {
+        source = ./agents;
+        recursive = true;
+      };
+      ".claude/commands" = {
+        source = ./commands;
+        recursive = true;
+      };
     };
-
-    home.file.".claude/commands" = {
-      source = ./commands;
-      recursive = true;
-    };
-
   };
 }

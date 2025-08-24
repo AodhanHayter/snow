@@ -15,6 +15,8 @@ let
 
     export PATH="$HOME/.local/bin:$PATH"
 
+    export ERL_AFLAGS="-kernel shell_history enabled"
+
     function pg() {
       if [ $1 ]; then
         PGSERVICE=$1 $HOME/.nix-profile/bin/pgcli
