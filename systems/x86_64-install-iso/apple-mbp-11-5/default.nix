@@ -6,7 +6,7 @@ with lib;
 with lib.modernage; {
 
   imports = with nixos-hardware.nixosModules; [
-    apple-mbp-11-5
+    apple-macbook-pro-11-5
   ];
 
   modernage = {
@@ -21,9 +21,9 @@ with lib.modernage; {
       git = enabled;
     };
 
-    hardware = {
-      networking = enabled;
-    };
+    # hardware = {
+    #   networking = enabled;
+    # };
 
     services = {
       openssh = enabled;
