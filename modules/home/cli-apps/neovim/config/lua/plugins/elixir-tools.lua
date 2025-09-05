@@ -1,6 +1,7 @@
 return {
   {
     "elixir-tools/elixir-tools.nvim",
+    version = "*",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
       local elixir = require("elixir")
@@ -8,13 +9,15 @@ return {
 
       elixir.setup({
         nextls = { enable = true },
-        credo = {},
         elixirls = {
           enable = true,
           settings = elixirls.settings {
             dialyzerEnabled = false,
             enableTestLenses = false,
           }
+        },
+        projectionist = {
+          enable = true
         }
       })
     end,
