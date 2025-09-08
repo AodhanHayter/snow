@@ -34,7 +34,7 @@ in
       # mcp-server-filesystem
       # mcp-server-git
       # mcp-server-postgres
-      playwright-mcp
+      # playwright-mcp
     ];
 
     sops.templates."claude_desktop_config.json" = {

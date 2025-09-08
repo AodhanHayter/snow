@@ -15,12 +15,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    # home.packages = with pkgs; [ awscli2 ];
 
     # The home-manager setup requires more involved credentials handling
     programs.awscli = {
       enable = true;
-      package = pkgs.awscli2;
     };
 
     programs.zsh.initContent = ''
