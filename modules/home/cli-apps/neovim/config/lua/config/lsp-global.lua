@@ -29,18 +29,15 @@ local on_attach = function(client, bufnr)
 end
 
 local capabilities = require("blink.cmp").get_lsp_capabilities()
--- vim.lsp.config("*", {
---   on_attach = on_attach,
---   capabilities = capabilities,
--- })
 
 local lsps = {
   "basedpyright",
   "bashls",
   "diagnosticls",
   "dockerls",
-  "elixirls",
+  -- "elixirls",
   "eslint",
+  "expert",
   "lua_ls",
   "marksman",
   "nixd",

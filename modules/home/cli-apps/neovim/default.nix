@@ -19,6 +19,7 @@ in
       gcc # treesitter needs a c compiler
       yarn # used by the nvim nodejs provider
       # Various language servers
+      expert
       dockerfile-language-server-nodejs
       lua-language-server
       marksman
