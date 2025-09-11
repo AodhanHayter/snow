@@ -24,75 +24,75 @@ let
         "Glob(**)"
         "Grep(**)"
         "LS(**)"
-        "WebSearch(**)"
-        "TodoRead()"
+        "WebSearch"
+        "TodoRead(**)"
         "TodoWrite(**)"
         "Task(**)"
 
         # Nix commands
         "Bash(nix flake check)"
-        "Bash(nix build*)"
+        "Bash(nix build:*)"
         "Bash(nix fmt)"
         "Bash(nix develop)"
 
         # Read-only file operations
-        "Bash(ls*)"
-        "Bash(cat*)"
-        "Bash(head*)"
-        "Bash(tail*)"
-        "Bash(grep*)"
-        "Bash(rg*)"
-        "Bash(fd*)"
-        "Bash(find*)"
-        "Bash(which*)"
+        "Bash(ls:*)"
+        "Bash(cat:*)"
+        "Bash(head:*)"
+        "Bash(tail:*)"
+        "Bash(grep:*)"
+        "Bash(rg:*)"
+        "Bash(fd:*)"
+        "Bash(find:*)"
+        "Bash(which:*)"
         "Bash(pwd)"
         "Bash(whoami)"
-        "Bash(uname*)"
+        "Bash(uname:*)"
 
         # Git read operations
-        "Bash(git status*)"
-        "Bash(git log*)"
-        "Bash(git diff*)"
-        "Bash(git branch*)"
-        "Bash(git remote*)"
-        "Bash(git show*)"
+        "Bash(git status:*)"
+        "Bash(git log:*)"
+        "Bash(git diff:*)"
+        "Bash(git branch:*)"
+        "Bash(git remote:*)"
+        "Bash(git show:*)"
 
         # Package manager read operations
-        "Bash(npm list*)"
-        "Bash(yarn list*)"
+        "Bash(npm list:*)"
+        "Bash(yarn list:*)"
         "Bash(cargo tree)"
         "Bash(pip list)"
         "Bash(gem list)"
 
         # System information
         "Bash(date)"
-        "Bash(echo*)"
+        "Bash(echo:*)"
         "Bash(env)"
         "Bash(printenv)"
-        "Bash(locale*)"
+        "Bash(locale:*)"
 
         # File analysis
-        "Bash(file*)"
-        "Bash(wc*)"
-        "Bash(du*)"
-        "Bash(tree*)"
-        "Bash(stat*)"
+        "Bash(file:*)"
+        "Bash(wc:*)"
+        "Bash(du:*)"
+        "Bash(tree:*)"
+        "Bash(stat:*)"
 
         # Text processing
-        "Bash(sed*)"
-        "Bash(awk*)"
-        "Bash(sort*)"
-        "Bash(uniq*)"
-        "Bash(cut*)"
-        "Bash(tr*)"
+        "Bash(sed:*)"
+        "Bash(awk:*)"
+        "Bash(sort:*)"
+        "Bash(uniq:*)"
+        "Bash(cut:*)"
+        "Bash(tr:*)"
 
         # JSON/YAML tools
-        "Bash(jq*)"
-        "Bash(yq*)"
+        "Bash(jq:*)"
+        "Bash(yq:*)"
 
         # devenv and direnv integration
-        "Bash(devenv*)"
-        "Bash(direnv*)"
+        "Bash(devenv:*)"
+        "Bash(direnv:*)"
       ];
       deny = [ ];
     };
@@ -115,19 +115,8 @@ in
   config = mkIf cfg.enable {
     home.packages = with pkgs; [ claude-code ];
 
-    home.file.".claude/CLAUDE.md".text = ''
-      When devenv.nix doesn't exist and a command/tool is missing, create ad-hoc environment:
-
-          $ devenv -O languages.rust.enable:bool true -O packages:pkgs "mypackage mypackage2" shell -- cli args
-
-      When the setup becomes complex create `devenv.nix` and run commands within:
-
-          $ devenv shell -- cli args
-
-      See https://devenv.sh/ad-hoc-developer-environments/
-    '';
-
     home.file = {
+      ".claude/CLAUDE.md".source = ./CLAUDE.md;
       ".claude/settings.json" = {
         text = builtins.toJSON settings;
       };
