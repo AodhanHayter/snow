@@ -62,6 +62,7 @@ in
       libnotify # needed for dunst
       nautilus # file manager (optional, can be replaced with yazi)
       pavucontrol # volume control GUI
+      quickshell
       rofi-wayland # application launcher for Hyprland
       waybar # status bar for Hyprland
       (sddm-astronaut.override { embeddedTheme = "pixel_sakura"; })

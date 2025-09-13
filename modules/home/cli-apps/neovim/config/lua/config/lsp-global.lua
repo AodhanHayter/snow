@@ -45,6 +45,7 @@ local lsps = {
   "ruff",
   "rust_analyzer",
   "ts_ls",
+  "yamlls",
 }
 
 for _, lsp in ipairs(lsps) do

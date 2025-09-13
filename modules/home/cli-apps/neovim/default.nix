@@ -31,6 +31,7 @@ in
       basedpyright
       terraform-ls
       vscode-langservers-extracted
+      yaml-language-server
       ###
     ];
 
