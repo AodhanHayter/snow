@@ -16,6 +16,11 @@
     darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
+    # determinate nix
+    determinate = {
+      url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+    };
+
     # Hardware Configuration
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
@@ -43,7 +48,7 @@
     };
 
     ghostty = {
-      url = "github:ghostty-org/ghostty/v1.1.0";
+      url = "github:ghostty-org/ghostty/v1.1.3";
     };
 
     alacritty-themes = {
@@ -66,12 +71,7 @@
     };
 
     expert = {
-      url = "github:elixir-lang/expert";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprddm = {
-      url = "github:maotseantonio/hyprddm";
+      url = "github:elixir-lang/expert?ref=nightly";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -109,6 +109,7 @@
         sops-nix.nixosModules.sops
         home-manager.nixosModules.home-manager
         disko.nixosModules.disko
+        determinate.nixosModules.default
       ];
 
       systems.modules.darwin = with inputs; [

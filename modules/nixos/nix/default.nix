@@ -1,9 +1,10 @@
-{ options
-, config
-, pkgs
-, lib
-, inputs
-, ...
+{
+  options,
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
 }:
 
 with lib;
@@ -11,11 +12,14 @@ with lib.modernage;
 let
   cfg = config.modernage.nix;
 
-  substituters-submodule = types.submodule ({ name, ... }: {
-    options = with types; {
-      key = mkOpt (nullOr str) null "The trusted public key for this substituter.";
-    };
-  });
+  substituters-submodule = types.submodule (
+    { name, ... }:
+    {
+      options = with types; {
+        key = mkOpt (nullOr str) null "The trusted public key for this substituter.";
+      };
+    }
+  );
 in
 {
   options.modernage.nix = with types; {
@@ -24,19 +28,19 @@ in
 
     default-substituter = {
       url = mkOpt str "https://cache.nixos.org" "The url for the substituter.";
-      key = mkOpt str "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" "The trusted public key for the substituter.";
+      key =
+        mkOpt str "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+          "The trusted public key for the substituter.";
     };
 
     extra-substituters = mkOpt (attrsOf substituters-submodule) { } "Extra substituters to configure.";
   };
 
   config = mkIf cfg.enable {
-    assertions = mapAttrsToList
-      (name: value: {
-        assertion = value.key != null;
-        message = "modernage.nix.extra-substituters.${name}.key must be set";
-      })
-      cfg.extra-substituters;
+    assertions = mapAttrsToList (name: value: {
+      assertion = value.key != null;
+      message = "modernage.nix.extra-substituters.${name}.key must be set";
+    }) cfg.extra-substituters;
 
     environment.systemPackages = with pkgs; [
       nixfmt-rfc-style
@@ -46,29 +50,33 @@ in
     ];
 
     nix =
-      let users = [ "root" config.modernage.user.name ];
+      let
+        users = [
+          "root"
+          config.modernage.user.name
+        ];
       in
       {
-        package = cfg.package;
+        # package = cfg.package; # disabled for determinate nix
 
         settings = {
-          experimental-features = "nix-command flakes";
+          eval-cores = 2; # determinate nix specific
           http-connections = 50;
           warn-dirty = false;
           log-lines = 50;
           sandbox = "relaxed";
           auto-optimise-store = true;
-          trusted-users = users;
+          trusted-users = [ config.modernage.user.name ];
           allowed-users = users;
 
-          substituters =
-            [ cfg.default-substituter.url ]
-            ++
-            (mapAttrsToList (name: value: name) cfg.extra-substituters);
-          trusted-public-keys =
-            [ cfg.default-substituter.key ]
-            ++
-            (mapAttrsToList (name: value: value.key) cfg.extra-substituters);
+          substituters = [
+            cfg.default-substituter.url
+          ]
+          ++ (mapAttrsToList (name: value: name) cfg.extra-substituters);
+          trusted-public-keys = [
+            cfg.default-substituter.key
+          ]
+          ++ (mapAttrsToList (name: value: value.key) cfg.extra-substituters);
 
         };
 
