@@ -97,6 +97,9 @@ in
           enabled = true;
           autoupdate = true;
         };
+        safe = {
+          directory = "*";
+        };
         tag = {
           # sort version numbers as a series of integers
           sort = "version:refname";
