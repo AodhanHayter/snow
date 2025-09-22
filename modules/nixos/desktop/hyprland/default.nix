@@ -9,7 +9,6 @@ with lib;
 with lib.modernage;
 let
   cfg = config.modernage.desktop.hyprland;
-  user = config.modernage.user;
 in
 {
   options.modernage.desktop.hyprland = with types; {

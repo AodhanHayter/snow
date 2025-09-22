@@ -13,6 +13,8 @@ with lib.modernage;
       enable = true;
     };
 
+    hyprland = enabled;
+
     apps = {
       ghostty = enabled;
       gnucash = enabled;
