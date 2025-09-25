@@ -44,6 +44,7 @@ in
 
     services.libinput.enable = true;
     services.gnome.gnome-keyring.enable = true;
+    programs.seahorse.enable = true; # for gnome-keyring
 
     environment.sessionVariables = {
       NIXOS_OZONE_WL = "1";
@@ -63,8 +64,9 @@ in
       pavucontrol # volume control GUI
       quickshell
       rofi-wayland # application launcher for Hyprland
-      waybar # status bar for Hyprland
+      libsecret # keyring cli
       (sddm-astronaut.override { embeddedTheme = "pixel_sakura"; })
+      waybar # status bar for Hyprland
       yazi # tui file manager for Hyprland
     ];
 
