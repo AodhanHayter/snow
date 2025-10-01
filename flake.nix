@@ -62,7 +62,7 @@
     };
 
     opencode = {
-      url = "github:AodhanHayter/opencode-flake";
+      url = "github:AodhanHayter/opencode-flake?ref=fix-builds-for-macos";
     };
 
     mcp-servers-nix = {
