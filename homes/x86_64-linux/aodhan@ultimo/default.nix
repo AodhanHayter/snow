@@ -19,14 +19,16 @@ with lib.modernage;
       ghostty = enabled;
       gnucash = enabled;
       obs-studio = enabled;
+      omnissa-horizon-client = enabled;
     };
 
     cli-apps = {
       ast-grep = enabled;
       autojump = enabled;
-      awscli = enabled;
+      awscli = disabled;
       bat = enabled;
       claude-code = enabled;
+      codex = enabled;
       dog = enabled;
       entr = enabled;
       eza = enabled;
