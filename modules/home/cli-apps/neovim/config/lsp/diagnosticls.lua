@@ -11,6 +11,7 @@ return {
       sh = "shellcheck",
     },
     formatFiletypes = {
+      astro = "prettier",
       javascript = "prettier",
       javascriptreact = "prettier",
       json = "prettier",

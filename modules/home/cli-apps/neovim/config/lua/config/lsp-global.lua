@@ -31,6 +31,7 @@ end
 local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 local lsps = {
+  "astro",
   "basedpyright",
   "bashls",
   "diagnosticls",

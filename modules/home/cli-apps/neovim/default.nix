@@ -19,6 +19,7 @@ in
       gcc # treesitter needs a c compiler
       yarn # used by the nvim nodejs provider
       # Various language servers
+      astro-language-server
       # expert
       dockerfile-language-server-nodejs
       lua-language-server

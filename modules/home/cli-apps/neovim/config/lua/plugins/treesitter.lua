@@ -6,6 +6,7 @@ return {
       auto_install = true,
       sync_install = false,
       ensure_installed = {
+        "astro",
         "bash",
         "c",
         "cpp",
@@ -40,6 +41,7 @@ return {
         "terraform",
         "tmux",
         "toml",
+        "tsx",
         "typescript",
         "vim",
         "vimdoc",
