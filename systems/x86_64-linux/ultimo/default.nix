@@ -20,6 +20,9 @@ with lib.modernage;
         enable = true;
         openFirewall = true;
       };
+
+      # Enable keyd for macOS-style keyboard shortcuts
+      keyd = enabled;
     };
   };
 
