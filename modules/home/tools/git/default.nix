@@ -58,7 +58,7 @@ in
           ui = "auto";
         };
         core = {
-          fsmonitor = true;
+          fsmonitor = false;
           untrackedCache = true;
           whitespace = "trailing-space,space-before-tab";
         };
