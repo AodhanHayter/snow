@@ -53,7 +53,7 @@ in
               # Text navigation with arrow keys
               "left" = "C-left"; # Word left
               "right" = "C-right"; # Word right
-              "backspace" = "C-backspace"; # Delete word
+              "backspace" = "C-u"; # Delete to beginning of line (macOS Cmd+Backspace behavior)
 
               # Home/End with up/down arrows (macOS style)
               "up" = "C-home"; # Beginning of document
@@ -69,7 +69,12 @@ in
               "p" = "C-S-p"; # Print Preview/Settings
             };
 
-            # Meta+Alt layer for word operations
+            # Alt layer for word operations (macOS Option key behavior)
+            "alt" = {
+              "backspace" = "C-backspace"; # Delete word (macOS Option+Backspace)
+            };
+
+            # Meta+Alt layer for word selection
             "meta+alt" = {
               "left" = "C-S-left"; # Select word left
               "right" = "C-S-right"; # Select word right
