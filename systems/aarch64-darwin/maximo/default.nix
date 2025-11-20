@@ -10,8 +10,7 @@ with lib.modernage;
 {
   modernage = {
     user = {
-      name = "ahayter";
-      uid = 502;
+      name = "aodhan";
     };
 
     prototype = {
