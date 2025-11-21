@@ -1,5 +1,7 @@
 In all interactions and commit messages, be extremely concise and sacrifice grammar for the sake of concision.
 
+When working in a repository use the agentlocal directory to store ephemeral files.
+
 ## Jira
 
 - When given or asked about a Jira ticket use the `acli` cli tool to retrieve its contents:
@@ -15,6 +17,7 @@ In all interactions and commit messages, be extremely concise and sacrifice gram
     $ acli jira workitem view KEY-123 --json
 
     # View work item with work item keys and a list of field to return
+    $ acli jira workitem view KEY-123 --fields summary,comment
 
 ## GitHub
 
@@ -22,4 +25,4 @@ In all interactions and commit messages, be extremely concise and sacrifice gram
 
 ## Plans
 
-- At the end of each plan, give me a list of unresolved questions to answer, if any. Make the questions extremely concise. Sacrifice grammar for the sake of concision.   $ acli jira workitem view KEY-123 --fields summary,comment
+- At the end of each plan, give me a list of unresolved questions to answer, if any. Make the questions extremely concise. Sacrifice grammar for the sake of concision.
