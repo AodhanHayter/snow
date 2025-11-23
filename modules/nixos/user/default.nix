@@ -133,8 +133,8 @@ in
                 src = pkgs.fetchFromGitHub {
                   owner = "mafredri";
                   repo = "zsh-async";
-                  rev = "v1.8.5";
-                  sha256 = "sha256-mpXT3Hoz0ptVOgFMBCuJa0EPkqP4wZLvr81+1uHDlCc=";
+                  rev = "v1.8.6";
+                  sha256 = "sha256-Js/9vGGAEqcPmQSsumzLfkfwljaFWHJ9sMWOgWDi0NI=";
                 };
               }
               {
