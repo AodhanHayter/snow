@@ -1,4 +1,4 @@
 { inputs, ... }:
 final: prev: {
-  ghostty = inputs.ghostty.packages.${prev.system}.default;
+  ghostty = inputs.ghostty.packages.${prev.stdenv.hostPlatform.system}.default;
 }

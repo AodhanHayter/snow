@@ -21,7 +21,7 @@ in
       # Various language servers
       astro-language-server
       # expert
-      dockerfile-language-server-nodejs
+      dockerfile-language-server
       lua-language-server
       marksman
       nixd
