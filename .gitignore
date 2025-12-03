@@ -2,3 +2,4 @@ result
 *.qcow2
 .luarc.json
 .claude/*.local.json
+.DS_Store
