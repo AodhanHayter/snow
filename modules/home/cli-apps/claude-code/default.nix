@@ -93,6 +93,9 @@ let
         # devenv and direnv integration
         "Bash(devenv:*)"
         "Bash(direnv:*)"
+
+        # Beads - AI agent issue tracker
+        "Bash(bd:*)"
       ];
       deny = [ ];
     };
