@@ -74,6 +74,11 @@
       url = "github:elixir-lang/expert?ref=nightly";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    beads = {
+      url = "github:steveyegge/beads";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

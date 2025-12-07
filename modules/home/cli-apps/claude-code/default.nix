@@ -113,7 +113,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ claude-code ];
+    home.packages = with pkgs; [
+      claude-code
+      claude-code-acp
+    ];
 
     home.file = {
       ".claude/CLAUDE.md".source = ./CLAUDE.md;
