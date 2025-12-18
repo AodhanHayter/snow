@@ -1,4 +1,4 @@
-{ channels, ... }:
+{ inputs, ... }:
 final: prev: {
-  inherit (channels.unstable) claude-code;
+  claude-code = inputs.claude-code-nix.packages.${prev.stdenv.hostPlatform.system}.default;
 }
