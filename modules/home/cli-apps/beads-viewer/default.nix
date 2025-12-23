@@ -2,12 +2,14 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }:
 with lib;
 with lib.modernage;
 let
   cfg = config.modernage.cli-apps.beads-viewer;
+  beads-viewer = inputs.self.packages.${pkgs.system}.beads-viewer;
 in
 {
   options.modernage.cli-apps.beads-viewer = {
@@ -15,6 +17,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ beads-viewer ];
+    home.packages = [ beads-viewer ];
   };
 }
