@@ -27,6 +27,7 @@ with lib.modernage;
       autojump = enabled;
       awscli = disabled;
       bat = enabled;
+      beads-viewer = enabled;
       claude-code = enabled;
       codex = enabled;
       dog = enabled;

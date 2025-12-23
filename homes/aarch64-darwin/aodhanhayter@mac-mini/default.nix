@@ -22,6 +22,7 @@ with lib.modernage;
       awscli = enabled;
       bat = enabled;
       beads = enabled;
+      beads-viewer = enabled;
       claude-code = enabled;
       dog = enabled;
       entr = enabled;
