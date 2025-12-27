@@ -199,6 +199,16 @@ in
           ".eex" = "eelixir";
         };
       }
+      {
+        name = "nil";
+        description = "Nix language server";
+        languageId = "nix";
+        command = "${pkgs.nil}/bin/nil";
+        args = [ ];
+        extensionToLanguage = {
+          ".nix" = "nix";
+        };
+      }
     ] "LSP server definitions";
   };
 
