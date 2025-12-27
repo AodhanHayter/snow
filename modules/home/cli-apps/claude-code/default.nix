@@ -2,12 +2,51 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }:
 with lib;
 with lib.modernage;
 let
   cfg = config.modernage.cli-apps.claude-code;
+
+  # Skill type definition
+  skillType = types.submodule {
+    options = {
+      name = mkOpt types.str "" "Skill name (used for directory)";
+      description = mkOpt types.str "" "Skill description for semantic matching";
+      content = mkOpt types.str "" "Skill markdown content (without frontmatter)";
+      allowedTools = mkOpt (types.nullOr types.str) null "Comma-separated allowed tools";
+      model = mkOpt (types.nullOr types.str) null "Model override";
+    };
+  };
+
+  # External skill source type
+  externalSkillsType = types.submodule {
+    options = {
+      src = mkOpt types.path "" "Path to plugin repo (from inputs)";
+      plugins = mkOpt (types.nullOr (types.listOf types.str)) null "List of plugins to load (null = all)";
+      blacklist = mkOpt (types.listOf types.str) [] "Skill names to exclude";
+    };
+  };
+
+  # Load external skills
+  externalSkills = lib.flatten (
+    map (ext: lib.modernage.skills.loadPluginSkills {
+      inherit (ext) src plugins blacklist;
+    }) cfg.externalSkills
+  );
+
+  # Merge all skills (local wins on collision)
+  allSkills =
+    let
+      localNames = map (s: s.name) cfg.skills;
+      filteredExternal = filter (s: !(elem s.name localNames)) externalSkills;
+    in
+    cfg.skills ++ filteredExternal;
+
+  # Generate skill files
+  skillFiles = lib.modernage.skills.mkSkillFiles allSkills;
 
   settings = {
     statusLine = {
@@ -113,6 +152,14 @@ in
 {
   options.modernage.cli-apps.claude-code = {
     enable = mkBoolOpt false "Whether or not to install and configure claude code.";
+    skills = mkOpt (types.listOf skillType) [] "Local skill definitions";
+    externalSkills = mkOpt (types.listOf externalSkillsType) [
+      {
+        src = inputs.claude-code-elixir;
+        plugins = null; # all plugins
+        blacklist = ["phoenix-ecto-thinking"];
+      }
+    ] "External skill sources (plugin repos)";
   };
 
   config = mkIf cfg.enable {
@@ -134,6 +181,6 @@ in
         source = ./commands;
         recursive = true;
       };
-    };
+    } // skillFiles;
   };
 }
