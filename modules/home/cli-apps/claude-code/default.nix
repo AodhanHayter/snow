@@ -209,6 +209,32 @@ in
           ".nix" = "nix";
         };
       }
+      {
+        name = "ty";
+        description = "Python type checker and language server";
+        languageId = "python";
+        command = "${pkgs.ty}/bin/ty";
+        args = [ "server" ];
+        extensionToLanguage = {
+          ".py" = "python";
+          ".pyi" = "python";
+        };
+      }
+      {
+        name = "typescript-language-server";
+        description = "TypeScript/JavaScript language server";
+        languageId = "typescript";
+        command = "${pkgs.typescript-language-server}/bin/typescript-language-server";
+        args = [ "--stdio" ];
+        extensionToLanguage = {
+          ".ts" = "typescript";
+          ".tsx" = "typescriptreact";
+          ".js" = "javascript";
+          ".jsx" = "javascriptreact";
+          ".mjs" = "javascript";
+          ".cjs" = "javascript";
+        };
+      }
     ] "LSP server definitions";
   };
 
