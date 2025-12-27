@@ -32,7 +32,7 @@ in
     };
 
     home-manager = {
-      backupFileExtension = "bak";
+      backupFileExtension = "hm-bak";
       useUserPackages = true;
       useGlobalPkgs = true;
 

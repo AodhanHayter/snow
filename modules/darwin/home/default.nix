@@ -34,7 +34,7 @@ in
     home-manager = {
       useUserPackages = true;
       useGlobalPkgs = true;
-      backupFileExtension = "bak";
+      backupFileExtension = "hm-bak";
     };
   };
 }
