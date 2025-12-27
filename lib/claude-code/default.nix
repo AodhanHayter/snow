@@ -1,20 +1,21 @@
-# Claude Code skill management functions
+# Claude Code configuration functions (skills, LSP)
 { lib, ... }:
 
 let
   inherit (lib) concatStringsSep elem filter flatten hasSuffix
-    listToAttrs mapAttrsToList optionalString removeSuffix splitString
-    stringLength substring trim;
+    listToAttrs optionalAttrs removeSuffix splitString trim;
+
+  # ============================================================================
+  # Skills
+  # ============================================================================
 
   # Parse simple YAML frontmatter from markdown content
-  # Returns: { frontmatter = { key = value; ... }; content = "..."; }
   parseSkillMd = content:
     let
       lines = splitString "\n" content;
       firstLine = if lines != [] then builtins.head lines else "";
       hasFrontmatter = firstLine == "---";
 
-      # Find index of closing ---
       findClosing = idx: ls:
         if idx >= builtins.length ls then null
         else if idx > 0 && (builtins.elemAt ls idx) == "---" then idx
@@ -32,7 +33,6 @@ let
         then lib.sublist (closingIdx + 1) (builtins.length lines - closingIdx - 1) lines
         else lines;
 
-      # Parse simple YAML key: value pairs
       parseLine = line:
         let
           match = builtins.match "([^:]+):(.*)" line;
@@ -59,7 +59,6 @@ let
     frontmatter + content;
 
   # Load skills from external plugin repo
-  # Plugin repos use: plugins/<plugin-name>/skills/<skill-name>.md
   loadPluginSkills = { src, plugins ? null, blacklist ? [] }:
     let
       pluginsPath = "${src}/plugins";
@@ -108,9 +107,66 @@ let
       };
     }) skills);
 
+  # ============================================================================
+  # LSP
+  # ============================================================================
+
+  # Generate .lsp.json content from LSP server config
+  mkLspJson = lspConfig:
+    let
+      serverConfig = {
+        command = lspConfig.command;
+        args = lspConfig.args;
+        extensionToLanguage = lspConfig.extensionToLanguage;
+      } // optionalAttrs (lspConfig.transport != "stdio") {
+        transport = lspConfig.transport;
+      } // optionalAttrs (lspConfig.initializationOptions != {}) {
+        initializationOptions = lspConfig.initializationOptions;
+      } // optionalAttrs (lspConfig.settings != {}) {
+        settings = lspConfig.settings;
+      } // optionalAttrs (lspConfig.env != null) {
+        env = lspConfig.env;
+      } // optionalAttrs (lspConfig.startupTimeout != null) {
+        startupTimeout = lspConfig.startupTimeout;
+      } // optionalAttrs (lspConfig.restartOnCrash != null) {
+        restartOnCrash = lspConfig.restartOnCrash;
+      } // optionalAttrs (lspConfig.maxRestarts != 3) {
+        maxRestarts = lspConfig.maxRestarts;
+      };
+    in
+    builtins.toJSON { ${lspConfig.languageId} = serverConfig; };
+
+  # Generate plugin.json metadata
+  mkPluginJson = { name, description, ... }:
+    builtins.toJSON {
+      inherit name description;
+      version = "0.1.0";
+    };
+
+  # Convert LSP configs to home.file entries
+  mkLspFiles = lspConfigs:
+    let
+      mkPluginFiles = lsp: [
+        {
+          name = ".claude/plugins/${lsp.name}/plugin.json";
+          value.text = mkPluginJson lsp;
+        }
+        {
+          name = ".claude/plugins/${lsp.name}/.lsp.json";
+          value.text = mkLspJson lsp;
+        }
+      ];
+    in
+    listToAttrs (flatten (map mkPluginFiles lspConfigs));
+
 in
 {
-  skills = {
-    inherit parseSkillMd mkSkillMd loadPluginSkills mkSkillFiles;
+  "claude-code" = {
+    skills = {
+      inherit parseSkillMd mkSkillMd loadPluginSkills mkSkillFiles;
+    };
+    lsp = {
+      inherit mkLspJson mkPluginJson mkLspFiles;
+    };
   };
 }

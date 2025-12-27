@@ -26,15 +26,37 @@ let
     options = {
       src = mkOpt types.path "" "Path to plugin repo (from inputs)";
       plugins = mkOpt (types.nullOr (types.listOf types.str)) null "List of plugins to load (null = all)";
-      blacklist = mkOpt (types.listOf types.str) [] "Skill names to exclude";
+      blacklist = mkOpt (types.listOf types.str) [ ] "Skill names to exclude";
+    };
+  };
+
+  # LSP server type definition
+  lspType = types.submodule {
+    options = {
+      name = mkOpt types.str "" "Plugin name (used for directory)";
+      description = mkOpt types.str "" "LSP description";
+      languageId = mkOpt types.str "" "Language identifier (e.g., 'typescript', 'nix')";
+      command = mkOpt types.str "" "LSP server binary path";
+      args = mkOpt (types.listOf types.str) [ ] "Command arguments";
+      extensionToLanguage = mkOpt (types.attrsOf types.str) { } "Map file extensions to language IDs";
+      transport = mkOpt types.str "stdio" "Transport method (stdio, tcp, pipe)";
+      initializationOptions = mkOpt types.attrs { } "LSP initialization options";
+      settings = mkOpt types.attrs { } "LSP settings";
+      env = mkOpt (types.nullOr (types.attrsOf types.str)) null "Environment variables";
+      startupTimeout = mkOpt (types.nullOr types.int) null "Startup timeout in ms";
+      restartOnCrash = mkOpt (types.nullOr types.bool) null "Auto-restart on crash";
+      maxRestarts = mkOpt types.int 3 "Max restart attempts";
     };
   };
 
   # Load external skills
   externalSkills = lib.flatten (
-    map (ext: lib.modernage.skills.loadPluginSkills {
-      inherit (ext) src plugins blacklist;
-    }) cfg.externalSkills
+    map (
+      ext:
+      lib.modernage."claude-code".skills.loadPluginSkills {
+        inherit (ext) src plugins blacklist;
+      }
+    ) cfg.externalSkills
   );
 
   # Merge all skills (local wins on collision)
@@ -46,7 +68,10 @@ let
     cfg.skills ++ filteredExternal;
 
   # Generate skill files
-  skillFiles = lib.modernage.skills.mkSkillFiles allSkills;
+  skillFiles = lib.modernage."claude-code".skills.mkSkillFiles allSkills;
+
+  # Generate LSP plugin files
+  lspFiles = lib.modernage."claude-code".lsp.mkLspFiles cfg.lspServers;
 
   settings = {
     statusLine = {
@@ -152,14 +177,29 @@ in
 {
   options.modernage.cli-apps.claude-code = {
     enable = mkBoolOpt false "Whether or not to install and configure claude code.";
-    skills = mkOpt (types.listOf skillType) [] "Local skill definitions";
+    skills = mkOpt (types.listOf skillType) [ ] "Local skill definitions";
     externalSkills = mkOpt (types.listOf externalSkillsType) [
       {
         src = inputs.claude-code-elixir;
         plugins = null; # all plugins
-        blacklist = ["phoenix-ecto-thinking"];
+        blacklist = [ "phoenix-ecto-thinking" ];
       }
     ] "External skill sources (plugin repos)";
+    lspServers = mkOpt (types.listOf lspType) [
+      {
+        name = "expert";
+        description = "Official Elixir language server";
+        languageId = "elixir";
+        command = "${pkgs.expert}/bin/expert";
+        args = [ "--stdio" ];
+        extensionToLanguage = {
+          ".ex" = "elixir";
+          ".exs" = "elixir";
+          ".heex" = "heex";
+          ".eex" = "eelixir";
+        };
+      }
+    ] "LSP server definitions";
   };
 
   config = mkIf cfg.enable {
@@ -181,6 +221,8 @@ in
         source = ./commands;
         recursive = true;
       };
-    } // skillFiles;
+    }
+    // skillFiles
+    // lspFiles;
   };
 }
