@@ -1,13 +1,9 @@
-# Claude Code configuration functions (skills, LSP)
+# Claude Code configuration functions
 { lib, ... }:
 
 let
   inherit (lib) concatStringsSep elem filter flatten hasSuffix
-    listToAttrs optionalAttrs removeSuffix splitString trim;
-
-  # ============================================================================
-  # Skills
-  # ============================================================================
+    listToAttrs removeSuffix splitString trim foldl';
 
   # Parse simple YAML frontmatter from markdown content
   parseSkillMd = content:
@@ -42,7 +38,7 @@ let
         in
         if hasColon && key != "" then { ${key} = value; } else {};
 
-      frontmatter = lib.foldl' (a: b: a // b) {} (map parseLine frontmatterLines);
+      frontmatter = foldl' (a: b: a // b) {} (map parseLine frontmatterLines);
     in
     { inherit frontmatter; content = concatStringsSep "\n" contentLines; };
 
@@ -98,75 +94,16 @@ let
     in
     flatten (map loadPlugin pluginDirs);
 
-  # Convert skill attrsets to home.file entries
+  # Generate skill files for ~/.claude/skills/
   mkSkillFiles = skills:
     listToAttrs (map (skill: {
       name = ".claude/skills/${skill.name}/SKILL.md";
-      value = {
-        text = mkSkillMd skill;
-      };
+      value.text = mkSkillMd skill;
     }) skills);
-
-  # ============================================================================
-  # LSP
-  # ============================================================================
-
-  # Generate .lsp.json content from LSP server config
-  mkLspJson = lspConfig:
-    let
-      serverConfig = {
-        command = lspConfig.command;
-        args = lspConfig.args;
-        extensionToLanguage = lspConfig.extensionToLanguage;
-      } // optionalAttrs (lspConfig.transport != "stdio") {
-        transport = lspConfig.transport;
-      } // optionalAttrs (lspConfig.initializationOptions != {}) {
-        initializationOptions = lspConfig.initializationOptions;
-      } // optionalAttrs (lspConfig.settings != {}) {
-        settings = lspConfig.settings;
-      } // optionalAttrs (lspConfig.env != null) {
-        env = lspConfig.env;
-      } // optionalAttrs (lspConfig.startupTimeout != null) {
-        startupTimeout = lspConfig.startupTimeout;
-      } // optionalAttrs (lspConfig.restartOnCrash != null) {
-        restartOnCrash = lspConfig.restartOnCrash;
-      } // optionalAttrs (lspConfig.maxRestarts != 3) {
-        maxRestarts = lspConfig.maxRestarts;
-      };
-    in
-    builtins.toJSON { ${lspConfig.languageId} = serverConfig; };
-
-  # Generate plugin.json metadata
-  mkPluginJson = { name, description, ... }:
-    builtins.toJSON {
-      inherit name description;
-      version = "0.1.0";
-    };
-
-  # Convert LSP configs to home.file entries
-  mkLspFiles = lspConfigs:
-    let
-      mkPluginFiles = lsp: [
-        {
-          name = ".claude/plugins/${lsp.name}/plugin.json";
-          value.text = mkPluginJson lsp;
-        }
-        {
-          name = ".claude/plugins/${lsp.name}/.lsp.json";
-          value.text = mkLspJson lsp;
-        }
-      ];
-    in
-    listToAttrs (flatten (map mkPluginFiles lspConfigs));
 
 in
 {
   "claude-code" = {
-    skills = {
-      inherit parseSkillMd mkSkillMd loadPluginSkills mkSkillFiles;
-    };
-    lsp = {
-      inherit mkLspJson mkPluginJson mkLspFiles;
-    };
+    inherit parseSkillMd mkSkillMd loadPluginSkills mkSkillFiles;
   };
 }
