@@ -2,14 +2,82 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }:
 with lib;
 with lib.modernage;
 let
   cfg = config.modernage.cli-apps.claude-code;
+  homeDir = config.home.homeDirectory;
 
-  settings = {
+  # Marketplace submodule type
+  marketplaceModule = types.submodule {
+    options = {
+      source = mkOption {
+        type = types.submodule {
+          options = {
+            type = mkOpt types.str "github" "Source type: github, git, or local";
+            url = mkOpt types.str "" "Repository URL (e.g., owner/repo)";
+          };
+        };
+        description = "Marketplace source configuration";
+      };
+      flakeInput = mkOption {
+        type = types.nullOr types.path;
+        default = null;
+        description = "Flake input for Nix-managed (immutable) marketplace";
+      };
+    };
+  };
+
+  # Get last segment of marketplace name (e.g., "anthropics/claude-plugins-official" -> "claude-plugins-official")
+  getMarketplaceName = name: lib.last (lib.splitString "/" name);
+
+  # Marketplaces with flakeInput defined (Nix-managed via symlinks)
+  nixManagedMarketplaces = filterAttrs (_: m: m.flakeInput != null) cfg.plugins.marketplaces;
+
+  # Transform marketplaces to Claude known_marketplaces.json format
+  toNativeFormat = name: m:
+    let
+      marketplaceName = getMarketplaceName name;
+      localPath = "${homeDir}/.claude/plugins/marketplaces/${marketplaceName}";
+    in
+    lib.nameValuePair marketplaceName {
+      source = {
+        source = if m.source.type == "github" then "github" else m.source.type;
+        repo = name;
+      };
+      installLocation = localPath;
+      lastUpdated = "2025-01-01T00:00:00.000Z";
+    };
+
+  # Build known_marketplaces.json content
+  knownMarketplaces =
+    lib.listToAttrs (lib.mapAttrsToList toNativeFormat cfg.plugins.marketplaces)
+    // optionalAttrs cfg.plugins.allowRuntimeInstall {
+      "local" = {
+        source = {
+          source = "directory";
+          path = "${homeDir}/.claude/plugins/local";
+        };
+        installLocation = "${homeDir}/.claude/plugins/marketplaces/local";
+        lastUpdated = "2025-01-01T00:00:00.000Z";
+        managedBy = "runtime";
+      };
+    };
+
+  # Generate symlinks for Nix-managed marketplaces
+  marketplaceSymlinks = lib.mapAttrs' (
+    name: marketplace:
+    lib.nameValuePair ".claude/plugins/marketplaces/${getMarketplaceName name}" {
+      source = marketplace.flakeInput;
+      force = true;
+    }
+  ) nixManagedMarketplaces;
+
+  # Base settings (without plugins)
+  baseSettings = {
     statusLine = {
       type = "command";
       command = "bunx ccusage statusline";
@@ -108,10 +176,76 @@ let
     };
     includeCoAuthoredBy = false;
   };
+
+  # Merge enabled plugins into settings
+  settings = baseSettings // optionalAttrs (cfg.plugins.enabled != { }) {
+    enabledPlugins = cfg.plugins.enabled;
+  };
+
+  # Generate skill file entries from anthropics-skills input
+  skillFiles = optionalAttrs cfg.skills.enable (
+    listToAttrs (map (skillName: {
+      name = ".claude/skills/${skillName}";
+      value = { source = "${inputs.anthropics-skills}/skills/${skillName}"; };
+    }) cfg.skills.names)
+  );
 in
 {
   options.modernage.cli-apps.claude-code = {
     enable = mkBoolOpt false "Whether or not to install and configure claude code.";
+
+    plugins = {
+      marketplaces = mkOption {
+        type = types.attrsOf marketplaceModule;
+        default = {
+          "anthropics/claude-plugins-official" = {
+            source = { type = "github"; url = "anthropics/claude-plugins-official"; };
+            flakeInput = inputs.claude-plugins-official;
+          };
+          "anthropics/skills" = {
+            source = { type = "github"; url = "anthropics/skills"; };
+            flakeInput = inputs.anthropics-skills;
+          };
+        };
+        description = "Plugin marketplaces to register";
+        example = literalExpression ''
+          {
+            "anthropics/claude-plugins-official" = {
+              source = { type = "github"; url = "anthropics/claude-plugins-official"; };
+              flakeInput = inputs.claude-plugins-official;
+            };
+          }
+        '';
+      };
+
+      enabled = mkOption {
+        type = types.attrsOf types.bool;
+        default = {
+          "plugin-dev@claude-plugins-official" = true;
+        };
+        description = "Plugins to enable in format 'plugin-name@marketplace-name'";
+        example = {
+          "code-review@claude-plugins-official" = true;
+          "frontend-design@claude-plugins-official" = true;
+        };
+      };
+
+      allowRuntimeInstall = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Allow runtime plugin installation via /plugin command";
+      };
+    };
+
+    skills = {
+      enable = mkBoolOpt false "Enable copying skills from anthropics-skills input";
+      names = mkOption {
+        type = types.listOf types.str;
+        default = [ ];
+        description = "Skill folder names to copy from anthropics/skills repo";
+        example = [ "document-skills" "example-skills" ];
+      };
+    };
   };
 
   config = mkIf cfg.enable {
@@ -123,6 +257,22 @@ in
       agentsDir = ./agents;
       commandsDir = ./commands;
     };
+
+    # Symlink Nix-managed marketplaces + skills
+    home.file = marketplaceSymlinks // skillFiles // {
+      # known_marketplaces.json - Claude needs this to find marketplaces
+      ".claude/plugins/known_marketplaces.json" = {
+        text = builtins.toJSON knownMarketplaces;
+      };
+    };
+
+    # Create local plugins directory for runtime installs
+    home.activation.claudePluginsSetup = mkIf cfg.plugins.allowRuntimeInstall (
+      config.lib.dag.entryAfter [ "writeBoundary" ] ''
+        run mkdir -p "${homeDir}/.claude/plugins/local"
+        run mkdir -p "${homeDir}/.claude/plugins/marketplaces/local"
+      ''
+    );
 
     home.packages = with pkgs; [
       claude-code-acp

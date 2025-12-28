@@ -84,6 +84,17 @@
       url = "github:sadjow/claude-code-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Claude Code plugins/skills sources
+    anthropics-skills = {
+      url = "github:anthropics/skills";
+      flake = false;
+    };
+
+    claude-plugins-official = {
+      url = "github:anthropics/claude-plugins-official";
+      flake = false;
+    };
   };
 
   outputs =
