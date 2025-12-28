@@ -84,12 +84,6 @@
       url = "github:sadjow/claude-code-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Claude Code skills/plugins
-    claude-code-elixir = {
-      url = "github:georgeguimaraes/claude-code-elixir";
-      flake = false;
-    };
   };
 
   outputs =
