@@ -206,6 +206,14 @@ in
             source = { type = "github"; url = "anthropics/skills"; };
             flakeInput = inputs.anthropics-skills;
           };
+          "kenryu42/cc-marketplace" = {
+            source = { type = "github"; url = "kenryu42/cc-marketplace"; };
+            flakeInput = inputs.cc-marketplace;
+          };
+          "sawyerhood/dev-browser" = {
+            source = { type = "github"; url = "sawyerhood/dev-browser"; };
+            flakeInput = inputs.dev-browser;
+          };
         };
         description = "Plugin marketplaces to register";
         example = literalExpression ''
@@ -222,6 +230,8 @@ in
         type = types.attrsOf types.bool;
         default = {
           "plugin-dev@claude-plugins-official" = true;
+          "safety-net@cc-marketplace" = true;
+          "dev-browser@dev-browser" = true;
         };
         description = "Plugins to enable in format 'plugin-name@marketplace-name'";
         example = {

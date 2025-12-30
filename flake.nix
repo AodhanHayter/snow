@@ -95,6 +95,16 @@
       url = "github:anthropics/claude-plugins-official";
       flake = false;
     };
+
+    cc-marketplace = {
+      url = "github:kenryu42/cc-marketplace";
+      flake = false;
+    };
+
+    dev-browser = {
+      url = "github:SawyerHood/dev-browser";
+      flake = false;
+    };
   };
 
   outputs =

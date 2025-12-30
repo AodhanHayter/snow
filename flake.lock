@@ -17,6 +17,22 @@
         "type": "github"
       }
     },
+    "anthropics-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1766254184,
+        "narHash": "sha256-pllFZoWRdtLliz/5pLWks0V9nKFMzeWoRcmFgu2UWi8=",
+        "owner": "anthropics",
+        "repo": "skills",
+        "rev": "69c0b1a0674149f27b61b2635f935524b6add202",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anthropics",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "beads": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -64,19 +80,19 @@
         "type": "github"
       }
     },
-    "claude-code-elixir": {
+    "cc-marketplace": {
       "flake": false,
       "locked": {
-        "lastModified": 1767039598,
-        "narHash": "sha256-F+Bk+Xfh0vUKdLpWJPkeNsFphcnfkhRjlCy5VqYcOxA=",
-        "owner": "georgeguimaraes",
-        "repo": "claude-code-elixir",
-        "rev": "57afedd5efb4f53498a63c4a15650f08eaab2757",
+        "lastModified": 1766842947,
+        "narHash": "sha256-w6/NCOrRRg8Hh6B1P2DZe3ZwSFl5EkoEi1V3JLBCkHo=",
+        "owner": "kenryu42",
+        "repo": "cc-marketplace",
+        "rev": "16400f496f89ec9f97684446425507c6975412d6",
         "type": "github"
       },
       "original": {
-        "owner": "georgeguimaraes",
-        "repo": "claude-code-elixir",
+        "owner": "kenryu42",
+        "repo": "cc-marketplace",
         "type": "github"
       }
     },
@@ -98,6 +114,22 @@
       "original": {
         "owner": "sadjow",
         "repo": "claude-code-nix",
+        "type": "github"
+      }
+    },
+    "claude-plugins-official": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1766118579,
+        "narHash": "sha256-JZNy8pFiYe2+vGkXO3jlBz0GGB1m95AWScNcHAL8kxM=",
+        "owner": "anthropics",
+        "repo": "claude-plugins-official",
+        "rev": "6d3752c000e2b3d0e6137bd7adb04895d6f40f14",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anthropics",
+        "repo": "claude-plugins-official",
         "type": "github"
       }
     },
@@ -199,6 +231,22 @@
       "original": {
         "type": "file",
         "url": "https://install.determinate.systems/determinate-nixd/tag/v3.15.1/x86_64-linux"
+      }
+    },
+    "dev-browser": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1766506857,
+        "narHash": "sha256-PRd6e5RN4wQ43qdNtPCtAIZ5RZOHn6UD8aYxJOfe7RA=",
+        "owner": "SawyerHood",
+        "repo": "dev-browser",
+        "rev": "b549fb0ecf9fa339100419d597ba4d04cda3e016",
+        "type": "github"
+      },
+      "original": {
+        "owner": "SawyerHood",
+        "repo": "dev-browser",
+        "type": "github"
       }
     },
     "disko": {
@@ -778,12 +826,15 @@
     "root": {
       "inputs": {
         "alacritty-themes": "alacritty-themes",
+        "anthropics-skills": "anthropics-skills",
         "beads": "beads",
-        "claude-code-elixir": "claude-code-elixir",
+        "cc-marketplace": "cc-marketplace",
         "claude-code-nix": "claude-code-nix",
+        "claude-plugins-official": "claude-plugins-official",
         "darwin": "darwin",
         "deploy-rs": "deploy-rs",
         "determinate": "determinate",
+        "dev-browser": "dev-browser",
         "disko": "disko",
         "expert": "expert",
         "ghostty": "ghostty",
