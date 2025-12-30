@@ -83,16 +83,17 @@
     "cc-marketplace": {
       "flake": false,
       "locked": {
-        "lastModified": 1766842947,
-        "narHash": "sha256-w6/NCOrRRg8Hh6B1P2DZe3ZwSFl5EkoEi1V3JLBCkHo=",
-        "owner": "kenryu42",
-        "repo": "cc-marketplace",
-        "rev": "16400f496f89ec9f97684446425507c6975412d6",
+        "lastModified": 1767134021,
+        "narHash": "sha256-l/fVeN6uv56ybSHSHevy6u9qxdusK0aikXjxvEv5Fis=",
+        "owner": "AodhanHayter",
+        "repo": "claude-code-safety-net",
+        "rev": "126b351a68dccd76d30c7377f323a6610c259246",
         "type": "github"
       },
       "original": {
-        "owner": "kenryu42",
-        "repo": "cc-marketplace",
+        "owner": "AodhanHayter",
+        "ref": "fix/py3.9-incompatible-type-annotations",
+        "repo": "claude-code-safety-net",
         "type": "github"
       }
     },
@@ -114,6 +115,22 @@
       "original": {
         "owner": "sadjow",
         "repo": "claude-code-nix",
+        "type": "github"
+      }
+    },
+    "claude-lsp-plugins": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767139028,
+        "narHash": "sha256-Z6/blhLXOUOtScHzjHGah13Jadqv1AIWFrXqUIFpqnQ=",
+        "owner": "AodhanHayter",
+        "repo": "claude-lsp-plugins",
+        "rev": "a77a0ab0dc203134d7e48dee42b07384c11e4dfb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AodhanHayter",
+        "repo": "claude-lsp-plugins",
         "type": "github"
       }
     },
@@ -652,11 +669,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1766568855,
-        "narHash": "sha256-UXVtN77D7pzKmzOotFTStgZBqpOcf8cO95FcupWp4Zo=",
+        "lastModified": 1767070591,
+        "narHash": "sha256-b0aM3221Pw6vbACFqZrVzZjMNqXVPi1dvgLr8QTbajc=",
         "owner": "nixos",
         "repo": "nixos-hardware",
-        "rev": "c5db9569ac9cc70929c268ac461f4003e3e5ca80",
+        "rev": "9b3c38bf6c260d0e88154ef07fa833fa845bfd14",
         "type": "github"
       },
       "original": {
@@ -830,6 +847,7 @@
         "beads": "beads",
         "cc-marketplace": "cc-marketplace",
         "claude-code-nix": "claude-code-nix",
+        "claude-lsp-plugins": "claude-lsp-plugins",
         "claude-plugins-official": "claude-plugins-official",
         "darwin": "darwin",
         "deploy-rs": "deploy-rs",

@@ -38,7 +38,8 @@ let
   nixManagedMarketplaces = filterAttrs (_: m: m.flakeInput != null) cfg.plugins.marketplaces;
 
   # Transform marketplaces to Claude known_marketplaces.json format
-  toNativeFormat = name: m:
+  toNativeFormat =
+    name: m:
     let
       marketplaceName = getMarketplaceName name;
       localPath = "${homeDir}/.claude/plugins/marketplaces/${marketplaceName}";
@@ -178,16 +179,22 @@ let
   };
 
   # Merge enabled plugins into settings
-  settings = baseSettings // optionalAttrs (cfg.plugins.enabled != { }) {
-    enabledPlugins = cfg.plugins.enabled;
-  };
+  settings =
+    baseSettings
+    // optionalAttrs (cfg.plugins.enabled != { }) {
+      enabledPlugins = cfg.plugins.enabled;
+    };
 
   # Generate skill file entries from anthropics-skills input
   skillFiles = optionalAttrs cfg.skills.enable (
-    listToAttrs (map (skillName: {
-      name = ".claude/skills/${skillName}";
-      value = { source = "${inputs.anthropics-skills}/skills/${skillName}"; };
-    }) cfg.skills.names)
+    listToAttrs (
+      map (skillName: {
+        name = ".claude/skills/${skillName}";
+        value = {
+          source = "${inputs.anthropics-skills}/skills/${skillName}";
+        };
+      }) cfg.skills.names
+    )
   );
 in
 {
@@ -199,20 +206,39 @@ in
         type = types.attrsOf marketplaceModule;
         default = {
           "anthropics/claude-plugins-official" = {
-            source = { type = "github"; url = "anthropics/claude-plugins-official"; };
+            source = {
+              type = "github";
+              url = "anthropics/claude-plugins-official";
+            };
             flakeInput = inputs.claude-plugins-official;
           };
           "anthropics/skills" = {
-            source = { type = "github"; url = "anthropics/skills"; };
+            source = {
+              type = "github";
+              url = "anthropics/skills";
+            };
             flakeInput = inputs.anthropics-skills;
           };
           "kenryu42/cc-marketplace" = {
-            source = { type = "github"; url = "kenryu42/cc-marketplace"; };
+            source = {
+              type = "github";
+              url = "kenryu42/cc-marketplace";
+            };
             flakeInput = inputs.cc-marketplace;
           };
           "sawyerhood/dev-browser" = {
-            source = { type = "github"; url = "sawyerhood/dev-browser"; };
+            source = {
+              type = "github";
+              url = "sawyerhood/dev-browser";
+            };
             flakeInput = inputs.dev-browser;
+          };
+          "AodhanHayter/claude-lsp-plugins" = {
+            source = {
+              type = "github";
+              url = "AodhanHayter/claude-lsp-plugins";
+            };
+            flakeInput = inputs.claude-lsp-plugins;
           };
         };
         description = "Plugin marketplaces to register";
@@ -232,6 +258,7 @@ in
           "plugin-dev@claude-plugins-official" = true;
           "safety-net@cc-marketplace" = true;
           "dev-browser@dev-browser" = true;
+          "lsp-configs@claude-lsp-plugins" = true;
         };
         description = "Plugins to enable in format 'plugin-name@marketplace-name'";
         example = {
@@ -253,7 +280,10 @@ in
         type = types.listOf types.str;
         default = [ ];
         description = "Skill folder names to copy from anthropics/skills repo";
-        example = [ "document-skills" "example-skills" ];
+        example = [
+          "document-skills"
+          "example-skills"
+        ];
       };
     };
   };
@@ -269,12 +299,15 @@ in
     };
 
     # Symlink Nix-managed marketplaces + skills
-    home.file = marketplaceSymlinks // skillFiles // {
-      # known_marketplaces.json - Claude needs this to find marketplaces
-      ".claude/plugins/known_marketplaces.json" = {
-        text = builtins.toJSON knownMarketplaces;
+    home.file =
+      marketplaceSymlinks
+      // skillFiles
+      // {
+        # known_marketplaces.json - Claude needs this to find marketplaces
+        ".claude/plugins/known_marketplaces.json" = {
+          text = builtins.toJSON knownMarketplaces;
+        };
       };
-    };
 
     # Create local plugins directory for runtime installs
     home.activation.claudePluginsSetup = mkIf cfg.plugins.allowRuntimeInstall (
