@@ -22,7 +22,6 @@ in
       astro-language-server
       dockerfile-language-server
       expert
-      dockerfile-language-server-nodejs
       lua-language-server
       marksman
       nixd
@@ -32,6 +31,7 @@ in
       typescript-language-server
       basedpyright
       terraform-ls
+      ty
       vscode-langservers-extracted
       yaml-language-server
       ###
