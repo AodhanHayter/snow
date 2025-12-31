@@ -24,6 +24,7 @@ in
       expert
       lua-language-server
       marksman
+      nil
       nixd
       nixpkgs-fmt
       diagnostic-languageserver

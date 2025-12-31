@@ -258,7 +258,9 @@ in
           "plugin-dev@claude-plugins-official" = true;
           "safety-net@cc-marketplace" = true;
           "dev-browser@dev-browser" = true;
-          "lsp-configs@claude-lsp-plugins" = true;
+          "nix-lsp@claude-lsp-plugins" = true;
+          "python-lsp@claude-lsp-plugins" = true;
+          "elixir-lsp@claude-lsp-plugins" = true;
         };
         description = "Plugins to enable in format 'plugin-name@marketplace-name'";
         example = {
