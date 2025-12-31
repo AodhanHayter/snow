@@ -121,11 +121,11 @@
     "claude-lsp-plugins": {
       "flake": false,
       "locked": {
-        "lastModified": 1767139807,
-        "narHash": "sha256-dOFGiqJIc7s+fRwN0D7C8rN1hPN/TrSdB7K+zOl0QQU=",
+        "lastModified": 1767143828,
+        "narHash": "sha256-ND1h9FztOhQjr2x56rcvGUYXaMiZogjvWjGm+u0ZtL4=",
         "owner": "AodhanHayter",
         "repo": "claude-lsp-plugins",
-        "rev": "a52b46ba1ad0ae1fb5f2d0a707ae8f70911827c7",
+        "rev": "91829977a92ce5fb3790b5a05173d26c6b3b69a8",
         "type": "github"
       },
       "original": {
