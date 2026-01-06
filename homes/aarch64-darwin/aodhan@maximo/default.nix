@@ -57,6 +57,7 @@ with lib.modernage;
 
   # Wake-on-LAN for waking ultimo
   home.packages = [ pkgs.wakeonlan ];
+  home.shellAliases.wake-ultimo = "wakeonlan a8:a1:59:a8:d9:5f";
 
   home.stateVersion = "22.11";
 }
