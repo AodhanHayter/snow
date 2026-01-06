@@ -18,7 +18,7 @@ in
     ]) "server" "The role this k3s machine should take";
     clusterInit = mkBoolOpt false "Initialize HA cluster using an embedded etcd datastore";
     tokenFile =
-      mkOpt path null
+      mkOpt (nullOr path) null
         "Path to a file containing the k3s cluster token. Required for agents and recommended for servers.";
   };
 

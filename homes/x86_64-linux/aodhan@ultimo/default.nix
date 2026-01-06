@@ -29,7 +29,7 @@ with lib.modernage;
       bat = enabled;
       beads-viewer = enabled;
       claude-code = enabled;
-      codex = enabled;
+      codex-cli = enabled;
       dog = enabled;
       entr = enabled;
       eza = enabled;

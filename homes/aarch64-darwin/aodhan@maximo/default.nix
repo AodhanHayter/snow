@@ -24,6 +24,7 @@ with lib.modernage;
       beads = enabled;
       beads-viewer = enabled;
       claude-code = enabled;
+      codex-cli = enabled;
       dog = enabled;
       entr = enabled;
       eza = enabled;

@@ -63,7 +63,7 @@ in
       nautilus # file manager (optional, can be replaced with yazi)
       pavucontrol # volume control GUI
       quickshell
-      rofi-wayland # application launcher for Hyprland
+      rofi # application launcher for Hyprland
       libsecret # keyring cli
       (sddm-astronaut.override { embeddedTheme = "pixel_sakura"; })
       waybar # status bar for Hyprland

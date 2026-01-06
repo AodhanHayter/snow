@@ -29,7 +29,7 @@ in
       defaultSopsFormat = "yaml";
       age.keyFile = "${home-directory}/.config/sops/age/keys.txt";
       secrets = {
-        "k3s-token" = { };
+        "k3s/token" = { };
       };
     };
 
