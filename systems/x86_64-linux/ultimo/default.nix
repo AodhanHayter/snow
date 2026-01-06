@@ -45,6 +45,7 @@ with lib.modernage;
     capSysAdmin = true;  # Required for KMS capture
     openFirewall = true;
   };
+  modernage.user.extraGroups = [ "input" ];  # Required for Sunshine input control
   # Sunshine needs avahi for discovery
   networking.firewall.allowedUDPPorts = [ 5353 ];
 
