@@ -45,22 +45,12 @@ with lib.modernage;
     capSysAdmin = true;  # Required for KMS capture
     openFirewall = true;
   };
-  modernage.user.extraGroups = [ "input" ];  # Required for Sunshine input control
+  modernage.user.extraGroups = [ "uinput" ];  # Required for Sunshine input control
   # Auto-login for remote desktop access via Sunshine
   services.displayManager.autoLogin = {
     enable = true;
     user = "aodhan";
   };
-  # udev rule to allow input group access to uinput (high priority to override sunshine's rule)
-  services.udev.packages = [
-    (pkgs.writeTextFile {
-      name = "sunshine-uinput-udev";
-      destination = "/etc/udev/rules.d/50-uinput.rules";
-      text = ''
-        KERNEL=="uinput", SUBSYSTEM=="misc", GROUP="input", MODE="0660", OPTIONS+="static_node=uinput"
-      '';
-    })
-  ];
   # Sunshine needs avahi for discovery
   networking.firewall.allowedUDPPorts = [ 5353 ];
 
