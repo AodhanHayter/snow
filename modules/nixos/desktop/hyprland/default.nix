@@ -51,6 +51,7 @@ in
     };
 
     environment.systemPackages = with pkgs; [
+      adwaita-icon-theme # traditional cursor theme
       bluetui # Bluetooth management tool
       btop # system resource monitor
       dunst # lightweight notification daemon
