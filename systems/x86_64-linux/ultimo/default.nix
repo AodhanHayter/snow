@@ -51,10 +51,16 @@ with lib.modernage;
     enable = true;
     user = "aodhan";
   };
-  # udev rule to allow input group access to uinput
-  services.udev.extraRules = ''
-    KERNEL=="uinput", GROUP="input", MODE="0660"
-  '';
+  # udev rule to allow input group access to uinput (high priority to override sunshine's rule)
+  services.udev.packages = [
+    (pkgs.writeTextFile {
+      name = "sunshine-uinput-udev";
+      destination = "/etc/udev/rules.d/50-uinput.rules";
+      text = ''
+        KERNEL=="uinput", SUBSYSTEM=="misc", GROUP="input", MODE="0660", OPTIONS+="static_node=uinput"
+      '';
+    })
+  ];
   # Sunshine needs avahi for discovery
   networking.firewall.allowedUDPPorts = [ 5353 ];
 
