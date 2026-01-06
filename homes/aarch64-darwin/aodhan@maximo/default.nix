@@ -55,5 +55,8 @@ with lib.modernage;
     };
   };
 
+  # Wake-on-LAN for waking ultimo
+  home.packages = [ pkgs.wakeonlan ];
+
   home.stateVersion = "22.11";
 }

@@ -23,8 +23,30 @@ with lib.modernage;
 
       # Enable keyd for macOS-style keyboard shortcuts
       keyd = enabled;
+
+      # Server capabilities
+      openssh = enabled;
+      avahi = enabled;
     };
   };
+
+  # Always-on server mode - disable auto-suspend but allow manual shutdown
+  powerManagement.enable = false;
+  services.logind.settings.Login = {
+    HandleLidSwitch = "ignore";
+    HandlePowerKey = "poweroff";  # Power button = clean shutdown
+    IdleAction = "ignore";
+  };
+
+  # Sunshine remote desktop (NVIDIA hardware encoding)
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;  # Required for KMS capture
+    openFirewall = true;
+  };
+  # Sunshine needs avahi for discovery
+  networking.firewall.allowedUDPPorts = [ 5353 ];
 
   virtualisation.vmVariant = {
     users.users.testuser = {
