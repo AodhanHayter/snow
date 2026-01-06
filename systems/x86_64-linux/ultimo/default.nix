@@ -46,6 +46,7 @@ with lib.modernage;
     openFirewall = true;
   };
   modernage.user.extraGroups = [ "input" ];  # Required for Sunshine input control
+  users.users.aodhan.linger = true;  # Start user services at boot (for Sunshine)
   # udev rule to allow input group access to uinput
   services.udev.extraRules = ''
     KERNEL=="uinput", GROUP="input", MODE="0660"
