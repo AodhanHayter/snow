@@ -37,7 +37,7 @@ in
           ".profile".text = ''
             # The default file limit is far too low and throws an error when rebuilding the system.
             # See the original with: ulimit -Sa
-            ulimit -n 4096
+            ulimit -n 10240
           '';
         };
       };
