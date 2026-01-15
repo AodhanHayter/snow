@@ -30,7 +30,6 @@ in
       diagnostic-languageserver
       bash-language-server
       typescript-language-server
-      basedpyright
       terraform-ls
       ty
       vscode-langservers-extracted

@@ -32,6 +32,7 @@ with lib.modernage;
       fzf = enabled;
       gemini-cli = enabled;
       gh = enabled;
+      gogcli = enabled;
       home-manager = enabled;
       jq = enabled;
       neovim = enabled;

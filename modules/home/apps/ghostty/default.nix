@@ -19,6 +19,10 @@ let
     shell-integration = zsh
     shell-integration-features = cursor,sudo,title
 
+    # set update channel to install from main
+    # to get latest changes
+    auto-update-channel = tip
+
     # keybindings
     ## windows
     keybind = ctrl+g>n=new_window
