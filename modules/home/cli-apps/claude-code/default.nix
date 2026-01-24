@@ -164,8 +164,6 @@ let
         "Bash(devenv:*)"
         "Bash(direnv:*)"
 
-        # Beads - AI agent issue tracker
-        "Bash(bd:*)"
       ];
       deny = [ ];
     };
