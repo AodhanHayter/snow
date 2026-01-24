@@ -32,6 +32,7 @@ in
       ignores = [
         "aodhanlocal"
         "agentlocal"
+        ".expert"
       ];
       settings = {
         user = {
