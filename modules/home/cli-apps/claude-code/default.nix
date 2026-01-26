@@ -238,6 +238,13 @@ in
             };
             flakeInput = inputs.claude-lsp-plugins;
           };
+          "pzep1/xcode-build-skill" = {
+            source = {
+              type = "github";
+              url = "pzep1/xcode-build-skill";
+            };
+            flakeInput = inputs.xcode-build-skill;
+          };
         };
         description = "Plugin marketplaces to register";
         example = literalExpression ''
@@ -259,6 +266,7 @@ in
           "nix-lsp@claude-lsp-plugins" = true;
           "python-lsp@claude-lsp-plugins" = true;
           "elixir-lsp@claude-lsp-plugins" = true;
+          "xcode-build-skill@xcode-build-skill" = true;
         };
         description = "Plugins to enable in format 'plugin-name@marketplace-name'";
         example = {

@@ -33,28 +33,6 @@
         "type": "github"
       }
     },
-    "beads": {
-      "inputs": {
-        "flake-utils": "flake-utils",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1766948342,
-        "narHash": "sha256-SuL0VslJwCFFYACpQDlzYqgARb2FGKFIlx7N5lo9n9A=",
-        "owner": "steveyegge",
-        "repo": "beads",
-        "rev": "6f00e482959028cc05f84affc6b5dd21db958eb4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "steveyegge",
-        "ref": "v0.40.0",
-        "repo": "beads",
-        "type": "github"
-      }
-    },
     "beam-flakes": {
       "inputs": {
         "flake-parts": [
@@ -99,7 +77,7 @@
     },
     "claude-code-nix": {
       "inputs": {
-        "flake-utils": "flake-utils_2",
+        "flake-utils": "flake-utils",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -152,7 +130,7 @@
     },
     "codex-cli-nix": {
       "inputs": {
-        "flake-utils": "flake-utils_3",
+        "flake-utils": "flake-utils_2",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -453,7 +431,7 @@
     },
     "flake-utils-plus": {
       "inputs": {
-        "flake-utils": "flake-utils_5"
+        "flake-utils": "flake-utils_4"
       },
       "locked": {
         "lastModified": 1715533576,
@@ -490,7 +468,7 @@
     },
     "flake-utils_3": {
       "inputs": {
-        "systems": "systems_3"
+        "systems": "systems_4"
       },
       "locked": {
         "lastModified": 1731533236,
@@ -511,24 +489,6 @@
         "systems": "systems_5"
       },
       "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "flake-utils_5": {
-      "inputs": {
-        "systems": "systems_6"
-      },
-      "locked": {
         "lastModified": 1694529238,
         "narHash": "sha256-zsNZZGTGnMOf9YpHKJqMSsa0dXbfmxeoJ7xHlrt+xmY=",
         "owner": "numtide",
@@ -545,7 +505,7 @@
     "ghostty": {
       "inputs": {
         "flake-compat": "flake-compat_3",
-        "flake-utils": "flake-utils_4",
+        "flake-utils": "flake-utils_3",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "zig": "zig",
@@ -883,7 +843,6 @@
       "inputs": {
         "alacritty-themes": "alacritty-themes",
         "anthropics-skills": "anthropics-skills",
-        "beads": "beads",
         "cc-marketplace": "cc-marketplace",
         "claude-code-nix": "claude-code-nix",
         "claude-lsp-plugins": "claude-lsp-plugins",
@@ -905,7 +864,8 @@
         "opencode": "opencode",
         "snowfall-lib": "snowfall-lib",
         "sops-nix": "sops-nix",
-        "unstable": "unstable"
+        "unstable": "unstable",
+        "xcode-build-skill": "xcode-build-skill"
       }
     },
     "snowfall-lib": {
@@ -1025,21 +985,6 @@
         "type": "github"
       }
     },
-    "systems_6": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
     "unstable": {
       "locked": {
         "lastModified": 1769018530,
@@ -1058,7 +1003,7 @@
     },
     "utils": {
       "inputs": {
-        "systems": "systems_4"
+        "systems": "systems_3"
       },
       "locked": {
         "lastModified": 1731533236,
@@ -1071,6 +1016,22 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "xcode-build-skill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1765970569,
+        "narHash": "sha256-Bb3rVPz+mwD00ES0MFBCo485nfyFdGwKUBhFpAh842U=",
+        "owner": "pzep1",
+        "repo": "xcode-build-skill",
+        "rev": "d3d4d5b491bdd2a2d1c8a525db768bd43634f12a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pzep1",
+        "repo": "xcode-build-skill",
         "type": "github"
       }
     },

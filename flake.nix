@@ -110,6 +110,11 @@
       url = "github:AodhanHayter/claude-lsp-plugins";
       flake = false;
     };
+
+    xcode-build-skill = {
+      url = "github:pzep1/xcode-build-skill";
+      flake = false;
+    };
   };
 
   outputs =
