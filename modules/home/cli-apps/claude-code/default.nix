@@ -261,11 +261,19 @@ in
         type = types.attrsOf types.bool;
         default = {
           "plugin-dev@claude-plugins-official" = true;
+          "playground@claude-plugins-official" = true;
+          "pr-review-toolkit@claude-plugins-official" = true;
+          "claude-md-management@claude-plugins-official" = true;
+          "code-simplifier@claude-plugins-official" = true;
+          "commit-commands@claude-plugins-official" = true;
+          "feature-dev@claude-plugins-official" = true;
+          "frontend-design@claude-plugins-official" = true;
           "safety-net@cc-marketplace" = true;
           "dev-browser@dev-browser" = true;
           "nix-lsp@claude-lsp-plugins" = true;
           "python-lsp@claude-lsp-plugins" = true;
           "elixir-lsp@claude-lsp-plugins" = true;
+          "swift-lsp@claude-lsp-plugins" = true;
           "xcode-build-skill@xcode-build-skill" = true;
         };
         description = "Plugins to enable in format 'plugin-name@marketplace-name'";

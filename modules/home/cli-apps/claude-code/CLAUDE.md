@@ -26,3 +26,7 @@ When working in a repository use the agentlocal directory to store ephemeral fil
 ## Plans
 
 - At the end of each plan, give me a list of unresolved questions to answer, if any. Make the questions extremely concise. Sacrifice grammar for the sake of concision.
+
+## Shell
+
+- `rm` is aliased to interactive mode; use `rm -f` to bypass in scripts.
