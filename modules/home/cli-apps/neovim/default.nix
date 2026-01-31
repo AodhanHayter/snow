@@ -23,7 +23,7 @@ in
       dockerfile-language-server
       expert
       lua-language-server
-      marksman
+      # marksman # disabled: swift build broken on nixos-25.11
       nil
       nixd
       nixpkgs-fmt

@@ -81,7 +81,7 @@ let
   baseSettings = {
     statusLine = {
       type = "command";
-      command = "bunx ccusage statusline";
+      command = "bun x ccusage statusline";
       padding = 0;
     };
     permissions = {
