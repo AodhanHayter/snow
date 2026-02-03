@@ -17,7 +17,7 @@ let
     copy-on-select = clipboard
     quick-terminal-position = bottom
     shell-integration = zsh
-    shell-integration-features = cursor,sudo,title
+    shell-integration-features = cursor,sudo,title,ssh-terminfo,ssh-env
 
     # set update channel to install from main
     # to get latest changes
