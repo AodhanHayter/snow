@@ -128,6 +128,22 @@
         "type": "github"
       }
     },
+    "claude-swift-engineering": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1768713854,
+        "narHash": "sha256-wCRgfflMek7gcJWdacXeDOK7syZeIzhyYeupAdILI1k=",
+        "owner": "johnrogers",
+        "repo": "claude-swift-engineering",
+        "rev": "1dc2cf4d020bd524168f20bec95104da6cb2888c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "johnrogers",
+        "repo": "claude-swift-engineering",
+        "type": "github"
+      }
+    },
     "codex-cli-nix": {
       "inputs": {
         "flake-utils": "flake-utils_2",
@@ -847,6 +863,7 @@
         "claude-code-nix": "claude-code-nix",
         "claude-lsp-plugins": "claude-lsp-plugins",
         "claude-plugins-official": "claude-plugins-official",
+        "claude-swift-engineering": "claude-swift-engineering",
         "codex-cli-nix": "codex-cli-nix",
         "darwin": "darwin",
         "deploy-rs": "deploy-rs",

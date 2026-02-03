@@ -120,6 +120,11 @@
       url = "github:conorluddy/xclaude-plugin";
       flake = false;
     };
+
+    claude-swift-engineering = {
+      url = "github:johnrogers/claude-swift-engineering";
+      flake = false;
+    };
   };
 
   outputs =

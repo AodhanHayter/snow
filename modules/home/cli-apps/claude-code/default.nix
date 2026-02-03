@@ -252,6 +252,13 @@ in
             };
             flakeInput = inputs.xclaude-plugin;
           };
+          "johnrogers/claude-swift-engineering" = {
+            source = {
+              type = "github";
+              url = "johnrogers/claude-swift-engineering";
+            };
+            flakeInput = inputs.claude-swift-engineering;
+          };
         };
         description = "Plugin marketplaces to register";
         example = literalExpression ''
@@ -283,6 +290,7 @@ in
           "swift-lsp@claude-lsp-plugins" = true;
           "xcode-build-skill@xcode-build-skill" = true;
           "xclaude-plugin@xclaude-plugin" = true;
+          "swift-engineering@claude-swift-engineering" = true;
         };
         description = "Plugins to enable in format 'plugin-name@marketplace-name'";
         example = {
