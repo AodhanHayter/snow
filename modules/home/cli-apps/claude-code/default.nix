@@ -320,6 +320,7 @@ in
       memory.source = ./CLAUDE.md;
       agentsDir = ./agents;
       commandsDir = ./commands;
+      skillsDir = ./skills;
     };
 
     # Symlink Nix-managed marketplaces + skills

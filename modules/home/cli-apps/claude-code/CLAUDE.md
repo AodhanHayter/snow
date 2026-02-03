@@ -30,3 +30,15 @@ When working in a repository use the agentlocal directory to store ephemeral fil
 ## Shell
 
 - `rm` is aliased to interactive mode; use `rm -f` to bypass in scripts.
+
+## Skills
+
+Skills are reference documents in `skills/` dir. Format:
+```md
+---
+description: Brief description for skill discovery
+---
+# Skill content...
+```
+
+Module option: `skillsDir = ./skills;`
