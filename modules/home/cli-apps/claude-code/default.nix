@@ -245,6 +245,13 @@ in
             };
             flakeInput = inputs.xcode-build-skill;
           };
+          "conorluddy/xclaude-plugin" = {
+            source = {
+              type = "github";
+              url = "conorluddy/xclaude-plugin";
+            };
+            flakeInput = inputs.xclaude-plugin;
+          };
         };
         description = "Plugin marketplaces to register";
         example = literalExpression ''
@@ -275,6 +282,7 @@ in
           "elixir-lsp@claude-lsp-plugins" = true;
           "swift-lsp@claude-lsp-plugins" = true;
           "xcode-build-skill@xcode-build-skill" = true;
+          "xclaude-plugin@xclaude-plugin" = true;
         };
         description = "Plugins to enable in format 'plugin-name@marketplace-name'";
         example = {

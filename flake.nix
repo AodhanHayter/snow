@@ -115,6 +115,11 @@
       url = "github:pzep1/xcode-build-skill";
       flake = false;
     };
+
+    xclaude-plugin = {
+      url = "github:conorluddy/xclaude-plugin";
+      flake = false;
+    };
   };
 
   outputs =
@@ -166,5 +171,42 @@
       checks = builtins.mapAttrs (
         system: deploy-lib: deploy-lib.deployChecks inputs.self.deploy
       ) inputs.deploy-rs.lib;
+
+      # VM configurations for use with claude-vm tool.
+      # Each config defines a VM that can be created/started via:
+      #   vm create <name> --flake=~/development/snow
+      #   vm start <name> --project=<path>
+      #
+      # Fields:
+      #   darwinConfiguration - nix-darwin config from systems/aarch64-darwin/<name>
+      #   image - OCI image for base VM (Cirrus macOS images)
+      #   readOnlyMounts - host dirs mounted read-only (configs, credentials)
+      #   symlinks - VM home symlinks: { ".ssh" = "ssh" } links ~/.ssh -> mount/ssh
+      vmConfigurations = {
+        claude-agent = {
+          # Which darwin config to apply (matches systems/aarch64-darwin/<name>)
+          darwinConfiguration = "claude-vm";
+
+          # Base image to use
+          image = "ghcr.io/cirruslabs/macos-tahoe-base:latest";
+
+          # Directories to mount read-only from host
+          readOnlyMounts = [
+            "~/.ssh"
+            "~/.gitconfig"
+            "~/.config/git"
+            "~/.claude"
+            "~/.gnupg"
+          ];
+
+          # Symlinks to create in VM (VM path -> mount path)
+          symlinks = {
+            ".ssh" = "ssh";
+            ".gitconfig" = "gitconfig/.gitconfig";
+            ".claude" = "claude";
+            ".gnupg" = "gnupg";
+          };
+        };
+      };
     };
 }
