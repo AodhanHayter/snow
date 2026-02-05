@@ -19,6 +19,13 @@ in
         common = enabled;
         development = enabled;
       };
+
+      security = {
+        ssh = {
+          enable = true;
+          server = true;
+        };
+      };
     };
   };
 }

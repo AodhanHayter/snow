@@ -11,6 +11,13 @@ let
 
   is-linux = pkgs.stdenv.isLinux;
   is-darwin = pkgs.stdenv.isDarwin;
+
+  authorizedKeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFnEsBv5zrOZzeQSymd/WKottg28l0mav/J0m0/Q3E4X aodhan.hayter@gmail.com"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMTBSBlivmm4W46rP9m+qHPwumFuepcjP9Jl6iYhcZS5 aodhan.hayter@gmail.com"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL5Gq86apfFdEbHIvTK+n1f7txgRYDakWfTARSzct0om aodhan.hayter@gmail.com"
+    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBL2eiUV5XxJPf6LaHmwGKNHnUyItlp4y1kt64kVlcsvzlU62Pe9GAsduW1Iv1K/gGCwRPj5wK5jf6derQqbydYM= #ssh.id - @aodhanhayter"
+  ];
 in
 {
   options.modernage.user = {
@@ -39,6 +46,7 @@ in
             # See the original with: ulimit -Sa
             ulimit -n 10240
           '';
+          ".ssh/authorized_keys".text = lib.concatStringsSep "\n" authorizedKeys + "\n";
         };
       };
     };
