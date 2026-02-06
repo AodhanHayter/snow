@@ -19,6 +19,7 @@ in
       mkOpt str "password"
         "The initial password to use when the user is first created.";
     prompt-init = mkBoolOpt true "Whether or not to show an initial message when opening a new shell.";
+    shell = mkOpt (enum [ "fish" "zsh" ]) "fish" "Default login shell.";
     extraGroups = mkOpt (listOf str) [ ] "Groups for the user to be assigned.";
     extraOptions = mkOpt attrs { } (mdDoc "Extra options passed to `users.users.<name>`.");
   };
@@ -35,6 +36,8 @@ in
       autosuggestions.enable = true;
       histFile = "$XDG_CACHE_HOME/zsh.history";
     };
+
+    programs.fish.enable = true;
 
     modernage.home = {
       file = {
@@ -127,26 +130,6 @@ in
                   sha256 = "037wz9fqmx0ngcwl9az55fgkipb745rymznxnssr3rx9irb6apzg";
                 };
               }
-              {
-                name = "zsh-async";
-                file = "async.zsh";
-                src = pkgs.fetchFromGitHub {
-                  owner = "mafredri";
-                  repo = "zsh-async";
-                  rev = "v1.8.6";
-                  sha256 = "sha256-Js/9vGGAEqcPmQSsumzLfkfwljaFWHJ9sMWOgWDi0NI=";
-                };
-              }
-              {
-                name = "pure";
-                file = "pure.zsh";
-                src = pkgs.fetchFromGitHub {
-                  owner = "sindresorhus";
-                  repo = "pure";
-                  rev = "v1.20.1";
-                  sha256 = "sha256-iuLi0o++e0PqK81AKWfIbCV0CTIxq2Oki6U2oEYsr68=";
-                };
-              }
             ];
           };
         };
@@ -161,7 +144,7 @@ in
       home = "/home/${cfg.name}";
       group = "users";
 
-      shell = pkgs.zsh;
+      shell = if cfg.shell == "fish" then pkgs.fish else pkgs.zsh;
 
       # Arbitrary user ID to use for the user. Since I only
       # have a single user on my machines this won't ever collide.

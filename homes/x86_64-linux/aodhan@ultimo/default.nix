@@ -24,7 +24,9 @@ with lib.modernage;
 
     cli-apps = {
       ast-grep = enabled;
-      autojump = enabled;
+      fish = enabled;
+      starship = enabled;
+      zoxide = enabled;
       awscli = disabled;
       bat = enabled;
       claude-code = enabled;
@@ -48,6 +50,8 @@ with lib.modernage;
       yq = enabled;
       zsh = enabled;
     };
+
+    shell = enabled;
 
     tools = {
       devenv = enabled;

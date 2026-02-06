@@ -110,26 +110,6 @@ in
               sha256 = "037wz9fqmx0ngcwl9az55fgkipb745rymznxnssr3rx9irb6apzg";
             };
           }
-          {
-            name = "zsh-async";
-            file = "async.zsh";
-            src = pkgs.fetchFromGitHub {
-              owner = "mafredri";
-              repo = "zsh-async";
-              rev = "v1.8.6";
-              sha256 = "sha256-Js/9vGGAEqcPmQSsumzLfkfwljaFWHJ9sMWOgWDi0NI=";
-            };
-          }
-          {
-            name = "pure";
-            file = "pure.zsh";
-            src = pkgs.fetchFromGitHub {
-              owner = "sindresorhus";
-              repo = "pure";
-              rev = "v1.23.0";
-              sha256 = "sha256-iuLi0o++e0PqK81AKWfIbCV0CTIxq2Oki6U2oEYsr68=";
-            };
-          }
         ];
       };
     };

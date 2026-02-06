@@ -1,0 +1,61 @@
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+with lib;
+with lib.modernage;
+let
+  cfg = config.modernage.cli-apps.fish;
+in
+{
+  options.modernage.cli-apps.fish = {
+    enable = mkBoolOpt false "Whether or not to enable fish shell configuration.";
+  };
+
+  config = mkIf cfg.enable {
+    programs.fish = {
+      enable = true;
+
+      interactiveShellInit = ''
+        fish_vi_key_bindings
+        set -gx PATH $HOME/.local/bin $PATH
+        set -gx ERL_AFLAGS "-kernel shell_history enabled"
+      '';
+
+      functions = {
+        pg = ''
+          if test (count $argv) -gt 0
+            PGSERVICE=$argv[1] $HOME/.nix-profile/bin/pgcli
+          else
+            echo 'A valid service name is required for this function'
+          end
+        '';
+
+        aws_login = ''
+          saml2aws login --session-duration 43200 --username "ahayter@kyruus.com" --duo-mfa-option="Duo Push" --skip-prompt --force --role="arn:aws:iam::206670668379:role/kyruusone-engineer"
+        '';
+
+        aws_env = ''
+          set -gx AWS_ACCESS_KEY_ID (aws configure get default.aws_access_key_id)
+          set -gx AWS_SECRET_ACCESS_KEY (aws configure get default.aws_secret_access_key)
+          set -gx AWS_SESSION_TOKEN (aws configure get default.aws_session_token)
+          set -gx AWS_SECURITY_TOKEN (aws configure get default.aws_security_token)
+        '';
+      };
+
+      plugins = [
+        {
+          name = "fzf.fish";
+          src = pkgs.fetchFromGitHub {
+            owner = "PatrickF1";
+            repo = "fzf.fish";
+            rev = "v10.3";
+            sha256 = "sha256-T8KYLA/r/gOKvAivKRoeqIwE2pINlxFQtZJHpOy9GMM=";
+          };
+        }
+      ];
+    };
+  };
+}

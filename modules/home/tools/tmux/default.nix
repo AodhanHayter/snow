@@ -28,5 +28,22 @@ in
         session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
       }
     '';
+
+    programs.fish.functions.tm = ''
+      if set -q TMUX
+        set change switch-client
+      else
+        set change attach-session
+      end
+      if test (count $argv) -gt 0
+        tmux $change -t "$argv[1]" 2>/dev/null; or begin
+          tmux new-session -d -s $argv[1]; and tmux $change -t "$argv[1]"
+        end
+        return
+      end
+      set session (tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0)
+      and tmux $change -t "$session"
+      or echo "No sessions found."
+    '';
   };
 }
