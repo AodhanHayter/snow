@@ -77,6 +77,48 @@ let
     }
   ) nixManagedMarketplaces;
 
+  # Arc Raiders alert sound script
+  arcAlertScript = pkgs.writeShellScript "play-arc-sound" ''
+    SOUND_NAME="''${1:-arc-alert}"
+    SOUND_DIR="${cfg.alerts.sounds}/share/sounds/arc-raiders"
+    SOUND_FILE="$SOUND_DIR/''${SOUND_NAME}.wav"
+
+    # Custom sound directory override
+    CUSTOM_DIR="${homeDir}/.config/claude-code/sounds"
+    if [ -f "$CUSTOM_DIR/''${SOUND_NAME}.wav" ]; then
+      SOUND_FILE="$CUSTOM_DIR/''${SOUND_NAME}.wav"
+    fi
+
+    # Send tmux bell for visual notification in status bar
+    if [ -n "$TMUX" ]; then
+      printf '\a'
+    fi
+
+    # Play sound file if it exists
+    if [ ! -f "$SOUND_FILE" ]; then
+      exit 0
+    fi
+
+    case "$(uname -s)" in
+      Darwin)
+        afplay "$SOUND_FILE" 2>/dev/null &
+        ;;
+      Linux)
+        if command -v paplay &>/dev/null; then
+          paplay "$SOUND_FILE" 2>/dev/null &
+        elif command -v pw-play &>/dev/null; then
+          pw-play "$SOUND_FILE" 2>/dev/null &
+        elif command -v aplay &>/dev/null; then
+          aplay -q "$SOUND_FILE" 2>/dev/null &
+        elif command -v play &>/dev/null; then
+          play -q "$SOUND_FILE" 2>/dev/null &
+        fi
+        ;;
+    esac
+
+    exit 0
+  '';
+
   # Base settings (without plugins)
   baseSettings = {
     statusLine = {
@@ -175,6 +217,31 @@ let
       DIRENV_WARN_TIMEOUT = "0";
     };
     includeCoAuthoredBy = false;
+  } // optionalAttrs cfg.alerts.enable {
+    hooks = {
+      Stop = [
+        {
+          matcher = "";
+          hooks = [
+            {
+              type = "command";
+              command = "${arcAlertScript} arc-complete";
+            }
+          ];
+        }
+      ];
+      Notification = [
+        {
+          matcher = "";
+          hooks = [
+            {
+              type = "command";
+              command = "${arcAlertScript} arc-alert";
+            }
+          ];
+        }
+      ];
+    };
   };
 
   # Merge enabled plugins into settings
@@ -317,6 +384,19 @@ in
           "document-skills"
           "example-skills"
         ];
+      };
+    };
+
+    alerts = {
+      enable = mkBoolOpt false "Enable Arc Raiders-inspired alert sounds via Claude Code hooks.";
+      sounds = mkOption {
+        type = types.package;
+        default = pkgs.arc-sounds;
+        description = ''
+          Package providing alert sound files. Must contain .wav files at
+          share/sounds/arc-raiders/. Override with custom sounds by placing
+          .wav files in ~/.config/claude-code/sounds/ (takes priority).
+        '';
       };
     };
   };
