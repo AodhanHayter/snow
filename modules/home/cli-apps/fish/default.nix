@@ -15,13 +15,31 @@ in
   };
 
   config = mkIf cfg.enable {
+    home.packages = [ pkgs.nix-your-shell ];
+
     programs.fish = {
       enable = true;
 
       interactiveShellInit = ''
         fish_vi_key_bindings
+        set -g fish_autocd 1
         set -gx PATH $HOME/.local/bin $PATH
         set -gx ERL_AFLAGS "-kernel shell_history enabled"
+
+        # nix shell integration — stay in fish inside nix-shell/nix develop
+        nix-your-shell fish | source
+
+        # syntax highlighting colors (matches prezto theme)
+        set fish_color_command blue
+        set fish_color_keyword blue
+        set fish_color_quote yellow
+        set fish_color_redirection cyan
+        set fish_color_end green
+        set fish_color_error red
+        set fish_color_param cyan
+        set fish_color_operator green
+        set fish_color_autosuggestion brblack
+        set fish_color_valid_path --underline
       '';
 
       functions = {
@@ -54,6 +72,10 @@ in
             rev = "v10.3";
             sha256 = "sha256-T8KYLA/r/gOKvAivKRoeqIwE2pINlxFQtZJHpOy9GMM=";
           };
+        }
+        {
+          name = "git-abbr";
+          inherit (pkgs.fishPlugins.git-abbr) src;
         }
       ];
     };
