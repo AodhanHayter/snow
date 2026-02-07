@@ -29,7 +29,10 @@ with lib.modernage;
       zoxide = enabled;
       awscli = disabled;
       bat = enabled;
-      claude-code = enabled;
+      claude-code = {
+        enable = true;
+        alerts = enabled;
+      };
       codex-cli = enabled;
       dog = enabled;
       entr = enabled;
