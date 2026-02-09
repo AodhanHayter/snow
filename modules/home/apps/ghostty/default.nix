@@ -16,7 +16,7 @@ let
     macos-titlebar-style = transparent
     copy-on-select = clipboard
     quick-terminal-position = bottom
-    shell-integration = zsh
+    shell-integration = fish
     shell-integration-features = cursor,sudo,title,ssh-terminfo,ssh-env
 
     # set update channel to install from main

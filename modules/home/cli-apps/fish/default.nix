@@ -21,6 +21,7 @@ in
       enable = true;
 
       interactiveShellInit = ''
+        set -g fish_greeting
         fish_vi_key_bindings
         set -g fish_autocd 1
         set -gx PATH $HOME/.local/bin $PATH

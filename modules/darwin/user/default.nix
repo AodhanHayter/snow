@@ -31,11 +31,15 @@ in
 
   config = {
     system.primaryUser = config.modernage.user.name;
+    programs.fish.enable = true;
+    environment.shells = [ pkgs.fish ];
+
     users.users.${cfg.name} = {
       # NOTE: Setting the uid here is required for another
       # module to evaluate successfully since it reads
       # `users.users.${modernage.user.name}.uid`.
       uid = mkIf (cfg.uid != null) cfg.uid;
+      shell = pkgs.fish;
     };
 
     snowfallorg.users.${config.modernage.user.name}.home.config = {
