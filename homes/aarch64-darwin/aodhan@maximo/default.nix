@@ -42,7 +42,7 @@ with lib.modernage;
       ripgrep = enabled;
       tealdeer = enabled;
       yq = enabled;
-      zsh = enabled;
+      zsh = disabled;
     };
 
     shell = enabled;
