@@ -51,11 +51,6 @@
       url = "github:ghostty-org/ghostty/v1.1.3";
     };
 
-    alacritty-themes = {
-      url = "github:alacritty/alacritty-theme?ref=master";
-      flake = false;
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
