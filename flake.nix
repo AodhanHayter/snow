@@ -160,6 +160,7 @@
 
       systems.modules.darwin = with inputs; [
         home-manager.darwinModules.home-manager
+        determinate.darwinModules.default
       ];
 
       homes.modules = with inputs; [
