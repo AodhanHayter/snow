@@ -30,6 +30,7 @@ in
         signByDefault = cfg.signByDefault;
       };
       ignores = [
+        ".DS_Store"
         "aodhanlocal"
         "agentlocal"
         ".expert"
