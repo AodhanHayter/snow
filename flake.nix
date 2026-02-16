@@ -91,11 +91,6 @@
       flake = false;
     };
 
-    cc-marketplace = {
-      url = "github:AodhanHayter/claude-code-safety-net?ref=fix/py3.9-incompatible-type-annotations";
-      flake = false;
-    };
-
     dev-browser = {
       url = "github:SawyerHood/dev-browser";
       flake = false;

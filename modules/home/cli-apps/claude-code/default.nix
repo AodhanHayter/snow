@@ -174,6 +174,19 @@ let
       DIRENV_LOG_FORMAT = "";
       DIRENV_WARN_TIMEOUT = "0";
     };
+    hooks = {
+      PreToolUse = [
+        {
+          matcher = "Bash";
+          hooks = [
+            {
+              type = "command";
+              command = "dcg hook";
+            }
+          ];
+        }
+      ];
+    };
     includeCoAuthoredBy = false;
   };
 
@@ -217,13 +230,6 @@ in
               url = "anthropics/skills";
             };
             flakeInput = inputs.anthropics-skills;
-          };
-          "kenryu42/cc-marketplace" = {
-            source = {
-              type = "github";
-              url = "kenryu42/cc-marketplace";
-            };
-            flakeInput = inputs.cc-marketplace;
           };
           "sawyerhood/dev-browser" = {
             source = {
@@ -283,7 +289,6 @@ in
           "commit-commands@claude-plugins-official" = true;
           "feature-dev@claude-plugins-official" = true;
           "frontend-design@claude-plugins-official" = true;
-          "safety-net@cc-marketplace" = true;
           "dev-browser@dev-browser" = true;
           "nix-lsp@claude-lsp-plugins" = true;
           "python-lsp@claude-lsp-plugins" = true;

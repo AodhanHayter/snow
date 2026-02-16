@@ -41,23 +41,6 @@
         "type": "github"
       }
     },
-    "cc-marketplace": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1767134021,
-        "narHash": "sha256-l/fVeN6uv56ybSHSHevy6u9qxdusK0aikXjxvEv5Fis=",
-        "owner": "AodhanHayter",
-        "repo": "claude-code-safety-net",
-        "rev": "126b351a68dccd76d30c7377f323a6610c259246",
-        "type": "github"
-      },
-      "original": {
-        "owner": "AodhanHayter",
-        "ref": "fix/py3.9-incompatible-type-annotations",
-        "repo": "claude-code-safety-net",
-        "type": "github"
-      }
-    },
     "claude-code-nix": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -293,11 +276,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1771010506,
-        "narHash": "sha256-NCR3CtdMvbBRPvr4pNwij9hXyy6ejWnVWHHMZh4ssmA=",
+        "lastModified": 1771186554,
+        "narHash": "sha256-GsCJkjkNh1SlkefsF1rCL0yhmLFOazHDgc8MAOTnzno=",
         "owner": "elixir-lang",
         "repo": "expert",
-        "rev": "c98b870fc073656cb955defda8b8623f71d2abc8",
+        "rev": "71c33f10ba8ab566a4e12dba024dba3e8c6f7c73",
         "type": "github"
       },
       "original": {
@@ -595,11 +578,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1771158601,
-        "narHash": "sha256-IVsfP2/Ivssdum5g4/uNT/0e3ui6PAQTwjeJUTNamfM=",
+        "lastModified": 1771204641,
+        "narHash": "sha256-XYuZDrzKbwJFo1ijipNQ29MpikJsK8jF7PGX/XZascI=",
         "owner": "natsukium",
         "repo": "mcp-servers-nix",
-        "rev": "190ff7e833965f3dc133c0ef24466f86f6b4138b",
+        "rev": "1d3d2894997f89dee54cbd94f1c25884590c3f7f",
         "type": "github"
       },
       "original": {
@@ -841,7 +824,6 @@
     "root": {
       "inputs": {
         "anthropics-skills": "anthropics-skills",
-        "cc-marketplace": "cc-marketplace",
         "claude-code-nix": "claude-code-nix",
         "claude-lsp-plugins": "claude-lsp-plugins",
         "claude-plugins-official": "claude-plugins-official",

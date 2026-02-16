@@ -136,19 +136,36 @@ final: prev:
 
 ## Package Template
 
-Custom packages in `packages/<name>/default.nix`:
+Custom packages in `packages/<name>/default.nix`. Auto-exported as `packages.<name>`.
 
+### Rust package (buildRustPackage)
 ```nix
-{ lib, pkgs, stdenv, inputs, namespace, ... }:
-stdenv.mkDerivation {
-  pname = "my-package";
+{ lib, rustPlatform, fetchFromGitHub, pkg-config, cmake, ... }:
+rustPlatform.buildRustPackage rec {
+  pname = "example";
   version = "1.0.0";
-  src = ./.;
-  # ... derivation attributes
+  src = fetchFromGitHub { owner = "..."; repo = "..."; rev = "v${version}"; hash = "..."; };
+  cargoHash = "..."; # use lib.fakeHash, build to get correct hash
+  doCheck = false;
+  meta = { description = "..."; homepage = "..."; license = lib.licenses.mit; mainProgram = "..."; };
 }
 ```
 
-Packages auto-exported as `packages.<name>` and available throughout flake.
+### Go package (buildGoModule)
+```nix
+{ lib, buildGoModule, fetchFromGitHub, ... }:
+buildGoModule rec {
+  pname = "example";
+  version = "1.0.0";
+  src = fetchFromGitHub { owner = "..."; repo = "..."; rev = "v${version}"; hash = "..."; };
+  vendorHash = "...";
+  doCheck = false;
+  meta = { description = "..."; homepage = "..."; license = lib.licenses.mit; mainProgram = "..."; };
+}
+```
+
+Reference custom packages from modules: `inputs.self.packages.${pkgs.system}.<name>`
+Build a package: `nix build .#packages.<system>.<name>`
 
 ## Code Style
 
