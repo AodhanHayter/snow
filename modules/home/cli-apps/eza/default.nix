@@ -14,5 +14,9 @@ in
       enable = true;
       extraOptions = [ "--icons" ];
     };
+
+    programs.fish.shellAbbrs = {
+      l = "eza -1";
+    };
   };
 }
