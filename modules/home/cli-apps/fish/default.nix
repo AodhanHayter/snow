@@ -43,6 +43,10 @@ in
         set fish_color_valid_path --underline
       '';
 
+      shellAbbrs = {
+        ccd = "claude --dangerously-skip-permissions";
+      };
+
       functions = {
         pg = ''
           if test (count $argv) -gt 0
