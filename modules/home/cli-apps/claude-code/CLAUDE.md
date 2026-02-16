@@ -33,9 +33,15 @@ When working in a repository use the agentlocal directory to store ephemeral fil
 
 ## Skills
 
-Skills are reference documents in `skills/` dir. Format:
+Skills are directories in `skills/` with a `SKILL.md` entrypoint:
+```
+skills/<skill-name>/SKILL.md
+```
+
+Format:
 ```md
 ---
+name: skill-name
 description: Brief description for skill discovery
 ---
 # Skill content...

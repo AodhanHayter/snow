@@ -1,4 +1,5 @@
 ---
+name: codex
 description: Use Codex CLI for complex debugging and code analysis via file-based I/O pattern
 ---
 # How to Use Codex from Claude Code
