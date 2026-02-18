@@ -34,6 +34,8 @@ in
     programs.fish.enable = true;
     environment.shells = [ pkgs.fish ];
 
+    users.knownUsers = [ cfg.name ];
+
     users.users.${cfg.name} = {
       # NOTE: Setting the uid here is required for another
       # module to evaluate successfully since it reads
