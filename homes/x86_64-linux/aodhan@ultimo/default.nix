@@ -31,6 +31,7 @@ with lib.modernage;
       bat = enabled;
       claude-code = enabled;
       codex-cli = enabled;
+      dcg = enabled;
       dog = enabled;
       entr = enabled;
       eza = enabled;
