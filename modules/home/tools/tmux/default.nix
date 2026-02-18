@@ -1,21 +1,36 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib;
 with lib.modernage;
 let
   cfg = config.modernage.tools.tmux;
+
+  themePlugins = {
+    nord = pkgs.tmuxPlugins.nord;
+    catppuccin = pkgs.tmuxPlugins.catppuccin;
+    dracula = pkgs.tmuxPlugins.dracula;
+    tokyo-night = pkgs.tmuxPlugins.tokyo-night-tmux;
+    gruvbox = pkgs.tmuxPlugins.gruvbox;
+    onedark = pkgs.tmuxPlugins.onedark-theme;
+  };
+
+  themePlugin = if cfg.theme != null then [ themePlugins.${cfg.theme} ] else [];
 in
 {
-  options.modernage.tools.tmux = {
+  options.modernage.tools.tmux = with types; {
     enable = mkBoolOpt false "Whether or not to install and configure tmux.";
+    theme = mkOpt (nullOr (enum [ "nord" "catppuccin" "dracula" "tokyo-night" "gruvbox" "onedark" ])) "nord"
+      "Tmux color theme. Set to null to disable.";
   };
 
   config = mkIf cfg.enable {
     programs.tmux = {
       enable = true;
+      plugins = themePlugin;
       extraConfig = (builtins.readFile ./tmux.conf);
     };
 
