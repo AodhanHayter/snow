@@ -181,7 +181,7 @@ let
           hooks = [
             {
               type = "command";
-              command = "dcg hook";
+              command = "dcg";
             }
           ];
         }
