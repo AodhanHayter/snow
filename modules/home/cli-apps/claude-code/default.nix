@@ -181,7 +181,7 @@ let
           hooks = [
             {
               type = "command";
-              command = "dcg hook";
+              command = "dcg";
             }
           ];
         }
@@ -332,7 +332,7 @@ in
       package = pkgs.claude-code;
       inherit settings;
       memory.source = ./CLAUDE.md;
-      agentsDir = ./agents;
+
       commandsDir = ./commands;
       skillsDir = ./skills;
     };
