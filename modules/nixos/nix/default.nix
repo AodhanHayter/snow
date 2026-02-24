@@ -24,7 +24,6 @@ in
 {
   options.modernage.nix = with types; {
     enable = mkBoolOpt true "Whether or not to manage nix configuration.";
-    package = mkOpt package pkgs.nixVersions.stable "Which nix package to use.";
 
     default-substituter = {
       url = mkOpt str "https://cache.nixos.org" "The url for the substituter.";
@@ -57,8 +56,6 @@ in
         ];
       in
       {
-        # package = cfg.package; # disabled for determinate nix
-
         settings = {
           eval-cores = 2; # determinate nix specific
           http-connections = 50;
@@ -80,11 +77,7 @@ in
 
         };
 
-        gc = {
-          automatic = true;
-          dates = "weekly";
-          options = "--delete-older-than 30d";
-        };
+        # gc managed by determinate-nix automatic strategy
 
         # flake-utils-plus
         generateRegistryFromInputs = true;
