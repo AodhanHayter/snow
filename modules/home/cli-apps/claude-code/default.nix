@@ -77,11 +77,33 @@ let
     }
   ) nixManagedMarketplaces;
 
+  statuslineScript = pkgs.writeShellScript "claude-statusline" ''
+    input=$(cat)
+    cwd=$(echo "$input" | jq -r '.workspace.current_dir // .cwd')
+    dir=$(echo "$cwd" | sed "s|$HOME|~|")
+    branch=$(git -C "$cwd" branch --no-color 2>/dev/null | grep '^\*' | sed 's/\* //')
+    modified=$(git -C "$cwd" status --porcelain 2>/dev/null | grep -c '^\(.[M]\|[M].\)' || true)
+    staged=$(git -C "$cwd" status --porcelain 2>/dev/null | grep -c '^[MADRCU]' || true)
+    untracked=$(git -C "$cwd" status --porcelain 2>/dev/null | grep -c '^??' || true)
+    remaining=$(echo "$input" | jq -r '.context_window.remaining_percentage // empty')
+    model=$(echo "$input" | jq -r '.model.display_name // empty')
+    git_status=""
+    [ "$modified" -gt 0 ] 2>/dev/null && git_status="''${git_status}*"
+    [ "$staged" -gt 0 ] 2>/dev/null && git_status="''${git_status}+"
+    [ "$untracked" -gt 0 ] 2>/dev/null && git_status="''${git_status}?"
+    out="$dir"
+    [ -n "$branch" ] && out="$out $branch"
+    [ -n "$git_status" ] && out="$out $git_status"
+    [ -n "$model" ] && out="$out | $model"
+    [ -n "$remaining" ] && out="$out | ctx:''${remaining}%"
+    echo "$out"
+  '';
+
   # Base settings (without plugins)
   baseSettings = {
     statusLine = {
       type = "command";
-      command = "bun x ccusage statusline";
+      command = "${statuslineScript}";
       padding = 0;
     };
     permissions = {
