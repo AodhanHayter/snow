@@ -24,6 +24,10 @@ with lib.modernage;
       awscli = enabled;
       bat = enabled;
       claude-code = enabled;
+      claude-code-work = {
+        enable = true;
+        repoPath = "/Users/ahayter/development/kyruushealth-claude-code";
+      };
       codex-cli = enabled;
       dcg = enabled;
       dog = enabled;

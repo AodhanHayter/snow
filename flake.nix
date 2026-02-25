@@ -115,6 +115,7 @@
       url = "github:johnrogers/claude-swift-engineering";
       flake = false;
     };
+
   };
 
   outputs =
