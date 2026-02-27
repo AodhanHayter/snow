@@ -77,6 +77,14 @@ let
     }
   ) nixManagedMarketplaces;
 
+  notifyScript = pkgs.writeShellScript "claude-notify" ''
+    [ -z "$TMUX" ] && exit 0
+    INPUT=$(cat)
+    TITLE=$(echo "$INPUT" | ${pkgs.jq}/bin/jq -r '.title // "Claude Code"')
+    MESSAGE=$(echo "$INPUT" | ${pkgs.jq}/bin/jq -r '.message // "Notification"')
+    osascript -e "display notification \"$MESSAGE\" with title \"$TITLE\" sound name \"Glass\""
+  '';
+
   statuslineScript = pkgs.writeShellScript "claude-statusline" ''
     input=$(cat)
     cwd=$(echo "$input" | jq -r '.workspace.current_dir // .cwd')
@@ -197,6 +205,16 @@ let
       DIRENV_WARN_TIMEOUT = "0";
     };
     hooks = {
+      Notification = [
+        {
+          hooks = [
+            {
+              type = "command";
+              command = "${notifyScript}";
+            }
+          ];
+        }
+      ];
       PreToolUse = [
         {
           matcher = "Bash";
