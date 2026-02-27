@@ -36,6 +36,8 @@ let
     export CLAUDE_CODE_USE_BEDROCK=1
     export AWS_PROFILE=${bedrockConfig.awsProfile}
     export AWS_REGION=${bedrockConfig.awsRegion}
+    ${optionalString (cfg.model != "") "export ANTHROPIC_MODEL='${cfg.model}'"}
+    ${optionalString (cfg.smallFastModel != "") "export ANTHROPIC_SMALL_FAST_MODEL='${cfg.smallFastModel}'"}
     export CLAUDE_CODE_ENABLE_TELEMETRY=1
     export OTEL_METRICS_EXPORTER=otlp
     export OTEL_LOGS_EXPORTER=otlp
@@ -48,6 +50,20 @@ in
 {
   options.modernage.cli-apps.claude-code-work = {
     enable = mkBoolOpt false "Whether to enable work (Bedrock) Claude Code configuration.";
+
+    model = mkOpt types.str "" ''
+      Bedrock model ID for the primary Claude model (sets ANTHROPIC_MODEL).
+      Leave empty for the Bedrock default (global.anthropic.claude-sonnet-4-6).
+      Cross-region inference profile IDs:
+        - us.anthropic.claude-opus-4-6-v1
+        - us.anthropic.claude-sonnet-4-6
+        - us.anthropic.claude-haiku-4-5-20251001-v1:0
+    '';
+
+    smallFastModel = mkOpt types.str "" ''
+      Bedrock model ID for the small/fast model (sets ANTHROPIC_SMALL_FAST_MODEL).
+      Leave empty for the Bedrock default (us.anthropic.claude-haiku-4-5-20251001-v1:0).
+    '';
 
     repoPath = mkOption {
       type = types.str;

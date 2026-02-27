@@ -26,6 +26,7 @@ with lib.modernage;
       claude-code = enabled;
       claude-code-work = {
         enable = true;
+        model = "us.anthropic.claude-sonnet-4-6";
         repoPath = "/Users/ahayter/development/kyruushealth-claude-code";
       };
       codex-cli = enabled;
