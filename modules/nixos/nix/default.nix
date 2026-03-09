@@ -68,10 +68,12 @@ in
 
           substituters = [
             cfg.default-substituter.url
+            "https://nixpkgs-python.cachix.org"
           ]
           ++ (mapAttrsToList (name: value: name) cfg.extra-substituters);
           trusted-public-keys = [
             cfg.default-substituter.key
+            "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
           ]
           ++ (mapAttrsToList (name: value: value.key) cfg.extra-substituters);
 

@@ -116,7 +116,7 @@
       flake = false;
     };
 
-    devenv.url = "github:cachix/devenv";
+    devenv.url = "github:cachix/devenv/v2.0.3";
     devenv.inputs.nixpkgs.follows = "nixpkgs";
 
   };

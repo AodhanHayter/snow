@@ -31,7 +31,7 @@ with lib.modernage;
       eza = enabled;
       fd = enabled;
       fzf = enabled;
-      gemini-cli = enabled;
+      gemini-cli = disabled;
       gh = enabled;
       gogcli = enabled;
       home-manager = enabled;

@@ -31,6 +31,8 @@ in
       trusted-users = root ${config.modernage.user.name}
       allowed-users = root ${config.modernage.user.name}
       extra-nix-path = nixpkgs=flake:nixpkgs
+      extra-substituters = https://nixpkgs-python.cachix.org https://devenv.cachix.org
+      extra-trusted-public-keys = nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU= devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
     '';
 
     # nix-darwin module disabled; determinate-nix manages the nix installation
