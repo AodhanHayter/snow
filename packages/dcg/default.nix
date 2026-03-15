@@ -1,34 +1,39 @@
 {
   lib,
-  rustPlatform,
-  fetchFromGitHub,
-  pkg-config,
-  cmake,
-  perl,
-  openssl,
+  stdenvNoCC,
+  fetchurl,
   ...
 }:
-rustPlatform.buildRustPackage rec {
+let
+  system = stdenvNoCC.hostPlatform.system;
+  platforms = {
+    "aarch64-darwin" = {
+      target = "aarch64-apple-darwin";
+      hash = "sha256-Kg1ZTx7FSxqUU8N2xKnGJ371SMhp9gusRsvSKSglHoM=";
+    };
+    "x86_64-linux" = {
+      target = "x86_64-unknown-linux-gnu";
+      hash = "sha256-FwSlM/DkDtErrDwTJzrB4JXiDD7r7VDMZxH3Bz6qUFw=";
+    };
+  };
+
+  platform = platforms.${system} or (throw "dcg: unsupported system ${system}");
+in
+stdenvNoCC.mkDerivation rec {
   pname = "dcg";
   version = "0.4.0";
 
-  src = fetchFromGitHub {
-    owner = "Dicklesworthstone";
-    repo = "destructive_command_guard";
-    rev = "v${version}";
-    hash = "sha256-tkjHhSMoLRV56AwUa0DkoDMoEj6gUZx/ih0VTC9C+4o=";
+  src = fetchurl {
+    url = "https://github.com/Dicklesworthstone/destructive_command_guard/releases/download/v${version}/dcg-${platform.target}.tar.xz";
+    hash = platform.hash;
   };
 
-  cargoHash = "sha256-G6cOjl5tLdjBg7A+Itnk/t6tLzoU7gKYOTYlZm3HSlA=";
+  sourceRoot = ".";
+  unpackCmd = "tar xf $curSrc";
 
-  nativeBuildInputs = [ pkg-config cmake perl ];
-  buildInputs = [ openssl ];
-
-  # vergen-gix needs git metadata; VERGEN_IDEMPOTENT provides fallback values in sandbox
-  env.VERGEN_IDEMPOTENT = "1";
-
-  # tests require git repo and network
-  doCheck = false;
+  installPhase = ''
+    install -Dm755 dcg $out/bin/dcg
+  '';
 
   meta = {
     description = "Hook for AI coding agents that blocks destructive commands";
