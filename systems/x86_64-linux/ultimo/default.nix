@@ -30,13 +30,35 @@ with lib.modernage;
     };
   };
 
-  # Always-on server mode - disable auto-suspend but allow manual shutdown
+  # Always-on server mode
   powerManagement.enable = false;
   services.logind.settings.Login = {
     HandleLidSwitch = "ignore";
-    HandlePowerKey = "poweroff";  # Power button = clean shutdown
+    HandlePowerKey = "poweroff";
     IdleAction = "ignore";
   };
+
+  # Prevent any sleep/suspend/hibernate states
+  systemd.targets.sleep.enable = false;
+  systemd.targets.suspend.enable = false;
+  systemd.targets.hibernate.enable = false;
+  systemd.targets.hybrid-sleep.enable = false;
+
+  # Auto-reboot on kernel panic (10s delay) and hung tasks
+  boot.kernelParams = [ "panic=10" ];
+  boot.kernel.sysctl = {
+    "kernel.panic_on_oops" = 1;
+    "kernel.hung_task_panic" = 1;
+  };
+
+  # Systemd watchdog - reboot if system becomes unresponsive
+  systemd.watchdog = {
+    runtimeTime = "30s";
+    rebootTime = "10m";
+  };
+
+  # SSD health maintenance
+  services.fstrim.enable = true;
 
   # Sunshine remote desktop (NVIDIA hardware encoding)
   services.sunshine = {
