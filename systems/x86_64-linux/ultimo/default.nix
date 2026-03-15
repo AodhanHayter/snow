@@ -52,9 +52,9 @@ with lib.modernage;
   };
 
   # Systemd watchdog - reboot if system becomes unresponsive
-  systemd.watchdog = {
-    runtimeTime = "30s";
-    rebootTime = "10m";
+  systemd.settings.Manager = {
+    RuntimeWatchdogSec = "30s";
+    RebootWatchdogSec = "10m";
   };
 
   # SSD health maintenance
