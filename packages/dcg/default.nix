@@ -5,6 +5,7 @@
   pkg-config,
   cmake,
   perl,
+  openssl,
   ...
 }:
 rustPlatform.buildRustPackage rec {
@@ -21,6 +22,7 @@ rustPlatform.buildRustPackage rec {
   cargoHash = "sha256-G6cOjl5tLdjBg7A+Itnk/t6tLzoU7gKYOTYlZm3HSlA=";
 
   nativeBuildInputs = [ pkg-config cmake perl ];
+  buildInputs = [ openssl ];
 
   # vergen-gix needs git metadata; VERGEN_IDEMPOTENT provides fallback values in sandbox
   env.VERGEN_IDEMPOTENT = "1";
