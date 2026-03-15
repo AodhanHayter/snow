@@ -41,7 +41,6 @@ in
 
       security = {
         gpg = enabled;
-        ssh = enabled;
         yubikey-manager = enabled;
       };
     };

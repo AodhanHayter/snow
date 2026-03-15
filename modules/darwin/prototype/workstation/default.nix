@@ -22,7 +22,6 @@ in
 
       security = {
         ssh = {
-          enable = true;
           server = true;
         };
       };

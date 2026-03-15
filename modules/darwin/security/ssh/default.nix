@@ -12,7 +12,7 @@ let
 in
 {
   options.modernage.security.ssh = with types; {
-    enable = mkBoolOpt false "Whether or not to install openssh"; # MacOS is shipped with openssh version that doesn't support yubikey
+    enable = mkBoolOpt false "Whether or not to install openssh"; # macOS now ships with FIDO2/yubikey support; Nix openssh causes firewall issues
     server = mkBoolOpt false "Whether to enable Remote Login (SSH server).";
   };
 
