@@ -37,36 +37,16 @@ let
   # Marketplaces with flakeInput defined (Nix-managed via symlinks)
   nixManagedMarketplaces = filterAttrs (_: m: m.flakeInput != null) cfg.plugins.marketplaces;
 
-  # Transform marketplaces to Claude known_marketplaces.json format
-  toNativeFormat =
+  # Build extraKnownMarketplaces for settings.json
+  extraKnownMarketplaces = lib.mapAttrs' (
     name: m:
-    let
-      marketplaceName = getMarketplaceName name;
-      localPath = "${homeDir}/.claude/plugins/marketplaces/${marketplaceName}";
-    in
-    lib.nameValuePair marketplaceName {
+    lib.nameValuePair (getMarketplaceName name) {
       source = {
         source = if m.source.type == "github" then "github" else m.source.type;
         repo = name;
       };
-      installLocation = localPath;
-      lastUpdated = "2025-01-01T00:00:00.000Z";
-    };
-
-  # Build known_marketplaces.json content
-  knownMarketplaces =
-    lib.listToAttrs (lib.mapAttrsToList toNativeFormat cfg.plugins.marketplaces)
-    // optionalAttrs cfg.plugins.allowRuntimeInstall {
-      "local" = {
-        source = {
-          source = "directory";
-          path = "${homeDir}/.claude/plugins/local";
-        };
-        installLocation = "${homeDir}/.claude/plugins/marketplaces/local";
-        lastUpdated = "2025-01-01T00:00:00.000Z";
-        managedBy = "runtime";
-      };
-    };
+    }
+  ) cfg.plugins.marketplaces;
 
   # Generate symlinks for Nix-managed marketplaces
   marketplaceSymlinks = lib.mapAttrs' (
@@ -214,11 +194,14 @@ let
     includeCoAuthoredBy = false;
   };
 
-  # Merge enabled plugins into settings
+  # Merge enabled plugins and marketplace declarations into settings
   settings =
     baseSettings
     // optionalAttrs (cfg.plugins.enabled != { }) {
       enabledPlugins = cfg.plugins.enabled;
+    }
+    // optionalAttrs (cfg.plugins.marketplaces != { }) {
+      inherit extraKnownMarketplaces;
     };
 
   # Generate skill file entries from anthropics-skills input
@@ -269,27 +252,6 @@ in
             };
             flakeInput = inputs.claude-lsp-plugins;
           };
-          "pzep1/xcode-build-skill" = {
-            source = {
-              type = "github";
-              url = "pzep1/xcode-build-skill";
-            };
-            flakeInput = inputs.xcode-build-skill;
-          };
-          "conorluddy/xclaude-plugin" = {
-            source = {
-              type = "github";
-              url = "conorluddy/xclaude-plugin";
-            };
-            flakeInput = inputs.xclaude-plugin;
-          };
-          "johnrogers/claude-swift-engineering" = {
-            source = {
-              type = "github";
-              url = "johnrogers/claude-swift-engineering";
-            };
-            flakeInput = inputs.claude-swift-engineering;
-          };
         };
         description = "Plugin marketplaces to register";
         example = literalExpression ''
@@ -318,9 +280,6 @@ in
           "python-lsp@claude-lsp-plugins" = true;
           "elixir-lsp@claude-lsp-plugins" = true;
           "swift-lsp@claude-lsp-plugins" = true;
-          "xcode-build-skill@xcode-build-skill" = true;
-          "xclaude-plugin@xclaude-plugin" = true;
-          "swift-engineering@claude-swift-engineering" = true;
         };
         description = "Plugins to enable in format 'plugin-name@marketplace-name'";
         example = {
@@ -362,15 +321,7 @@ in
     };
 
     # Symlink Nix-managed marketplaces + skills
-    home.file =
-      marketplaceSymlinks
-      // skillFiles
-      // {
-        # known_marketplaces.json - Claude needs this to find marketplaces
-        ".claude/plugins/known_marketplaces.json" = {
-          text = builtins.toJSON knownMarketplaces;
-        };
-      };
+    home.file = marketplaceSymlinks // skillFiles;
 
     # Create local plugins directory for runtime installs
     home.activation.claudePluginsSetup = mkIf cfg.plugins.allowRuntimeInstall (

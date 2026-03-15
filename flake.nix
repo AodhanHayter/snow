@@ -101,22 +101,8 @@
       flake = false;
     };
 
-    xcode-build-skill = {
-      url = "github:pzep1/xcode-build-skill";
-      flake = false;
-    };
 
-    xclaude-plugin = {
-      url = "github:conorluddy/xclaude-plugin";
-      flake = false;
-    };
-
-    claude-swift-engineering = {
-      url = "github:johnrogers/claude-swift-engineering";
-      flake = false;
-    };
-
-    devenv.url = "github:cachix/devenv/v2.0.3";
+    devenv.url = "github:AodhanHayter/devenv/feature/claude-plugin-support";
     devenv.inputs.nixpkgs.follows = "nixpkgs";
 
   };
