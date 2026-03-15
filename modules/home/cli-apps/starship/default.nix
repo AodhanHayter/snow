@@ -17,7 +17,7 @@ in
 
       settings = {
         add_newline = true;
-        format = "$directory$git_branch$git_status$nix_shell\n$character";
+        format = "$hostname$directory$git_branch$git_status$nix_shell\n$character";
 
         character = {
           success_symbol = "[❯](purple)";
@@ -49,6 +49,11 @@ in
           deleted = "";
           renamed = "";
           conflicted = "!";
+        };
+
+        hostname = {
+          ssh_only = true;
+          format = "[$hostname](green):";
         };
 
         nix_shell = {
