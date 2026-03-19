@@ -27,6 +27,9 @@ with lib.modernage;
       # Server capabilities
       openssh = enabled;
       avahi = enabled;
+
+      # ZEC DCA bot
+      crypt-dca = enabled;
     };
   };
 
