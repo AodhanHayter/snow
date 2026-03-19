@@ -15,6 +15,7 @@ in
   options.modernage.services.crypt-dca = with types; {
     enable = mkBoolOpt false "Whether or not to enable the crypt DCA bot.";
     image = mkOpt str "crypt-dca:latest" "Container image name.";
+    dryRun = mkBoolOpt true "Run in dry-run mode (no real trades).";
   };
 
   config = mkIf cfg.enable {
@@ -35,6 +36,7 @@ in
       content = ''
         COINBASE_API_KEY=${config.sops.placeholder."coinbase/api_key"}
         COINBASE_API_SECRET=${config.sops.placeholder."coinbase/api_secret"}
+        DRY_RUN=${if cfg.dryRun then "true" else "false"}
         TZ=America/Denver
       '';
     };
