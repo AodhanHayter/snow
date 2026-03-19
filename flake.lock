@@ -1057,22 +1057,6 @@
         "type": "github"
       }
     },
-    "gpg-base-conf": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1764561729,
-        "narHash": "sha256-6GSMMAmzPTkilVr2ihEaLD9ZIxjTfhmtepShh6XFb1w=",
-        "owner": "drduh",
-        "repo": "config",
-        "rev": "9887996fa114d5a81c2ab5891e1b7a866458ef2e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "drduh",
-        "repo": "config",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -1563,7 +1547,6 @@
         "disko": "disko",
         "expert": "expert",
         "ghostty": "ghostty",
-        "gpg-base-conf": "gpg-base-conf",
         "home-manager": "home-manager",
         "mcp-servers-nix": "mcp-servers-nix",
         "nixos-generators": "nixos-generators",

@@ -41,12 +41,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # GPG default config
-    gpg-base-conf = {
-      url = "github:drduh/config";
-      flake = false;
-    };
-
     ghostty = {
       url = "github:ghostty-org/ghostty/v1.1.3";
     };
