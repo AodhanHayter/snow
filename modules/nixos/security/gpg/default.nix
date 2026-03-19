@@ -42,8 +42,6 @@ in
     environment.systemPackages = with pkgs; [ paperkey ];
 
     programs = {
-      ssh.startAgent = true;
-
       gnupg.agent = {
         enable = true;
         enableExtraSocket = true;

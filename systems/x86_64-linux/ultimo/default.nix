@@ -15,6 +15,10 @@ with lib.modernage;
       workstation = enabled;
     };
 
+    tools = {
+      sops = enabled;
+    };
+
     services = {
       tailscale = {
         enable = true;
