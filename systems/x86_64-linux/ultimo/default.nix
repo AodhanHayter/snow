@@ -31,6 +31,10 @@ with lib.modernage;
       # ZEC DCA bot
       crypt-dca = enabled;
     };
+
+    hardware = {
+      rgb = enabled;
+    };
   };
 
   # Always-on server mode
