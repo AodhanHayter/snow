@@ -49,6 +49,7 @@ in
         environmentFiles = [
           config.sops.templates."crypt-dca.env".path
         ];
+        ports = [ "8000:8000" ];
         volumes = [
           "${dataDir}/data:/app/data"
           "${dataDir}/logs:/app/logs"
