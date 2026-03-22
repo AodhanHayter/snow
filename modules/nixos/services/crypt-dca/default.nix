@@ -14,7 +14,7 @@ in
 {
   options.modernage.services.crypt-dca = with types; {
     enable = mkBoolOpt false "Whether or not to enable the crypt DCA bot.";
-    image = mkOpt str "docker.io/library/crypt-dca:latest" "Container image name.";
+    image = mkOpt str "docker.io/library/processes:latest" "Container image name.";
     dryRun = mkBoolOpt true "Run in dry-run mode (no real trades).";
   };
 
