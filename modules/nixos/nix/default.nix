@@ -57,7 +57,7 @@ in
       in
       {
         settings = {
-          eval-cores = 2; # determinate nix specific
+          eval-cores = 0; # determinate nix specific
           http-connections = 50;
           warn-dirty = false;
           log-lines = 50;

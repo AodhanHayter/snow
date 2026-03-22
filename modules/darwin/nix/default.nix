@@ -23,7 +23,7 @@ in
     ];
 
     environment.etc."nix/nix.custom.conf".text = ''
-      eval-cores = 2
+      eval-cores = 0
       http-connections = 50
       warn-dirty = false
       log-lines = 50
@@ -33,7 +33,7 @@ in
       extra-nix-path = nixpkgs=flake:nixpkgs
       extra-substituters = https://nixpkgs-python.cachix.org https://devenv.cachix.org
       extra-trusted-public-keys = nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU= devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
-      extra-experimental-features = external-builders
+      extra-experimental-features = external-builders wasm-builtin
       external-builders = [{"systems":["aarch64-linux","x86_64-linux"],"program":"/usr/local/bin/determinate-nixd","args":["builder"]}]
     '';
 
