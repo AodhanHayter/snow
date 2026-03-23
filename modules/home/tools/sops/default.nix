@@ -39,6 +39,8 @@ in
         "llm/anthropic_api_key_kyruus" = { };
         "llm/groq_api_key" = { };
         "search/brave_api_key" = { };
+        "coinbase/api_key" = { };
+        "coinbase/api_secret" = { };
       };
     };
 
