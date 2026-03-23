@@ -100,7 +100,7 @@
     devenv.inputs.nixpkgs.follows = "nixpkgs";
 
     crypt = {
-      url = "github:AodhanHayter/crypt";
+      url = "git+ssh://git@github.com/AodhanHayter/crypt";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
