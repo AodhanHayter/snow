@@ -33,11 +33,11 @@ in
     sops.secrets."coinbase/api_key" = { };
     sops.secrets."coinbase/api_secret" = { };
 
-    # Template an env file from sops secrets
+    # Template env file (simple key-value only — PEM secret read from file)
     sops.templates."crypt-dca.env" = {
       content = ''
         COINBASE_API_KEY=${config.sops.placeholder."coinbase/api_key"}
-        COINBASE_API_SECRET=${config.sops.placeholder."coinbase/api_secret"}
+        COINBASE_API_SECRET_FILE=${config.sops.secrets."coinbase/api_secret".path}
         DRY_RUN=${if cfg.dryRun then "true" else "false"}
         TZ=America/Denver
       '';
