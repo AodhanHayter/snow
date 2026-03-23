@@ -3,24 +3,24 @@
   config,
   lib,
   pkgs,
+  inputs,
+  system,
   ...
 }:
 with lib;
 with lib.modernage;
 let
   cfg = config.modernage.services.crypt-dca;
+  cryptPkg = inputs.crypt.packages.${system}.default;
   dataDir = "/srv/crypt-dca";
 in
 {
   options.modernage.services.crypt-dca = with types; {
     enable = mkBoolOpt false "Whether or not to enable the crypt DCA bot.";
-    image = mkOpt str "docker.io/library/crypt-dca:latest" "Container image name.";
     dryRun = mkBoolOpt true "Run in dry-run mode (no real trades).";
   };
 
   config = mkIf cfg.enable {
-    virtualisation.podman.enable = true;
-
     # Ensure host directories exist
     systemd.tmpfiles.rules = [
       "d ${dataDir}/data 0750 root root -"
@@ -41,20 +41,47 @@ in
       '';
     };
 
-    # Podman container managed by systemd
-    virtualisation.oci-containers = {
-      backend = "podman";
-      containers.crypt-dca = {
-        image = cfg.image;
-        environmentFiles = [
-          config.sops.templates."crypt-dca.env".path
-        ];
-        ports = [ "8000:8000" ];
-        volumes = [
-          "${dataDir}/data:/app/data"
-          "${dataDir}/logs:/app/logs"
-        ];
+    # Bot — runs daily at 6am Denver time
+    systemd.services.crypt-dca = {
+      description = "ZEC DCA Trading Bot";
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+
+      serviceConfig = {
+        Type = "oneshot";
+        WorkingDirectory = dataDir;
+        EnvironmentFile = config.sops.templates."crypt-dca.env".path;
+        ExecStart = "${cryptPkg}/bin/crypt-bot";
       };
     };
+
+    systemd.timers.crypt-dca = {
+      description = "Daily ZEC DCA trade";
+      wantedBy = [ "timers.target" ];
+
+      timerConfig = {
+        OnCalendar = "*-*-* 06:00:00";
+        Persistent = true; # catch up if missed while offline
+      };
+    };
+
+    # Dashboard — long-running web service
+    systemd.services.crypt-dashboard = {
+      description = "ZEC DCA Dashboard";
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
+
+      serviceConfig = {
+        Type = "simple";
+        WorkingDirectory = dataDir;
+        EnvironmentFile = config.sops.templates."crypt-dca.env".path;
+        ExecStart = "${cryptPkg}/bin/crypt-dashboard";
+        Restart = "on-failure";
+        RestartSec = "5s";
+      };
+    };
+
+    networking.firewall.allowedTCPPorts = [ 8000 ];
   };
 }

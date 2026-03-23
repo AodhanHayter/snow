@@ -99,6 +99,11 @@
     devenv.url = "github:AodhanHayter/devenv/feature/claude-plugin-support";
     devenv.inputs.nixpkgs.follows = "nixpkgs";
 
+    crypt = {
+      url = "github:AodhanHayter/crypt";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
