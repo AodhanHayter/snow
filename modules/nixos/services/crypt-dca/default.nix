@@ -12,6 +12,7 @@ with lib.modernage;
 let
   cfg = config.modernage.services.crypt-dca;
   cryptPkg = inputs.crypt.packages.${system}.default;
+  cryptSrc = inputs.crypt;
   dataDir = "/srv/crypt-dca";
 in
 {
@@ -21,10 +22,11 @@ in
   };
 
   config = mkIf cfg.enable {
-    # Ensure host directories exist
+    # Ensure host directories exist + symlink config.yaml from flake source
     systemd.tmpfiles.rules = [
       "d ${dataDir}/data 0750 root root -"
       "d ${dataDir}/logs 0750 root root -"
+      "L+ ${dataDir}/config.yaml - - - - ${cryptSrc}/config.yaml"
     ];
 
     # Declare sops secrets
