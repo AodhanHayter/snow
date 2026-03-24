@@ -390,11 +390,11 @@
     "dev-browser": {
       "flake": false,
       "locked": {
-        "lastModified": 1774022642,
-        "narHash": "sha256-ns8w1dNAx4lzeIuhrCy8VltZ0ehO+f+As1Ndh0lh5tA=",
+        "lastModified": 1774301656,
+        "narHash": "sha256-Wek+2QabIDXSVjIol6Dbo9jzvze5L5GBWsu2WfMCxDM=",
         "owner": "SawyerHood",
         "repo": "dev-browser",
-        "rev": "285b1cdad84bf47a94b14dfde63a370b5db6e8c5",
+        "rev": "a5d27d7544361e3345ca3be83a2143b1c3745038",
         "type": "github"
       },
       "original": {
@@ -1108,11 +1108,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1774292343,
-        "narHash": "sha256-qdSBrX26W0njD/s2XoiptP9wOwGYCqPwHno4/5v2ir8=",
+        "lastModified": 1774314635,
+        "narHash": "sha256-nsU3H4/oS3ad7yfgF1PjnquLQht2ql+ZKPL8JFqm2eQ=",
         "owner": "natsukium",
         "repo": "mcp-servers-nix",
-        "rev": "9eaef7ecffa77bbe3cd1fd71f2018e9c2b1ff93f",
+        "rev": "83190486143d2808ffa244b2538bbd5a270797a0",
         "type": "github"
       },
       "original": {
@@ -1682,11 +1682,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1774154798,
-        "narHash": "sha256-zsTuloDSdKf+PrI1MsWx5z/cyGEJ8P3eERtAfdP8Bmg=",
+        "lastModified": 1774303811,
+        "narHash": "sha256-fhG4JAcLgjKwt+XHbjs8brpWnyKUfU4LikLm3s0Q/ic=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "3e0d543e6ba6c0c48117a81614e90c6d8c425170",
+        "rev": "614e256310e0a4f8a9ccae3fa80c11844fba7042",
         "type": "github"
       },
       "original": {
