@@ -34,6 +34,9 @@ with lib.modernage;
 
       # ZEC DCA bot
       crypt-dca = enabled;
+
+      # Nix binary cache
+      harmonia = enabled;
     };
 
     hardware = {

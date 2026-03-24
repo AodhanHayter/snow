@@ -69,11 +69,13 @@ in
           substituters = [
             cfg.default-substituter.url
             "https://nixpkgs-python.cachix.org"
+            "http://ultimo:5000"
           ]
           ++ (mapAttrsToList (name: value: name) cfg.extra-substituters);
           trusted-public-keys = [
             cfg.default-substituter.key
             "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
+            "ultimo.cache:2b5vN/ZXS0uALs01YAxo7eNrqS4dtHuw1peDCs+DpYc="
           ]
           ++ (mapAttrsToList (name: value: value.key) cfg.extra-substituters);
 
