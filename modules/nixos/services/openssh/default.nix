@@ -11,6 +11,7 @@ with lib.modernage; let
   default-key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFnEsBv5zrOZzeQSymd/WKottg28l0mav/J0m0/Q3E4X aodhan.hayter@gmail.com";
   desktop-key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMTBSBlivmm4W46rP9m+qHPwumFuepcjP9Jl6iYhcZS5 aodhan.hayter@gmail.com";
   macmini-key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL5Gq86apfFdEbHIvTK+n1f7txgRYDakWfTARSzct0om aodhan.hayter@gmail.com";
+  maximo-key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIX2R0he+RBUTv2EICttBFWGH1o5NRydkg2bJFtFG5/O aodhan.hayter@gmail.com";
   sshid-key = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBL2eiUV5XxJPf6LaHmwGKNHnUyItlp4y1kt64kVlcsvzlU62Pe9GAsduW1Iv1K/gGCwRPj5wK5jf6derQqbydYM= #ssh.id - @aodhanhayter";
 in
 {
@@ -18,7 +19,7 @@ in
     {
       enable =
         mkBoolOpt false "Whether or not to enable openssh configuration.";
-      authorizedKeys = mkOpt (listOf str) [ default-key desktop-key macmini-key sshid-key ] "The public keys to apply.";
+      authorizedKeys = mkOpt (listOf str) [ default-key desktop-key macmini-key maximo-key sshid-key ] "The public keys to apply.";
       port = mkOpt port 2222 "The port to listen on (in addition to 22).";
     };
 
