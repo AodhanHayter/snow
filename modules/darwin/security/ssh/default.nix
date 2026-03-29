@@ -16,8 +16,12 @@ in
     server = mkBoolOpt false "Whether to enable Remote Login (SSH server).";
   };
 
-  config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ openssh ];
-    services.openssh.enable = cfg.server;
-  };
+  config = mkMerge [
+    (mkIf cfg.enable {
+      environment.systemPackages = with pkgs; [ openssh ];
+    })
+    (mkIf cfg.server {
+      services.openssh.enable = true;
+    })
+  ];
 }
