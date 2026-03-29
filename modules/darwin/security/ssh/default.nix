@@ -19,7 +19,12 @@ in
     authorizedKeys = mkOpt (listOf str) [ ] "Public keys to authorize for the primary user.";
   };
 
-  config = mkMerge [
+  config = let
+    user = config.modernage.user.name;
+    authorizedKeysDir = "/etc/ssh/authorized_keys.d";
+    authorizedKeysPath = "${authorizedKeysDir}/${user}";
+    authorizedKeysSrc = pkgs.writeText "authorized_keys-${user}" authorizedKeysText;
+  in mkMerge [
     (mkIf cfg.enable {
       environment.systemPackages = with pkgs; [ openssh ];
     })
@@ -27,12 +32,15 @@ in
       services.openssh = {
         enable = true;
         extraConfig = ''
-          AuthorizedKeysFile /etc/ssh/authorized_keys.d/%u
+          AuthorizedKeysFile ${authorizedKeysDir}/%u
         '';
       };
     })
     (mkIf (cfg.authorizedKeys != [ ]) {
-      environment.etc."ssh/authorized_keys.d/${config.modernage.user.name}".text = authorizedKeysText;
+      system.activationScripts.postActivation.text = ''
+        mkdir -p ${authorizedKeysDir}
+        install -m 644 -o ${user} ${authorizedKeysSrc} ${authorizedKeysPath}
+      '';
     })
   ];
 }
