@@ -8,6 +8,13 @@ with lib;
 with lib.modernage;
 let
   cfg = config.modernage.security.gpg;
+  pinentry-wrapper = pkgs.writeShellScript "pinentry-wrapper" ''
+    if [ -n "$SSH_CONNECTION" ]; then
+      exec ${pkgs.pinentry-curses}/bin/pinentry-curses "$@"
+    else
+      exec ${pkgs.pinentry_mac}/bin/pinentry-mac "$@"
+    fi
+  '';
   gpgConf = ''
     personal-cipher-preferences AES256 AES192 AES
     personal-digest-preferences SHA512 SHA384 SHA256
@@ -30,7 +37,7 @@ let
   gpgAgentConf = ''
     default-cache-ttl 3600
     max-cache-ttl 7200
-    pinentry-program ${pkgs.pinentry_mac}/bin/pinentry-mac
+    pinentry-program ${pinentry-wrapper}
   '';
 in
 {
@@ -39,7 +46,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ gnupg paperkey pinentry_mac ];
+    environment.systemPackages = with pkgs; [ gnupg paperkey pinentry_mac pinentry-curses ];
 
     programs = {
       gnupg.agent = {
