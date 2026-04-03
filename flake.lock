@@ -395,11 +395,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1774228299,
+        "lastModified": 1775242457,
         "narHash": "sha256-aSjleOs3ZfOUtsT2Q+OU6yeQDRn1Ad7xmPUNfQuSH5Y=",
         "owner": "AodhanHayter",
         "repo": "devenv",
-        "rev": "61c49fae1496bbb8f24aa0729b103703da76aecc",
+        "rev": "4b7e74a5bd351dd26a531669c4dc3ff043fa0b5c",
         "type": "github"
       },
       "original": {
