@@ -60,7 +60,7 @@
     };
 
     expert = {
-      url = "github:elixir-lang/expert?ref=nightly";
+      url = "github:elixir-lang/expert?ref=v0.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
