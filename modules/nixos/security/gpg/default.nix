@@ -8,8 +8,12 @@ with lib;
 with lib.modernage;
 let
   cfg = config.modernage.security.gpg;
-  pinentry-wrapper = pkgs.writeShellScript "pinentry-wrapper" ''
-    if [ -n "$SSH_CONNECTION" ]; then
+  pinentry-wrapper = pkgs.writeShellScriptBin "pinentry" ''
+    # When accessed via SSH, gpg-agent passes the client's ttyname
+    # but no DISPLAY/WAYLAND_DISPLAY (if updatestartuptty was called).
+    # Fall back to curses when no graphical display is available for
+    # this specific pinentry invocation, or when PINENTRY_USER_DATA=curses.
+    if [ "$PINENTRY_USER_DATA" = "curses" ] || { [ -z "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ]; }; then
       exec ${pkgs.pinentry-curses}/bin/pinentry-curses "$@"
     else
       exec ${pkgs.pinentry-gnome3}/bin/pinentry-gnome3 "$@"
@@ -37,7 +41,7 @@ let
   gpgAgentConf = ''
     default-cache-ttl 3600
     max-cache-ttl 7200
-    pinentry-program ${pinentry-wrapper}
+    pinentry-program ${pinentry-wrapper}/bin/pinentry
   '';
 in
 {
@@ -53,6 +57,7 @@ in
       gnupg.agent = {
         enable = true;
         enableExtraSocket = true;
+        pinentryPackage = pinentry-wrapper;
       };
     };
 
@@ -62,6 +67,27 @@ in
         ".gnupg/gpg.conf".text = gpgConf;
         ".gnupg/gpg-agent.conf".text = gpgAgentConf;
       };
+
+      home.extraOptions.programs.bash.initExtra = ''
+        export GPG_TTY=$(tty)
+        if [ -n "$SSH_CONNECTION" ]; then
+          export PINENTRY_USER_DATA=curses
+        fi
+      '';
+
+      home.extraOptions.programs.fish.interactiveShellInit = ''
+        set -gx GPG_TTY (tty)
+        if set -q SSH_CONNECTION
+          set -gx PINENTRY_USER_DATA curses
+        end
+      '';
+
+      home.extraOptions.programs.zsh.initExtra = ''
+        export GPG_TTY=$(tty)
+        if [ -n "$SSH_CONNECTION" ]; then
+          export PINENTRY_USER_DATA=curses
+        fi
+      '';
     };
   };
 }
