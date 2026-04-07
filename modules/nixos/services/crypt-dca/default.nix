@@ -11,8 +11,9 @@ with lib;
 with lib.modernage;
 let
   cfg = config.modernage.services.crypt-dca;
-  cryptPkg = inputs.crypt.packages.${system}.default;
-  cryptSrc = inputs.crypt;
+  hasCrypt = inputs ? crypt;
+  cryptPkg = if hasCrypt then inputs.crypt.packages.${system}.default else null;
+  cryptSrc = if hasCrypt then inputs.crypt else null;
   dataDir = "/srv/crypt-dca";
 in
 {
@@ -22,6 +23,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    assertions = [{
+      assertion = hasCrypt;
+      message = "crypt-dca requires the 'crypt' flake input";
+    }];
     # Ensure host directories exist + symlink config.yaml from flake source
     systemd.tmpfiles.rules = [
       "d ${dataDir}/data 0750 root root -"

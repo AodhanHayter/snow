@@ -33,7 +33,7 @@ with lib.modernage;
       avahi = enabled;
 
       # ZEC DCA bot
-      crypt-dca = enabled;
+      crypt-dca = disabled;
 
       # Nix binary cache
       harmonia = enabled;
