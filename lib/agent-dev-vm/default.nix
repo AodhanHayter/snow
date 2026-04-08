@@ -156,6 +156,7 @@ in
             microvm = {
               hypervisor = "qemu";
               inherit mem vcpu;
+              writableStoreOverlay = "/nix/.rw-store";
               interfaces = [{
                 type = "user";
                 id = "usernet";
