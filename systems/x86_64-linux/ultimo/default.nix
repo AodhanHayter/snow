@@ -46,8 +46,8 @@ with lib.modernage;
     tools.agent-dev-vm = {
       enable = true;
       vms.test = {
-        mem = 4096;
-        vcpu = 2;
+        mem = 8192;
+        vcpu = 4;
         sshPort = 2322;
         projects = {
           snow = "/home/aodhan/development/snow";
