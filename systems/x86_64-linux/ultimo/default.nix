@@ -42,6 +42,17 @@ with lib.modernage;
     hardware = {
       rgb = enabled;
     };
+
+    tools.agent-dev-vm = {
+      enable = true;
+      vms.test = {
+        mem = 4096;
+        vcpu = 2;
+        projects = {
+          snow = "/home/aodhan/development/snow";
+        };
+      };
+    };
   };
 
   # Always-on server mode
