@@ -73,6 +73,7 @@ in
           sshPort = ports.${name}.sshPort;
           authorizedKeys = resolveKeys vmDef;
           useStaticIp = isDarwin;
+          shareFsType = if isDarwin then "virtiofs" else "9p";
         }) cfg.vms;
 
         launchers = mapAttrs (name: vmDef: mkLauncher {
@@ -119,13 +120,14 @@ in
       sshPort,
       guestSystem,
       useStaticIp ? false,
+      shareFsType ? "virtiofs",
     }:
       let
         projectMounts = mapAttrs' (pname: _: {
           name = "/mnt/${pname}";
           value = {
             device = pname;
-            fsType = "virtiofs";
+            fsType = shareFsType;
             options = [ "nofail" ];
           };
         }) projects;
