@@ -99,6 +99,9 @@
     devenv.url = "github:AodhanHayter/devenv/feature/claude-plugin-support";
     devenv.inputs.nixpkgs.follows = "nixpkgs";
 
+    microvm.url = "github:microvm-nix/microvm.nix";
+    microvm.inputs.nixpkgs.follows = "nixpkgs";
+
   };
 
   outputs =
