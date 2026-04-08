@@ -173,7 +173,6 @@ in
               settings = {
                 PasswordAuthentication = false;
                 StreamLocalBindUnlink = true;
-                UseDNS = false;
               };
             };
 
