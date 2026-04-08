@@ -170,6 +170,7 @@ in
               settings = {
                 PasswordAuthentication = false;
                 StreamLocalBindUnlink = true;
+                UseDns = false;
               };
             };
 
@@ -180,6 +181,8 @@ in
             };
 
             security.sudo.wheelNeedsPassword = false;
+
+            networking.firewall.allowedTCPPorts = [ 22 ];
 
             environment.systemPackages = with nixpkgs.legacyPackages.${guestSystem}; [
               git curl wget htop tmux
