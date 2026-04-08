@@ -48,6 +48,7 @@ with lib.modernage;
       vms.test = {
         mem = 4096;
         vcpu = 2;
+        sshPort = 2322;
         projects = {
           snow = "/home/aodhan/development/snow";
         };
