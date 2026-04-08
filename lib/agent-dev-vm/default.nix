@@ -312,6 +312,7 @@ in
           then "virt,accel=kvm:tcg,gic-version=max"
           else "q35,accel=kvm:tcg";
         consoleDevice = if arch == "aarch64" then "ttyAMA0" else "ttyS0";
+        kernelImage = if arch == "aarch64" then "Image" else "bzImage";
 
       in pkgs.writeShellScriptBin "avm-start-${vmName}" ''
         set -euo pipefail
@@ -343,7 +344,7 @@ in
           -nographic \
           -serial mon:stdio \
           -device virtio-rng-pci \
-          -kernel ${microvmCfg.kernel}/Image \
+          -kernel ${microvmCfg.kernel}/${kernelImage} \
           -initrd ${microvmCfg.initrdPath} \
           -append '${kernelParams} console=${consoleDevice} reboot=t panic=-1' \
           -drive 'id=store,format=raw,read-only=on,file=${microvmCfg.storeDisk},if=none' \
