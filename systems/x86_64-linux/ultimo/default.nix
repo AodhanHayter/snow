@@ -46,7 +46,7 @@ with lib.modernage;
     tools.agent-dev-vm = {
       enable = true;
       vms.test = {
-        mem = 8192;
+        mem = 16384;
         vcpu = 4;
         sshPort = 2322;
         projects = {
