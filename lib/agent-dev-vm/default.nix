@@ -332,11 +332,6 @@ in
           exit 0
         fi
 
-        cleanup() {
-          rm -f "$PID_FILE"
-        }
-        trap cleanup EXIT INT TERM
-
         mkdir -p "$VM_DIR"
 
         ${pkgs.qemu}/bin/qemu-system-${arch} \
@@ -358,9 +353,7 @@ in
           -device 'virtio-blk-pci,drive=store' \
           -netdev 'user,id=usernet,${hostfwdArgs}' \
           -device 'virtio-net-pci,netdev=usernet,mac=${macFromName vmName}' \
-          ${shareArgs} &
-        echo $! > "$PID_FILE"
-        wait
+          ${shareArgs}
       '';
 
     mkCli = { pkgs, vmDefs, launchers, ports, sshKeyDir, sshBinary, sshKeygen }:
@@ -458,8 +451,14 @@ in
         case "$COMMAND" in
           start)
             mkdir -p "$VM_DIR"
-            "$LAUNCHER" > "$VM_DIR/launcher.log" 2>&1 &
-            disown
+            nohup "$LAUNCHER" > "$VM_DIR/launcher.log" 2>&1 &
+            LAUNCHER_PID=$!
+            disown "$LAUNCHER_PID"
+            # Wait briefly for QEMU to start and write PID
+            sleep 2
+            # Find the actual QEMU/vfkit child process
+            CHILD_PID=$(pgrep -P "$LAUNCHER_PID" 2>/dev/null | head -1 || echo "$LAUNCHER_PID")
+            echo "$CHILD_PID" > "$VM_DIR/vm.pid"
             echo "Starting $VM_NAME (SSH port $SSH_PORT)..."
             wait_ssh
             echo "$VM_NAME running."
