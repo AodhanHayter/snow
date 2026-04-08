@@ -157,11 +157,6 @@ in
               hypervisor = "qemu";
               inherit mem vcpu;
               writableStoreOverlay = "/nix/.rw-store";
-              volumes = [{
-                image = "nix-store-overlay.img";
-                mountPoint = "/nix/.rw-store";
-                size = 20480; # 20GB
-              }];
               interfaces = [{
                 type = "user";
                 id = "usernet";
@@ -171,7 +166,12 @@ in
               shares = [];
             };
 
-            fileSystems = projectMounts;
+            fileSystems = projectMounts // {
+              "/nix/.rw-store" = {
+                fsType = "tmpfs";
+                options = [ "mode=0755" "size=75%" ];
+              };
+            };
 
             networking.useDHCP = true;
             # Static IP for gvproxy (macOS); QEMU user-mode uses DHCP (10.0.2.x)
