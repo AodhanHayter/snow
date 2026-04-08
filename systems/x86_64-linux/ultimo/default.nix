@@ -51,6 +51,7 @@ with lib.modernage;
         sshPort = 2322;
         projects = {
           snow = "/home/aodhan/development/snow";
+          testproject = "/home/aodhan/development/test-devenv-project";
         };
         authorizedKeys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIO1hPvqjkAi/2mfCNOqhOYYvTcCO5eeqUxOEbkZxLh5 avm-test"
