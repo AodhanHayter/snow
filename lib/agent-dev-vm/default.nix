@@ -65,11 +65,17 @@ in
       let
         ports = assignPorts cfg.vms;
 
+        claudeCodePkgs =
+          if inputs ? claude-code-nix
+          then [ inputs.claude-code-nix.packages.${guestSystem}.default ]
+          else [];
+
         guestSystems = mapAttrs (name: vmDef: mkGuestSystem {
           nixpkgs = inputs.nixpkgs;
           microvm = inputs.microvm;
           inherit name guestSystem;
-          inherit (vmDef) mem vcpu projects forwardPorts extraPackages;
+          inherit (vmDef) mem vcpu projects forwardPorts;
+          extraPackages = vmDef.extraPackages ++ claudeCodePkgs;
           sshPort = ports.${name}.sshPort;
           authorizedKeys = resolveKeys vmDef;
           useStaticIp = isDarwin;
