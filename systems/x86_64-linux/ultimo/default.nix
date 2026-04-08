@@ -52,6 +52,9 @@ with lib.modernage;
         projects = {
           snow = "/home/aodhan/development/snow";
         };
+        authorizedKeys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIO1hPvqjkAi/2mfCNOqhOYYvTcCO5eeqUxOEbkZxLh5 avm-test"
+        ];
       };
     };
   };
