@@ -72,6 +72,7 @@ in
           inherit (vmDef) mem vcpu projects forwardPorts extraPackages;
           sshPort = ports.${name}.sshPort;
           authorizedKeys = resolveKeys vmDef;
+          useStaticIp = isDarwin;
         }) cfg.vms;
 
         launchers = mapAttrs (name: vmDef: mkLauncher {
@@ -117,6 +118,7 @@ in
       authorizedKeys,
       sshPort,
       guestSystem,
+      useStaticIp ? false,
     }:
       let
         projectMounts = mapAttrs' (pname: _: {
@@ -158,7 +160,8 @@ in
             fileSystems = projectMounts;
 
             networking.useDHCP = true;
-            systemd.network.networks."10-virtio" = {
+            # Static IP for gvproxy (macOS); QEMU user-mode uses DHCP (10.0.2.x)
+            systemd.network.networks."10-virtio" = lib.mkIf useStaticIp {
               matchConfig.Driver = "virtio_net";
               addresses = [{ Address = "192.168.127.2/24"; }];
               routes = [{ Gateway = "192.168.127.1"; }];
@@ -170,7 +173,7 @@ in
               settings = {
                 PasswordAuthentication = false;
                 StreamLocalBindUnlink = true;
-                UseDns = false;
+                UseDNS = false;
               };
             };
 
