@@ -10,6 +10,7 @@ let
   cfg = config.modernage.apps.ghostty;
   ghosttyConfig = ''
     theme = nord
+    font-family = Berkeley Mono
     font-size = 16
     cursor-style = block
     mouse-hide-while-typing = true

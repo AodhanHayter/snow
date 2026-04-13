@@ -41,6 +41,26 @@
         "type": "github"
       }
     },
+    "berkeley-mono": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1776054452,
+        "narHash": "sha256-mee8/jv0t3NPvwW0oLa+0/fLZnHflcVtUB0mP1c2u8c=",
+        "ref": "refs/heads/master",
+        "rev": "d507a6d5cebe39913367b8eb25fc89517790925d",
+        "revCount": 2,
+        "type": "git",
+        "url": "ssh://git@github.com/AodhanHayter/berkeley-mono-nix"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/AodhanHayter/berkeley-mono-nix"
+      }
+    },
     "cachix": {
       "inputs": {
         "devenv": [
@@ -1535,6 +1555,7 @@
     "root": {
       "inputs": {
         "anthropics-skills": "anthropics-skills",
+        "berkeley-mono": "berkeley-mono",
         "claude-code-nix": "claude-code-nix",
         "claude-lsp-plugins": "claude-lsp-plugins",
         "claude-plugins-official": "claude-plugins-official",

@@ -95,6 +95,11 @@
       flake = false;
     };
 
+    berkeley-mono = {
+      url = "git+ssh://git@github.com/AodhanHayter/berkeley-mono-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
 
     devenv.url = "github:AodhanHayter/devenv/feature/claude-plugin-support";
     devenv.inputs.nixpkgs.follows = "nixpkgs";

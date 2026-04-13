@@ -15,6 +15,10 @@ in
 
   config = mkIf cfg.enable {
     modernage = {
+      desktop = {
+        fonts = enabled;
+      };
+
       suites = {
         common = enabled;
         desktop = enabled;
