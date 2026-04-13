@@ -18,6 +18,13 @@ This is "Modern Age" - a comprehensive NixOS/Darwin/Home Manager configuration r
 - `nix develop` - Enter development shell
 - `nix fmt` - Format Nix files
 
+### Private Flake Inputs (SSH)
+`sudo darwin-rebuild` can't access the user's SSH agent for private git inputs (e.g., `berkeley-mono-nix`). Pre-fetch as your user first:
+```bash
+nix flake update <input-name>
+sudo darwin-rebuild switch --flake .
+```
+
 ## Architecture & Key Patterns
 
 ### Snowfall Lib Framework
