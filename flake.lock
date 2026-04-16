@@ -50,13 +50,14 @@
       "locked": {
         "lastModified": 1776054452,
         "narHash": "sha256-mee8/jv0t3NPvwW0oLa+0/fLZnHflcVtUB0mP1c2u8c=",
-        "ref": "refs/heads/master",
+        "ref": "master",
         "rev": "d507a6d5cebe39913367b8eb25fc89517790925d",
         "revCount": 2,
         "type": "git",
         "url": "ssh://git@github.com/AodhanHayter/berkeley-mono-nix"
       },
       "original": {
+        "ref": "master",
         "type": "git",
         "url": "ssh://git@github.com/AodhanHayter/berkeley-mono-nix"
       }
@@ -160,11 +161,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1776353369,
-        "narHash": "sha256-/RO9Wrz4RzMogdR/kIBoRpSLjiaATVAmlIOuuXuZIGI=",
+        "lastModified": 1776370363,
+        "narHash": "sha256-Ul2mJIH6irPdJLiVFDUcSbc7rv7ULWutGjIv7IHOvyI=",
         "owner": "sadjow",
         "repo": "claude-code-nix",
-        "rev": "69fc1a6069ff38820fbbc042cc14f93b2539297f",
+        "rev": "9e198808ce7466eceb5bbd341936d6c410f9c664",
         "type": "github"
       },
       "original": {
@@ -192,11 +193,11 @@
     "claude-plugins-official": {
       "flake": false,
       "locked": {
-        "lastModified": 1776203202,
-        "narHash": "sha256-0NxVFMdpZp8mA2j78DPkxl1mh5ENjuO1qFTnYcngDWQ=",
+        "lastModified": 1776369707,
+        "narHash": "sha256-OMF6xFI/aJAicgYxv8lKLVIJza9x9rvjN7p7wEoVy+Q=",
         "owner": "anthropics",
         "repo": "claude-plugins-official",
-        "rev": "48aa43517886014e90ee80a6461f9de75045369d",
+        "rev": "de39da5ba2daf371d35601bc9e8f3946dbfc373f",
         "type": "github"
       },
       "original": {
@@ -416,11 +417,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1776130029,
-        "narHash": "sha256-zSIDrczVwHGylfphxb/uAxfmQNIHvfTfdghrpBJH3BM=",
+        "lastModified": 1776370698,
+        "narHash": "sha256-EshXnjFsAPbJ/0MMD5H55bopYqdiajg2vfW2QKnvwaM=",
         "owner": "AodhanHayter",
         "repo": "devenv",
-        "rev": "47107f68af14166018031b25361f0b357a2a4141",
+        "rev": "d682ae06b8a4ea06d38e8ba988aa325f9ee3e063",
         "type": "github"
       },
       "original": {

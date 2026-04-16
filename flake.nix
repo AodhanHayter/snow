@@ -96,7 +96,7 @@
     };
 
     berkeley-mono = {
-      url = "git+ssh://git@github.com/AodhanHayter/berkeley-mono-nix";
+      url = "git+ssh://git@github.com/AodhanHayter/berkeley-mono-nix?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
