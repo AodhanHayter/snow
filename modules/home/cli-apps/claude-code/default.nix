@@ -238,13 +238,6 @@ in
             };
             flakeInput = inputs.anthropics-skills;
           };
-          "sawyerhood/dev-browser" = {
-            source = {
-              type = "github";
-              url = "sawyerhood/dev-browser";
-            };
-            flakeInput = inputs.dev-browser;
-          };
           "AodhanHayter/claude-lsp-plugins" = {
             source = {
               type = "github";
