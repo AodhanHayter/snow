@@ -252,6 +252,13 @@ in
             };
             flakeInput = inputs.claude-lsp-plugins;
           };
+          "JuliusBrussee/caveman" = {
+            source = {
+              type = "github";
+              url = "JuliusBrussee/caveman";
+            };
+            flakeInput = inputs.caveman;
+          };
         };
         description = "Plugin marketplaces to register";
         example = literalExpression ''
@@ -280,6 +287,7 @@ in
           "python-lsp@claude-lsp-plugins" = true;
           "elixir-lsp@claude-lsp-plugins" = true;
           "swift-lsp@claude-lsp-plugins" = true;
+          "caveman@caveman" = true;
         };
         description = "Plugins to enable in format 'plugin-name@marketplace-name'";
         example = {
