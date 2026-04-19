@@ -67,9 +67,39 @@ let
 
   statuslineScript = pkgs.runCommand "claude-statusline" { } ''
     substitute ${./statusline.sh} $out \
-      --replace-fail "@PATH@" "${lib.makeBinPath (with pkgs; [ jq curl git coreutils gnused gawk ])}"
+      --replace-fail "@PATH@" "${
+        lib.makeBinPath (
+          with pkgs;
+          [
+            jq
+            curl
+            git
+            coreutils
+            gnused
+            gawk
+          ]
+        )
+      }"
     chmod +x $out
   '';
+
+  # RTK token-saving PreToolUse hook. Rewrites Bash commands to `rtk <cmd>`
+  # via `rtk rewrite`. Sourced from github:rtk-ai/rtk hooks/claude.
+  rtkRewriteScript = pkgs.writeShellScript "rtk-rewrite" ''
+    export PATH="${
+      lib.makeBinPath [
+        pkgs.jq
+        pkgs.rtk
+      ]
+    }:$PATH"
+    ${builtins.readFile ./rtk-rewrite.sh}
+  '';
+
+  # Merge RTK awareness into Claude memory so Claude knows rtk exists and
+  # which commands to invoke explicitly (rtk gain, rtk discover, ...).
+  memoryFile = pkgs.writeText "claude-memory.md" (
+    builtins.readFile ./CLAUDE.md + "\n\n" + builtins.readFile ./rtk-awareness.md
+  );
 
   # Base settings (without plugins)
   baseSettings = {
@@ -158,6 +188,9 @@ let
         "Bash(devenv:*)"
         "Bash(direnv:*)"
 
+        # rtk token-killer wrapper (auto-rewrites read-only cmds)
+        "Bash(rtk:*)"
+
       ];
       deny = [ ];
     };
@@ -183,6 +216,10 @@ let
         {
           matcher = "Bash";
           hooks = [
+            {
+              type = "command";
+              command = "${rtkRewriteScript}";
+            }
             {
               type = "command";
               command = "dcg";
@@ -315,7 +352,7 @@ in
       enable = true;
       package = pkgs.claude-code;
       inherit settings;
-      memory.source = ./CLAUDE.md;
+      memory.source = memoryFile;
 
       commandsDir = ./commands;
       skillsDir = ./skills;
@@ -334,6 +371,7 @@ in
 
     home.packages = with pkgs; [
       claude-code-acp
+      rtk
     ];
   };
 }
