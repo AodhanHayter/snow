@@ -11,5 +11,9 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [ devenv ];
+
+    programs.fish.interactiveShellInit = mkIf config.modernage.cli-apps.fish.enable ''
+      ${pkgs.devenv}/bin/devenv hook fish | source
+    '';
   };
 }
