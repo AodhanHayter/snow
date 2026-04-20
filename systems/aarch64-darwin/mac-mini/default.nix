@@ -17,10 +17,6 @@ with lib.modernage;
       workstation = enabled;
     };
 
-    tools = {
-      nodejs = enabled;
-    };
-
     services = {
       tailscale = enabled;
     };

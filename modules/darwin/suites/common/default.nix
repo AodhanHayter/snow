@@ -1,8 +1,9 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 
 with lib;
@@ -31,6 +32,7 @@ in
 
       tools = {
         git = enabled;
+        nodejs = enabled;
       };
 
       system = {

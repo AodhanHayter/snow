@@ -22,6 +22,7 @@ in
       tools = {
         git = enabled;
         sops = enabled;
+        nodejs = enabled;
       };
 
       hardware = {
