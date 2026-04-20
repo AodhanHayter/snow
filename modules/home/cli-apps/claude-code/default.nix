@@ -241,17 +241,23 @@ let
       inherit extraKnownMarketplaces;
     };
 
-  # Generate skill file entries from anthropics-skills input
-  skillFiles = optionalAttrs cfg.skills.enable (
-    listToAttrs (
+  # Generate skill file entries from configured sources
+  skillFiles = lib.foldl' (
+    acc: sourceName:
+    let
+      s = cfg.skills.sources.${sourceName};
+      prefix = if s.subdir == "" then "" else "${s.subdir}/";
+    in
+    acc
+    // listToAttrs (
       map (skillName: {
         name = ".claude/skills/${skillName}";
         value = {
-          source = "${inputs.anthropics-skills}/skills/${skillName}";
+          source = "${s.src}/${prefix}${skillName}";
         };
-      }) cfg.skills.names
+      }) s.names
     )
-  );
+  ) { } (attrNames cfg.skills.sources);
 in
 {
   options.modernage.cli-apps.claude-code = {
@@ -334,15 +340,37 @@ in
     };
 
     skills = {
-      enable = mkBoolOpt false "Enable copying skills from anthropics-skills input";
-      names = mkOption {
-        type = types.listOf types.str;
-        default = [ ];
-        description = "Skill folder names to copy from anthropics/skills repo";
-        example = [
-          "document-skills"
-          "example-skills"
-        ];
+      sources = mkOption {
+        type = types.attrsOf (
+          types.submodule {
+            options = {
+              src = mkOption {
+                type = types.path;
+                description = "Flake input path containing skill folders";
+              };
+              subdir = mkOpt types.str "" "Subdir within src holding skill folders (empty = root)";
+              names = mkOpt (types.listOf types.str) [ ] "Skill folder names to symlink";
+            };
+          }
+        );
+        default = {
+          anthropics = {
+            src = inputs.anthropics-skills;
+            subdir = "skills";
+            names = [ ];
+          };
+          mattpocock = {
+            src = inputs.mattpocock-skills;
+            subdir = "";
+            names = [
+              "domain-model"
+              "grill-me"
+              "improve-codebase-architecture"
+              "ubiquitous-language"
+            ];
+          };
+        };
+        description = "External skill sources to symlink into ~/.claude/skills";
       };
     };
   };

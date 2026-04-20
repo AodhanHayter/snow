@@ -1116,6 +1116,22 @@
         "type": "github"
       }
     },
+    "mattpocock-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1776427901,
+        "narHash": "sha256-LF+V0Qb3f6fmlBTIEHZw6H7RYzCrHIHZgolpNbww6Q4=",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "rev": "8868f54212dfcf450b665d2e2a5bf521ada64c3e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mattpocock",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "mcp-servers-nix": {
       "inputs": {
         "nixpkgs": [
@@ -1588,6 +1604,7 @@
         "expert": "expert",
         "ghostty": "ghostty",
         "home-manager": "home-manager",
+        "mattpocock-skills": "mattpocock-skills",
         "mcp-servers-nix": "mcp-servers-nix",
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
