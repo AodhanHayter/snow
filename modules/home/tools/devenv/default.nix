@@ -1,8 +1,15 @@
-{ options, config, lib, pkgs, ... }:
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 with lib.modernage;
-let cfg = config.modernage.tools.devenv;
+let
+  cfg = config.modernage.tools.devenv;
 in
 {
   options.modernage.tools.devenv = with types; {
@@ -11,9 +18,5 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [ devenv ];
-
-    programs.fish.interactiveShellInit = mkIf config.modernage.cli-apps.fish.enable ''
-      ${pkgs.devenv}/bin/devenv hook fish | source
-    '';
   };
 }
