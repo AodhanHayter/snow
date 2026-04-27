@@ -1,5 +1,6 @@
 { channels, ... }:
-final: prev:
-{
-  inherit (channels.unstable) direnv;
+final: prev: {
+  direnv = channels.unstable.direnv.overrideAttrs (_: {
+    doCheck = false;
+  });
 }
