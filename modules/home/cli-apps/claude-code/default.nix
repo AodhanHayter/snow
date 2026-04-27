@@ -72,10 +72,8 @@ let
           with pkgs;
           [
             jq
-            curl
             git
             coreutils
-            gnused
             gawk
           ]
         )
