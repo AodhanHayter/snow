@@ -239,6 +239,17 @@ let
       inherit extraKnownMarketplaces;
     };
 
+  # Render settings to a Nix-store JSON file. Seeded via activation as a
+  # mutable copy at ~/.claude/settings.json so Claude Code commands like
+  # /effort can write to it. Upstream HM symlink is bypassed by passing
+  # settings = {} to programs.claude-code below.
+  settingsJson = (pkgs.formats.json { }).generate "claude-code-settings.json" (
+    settings
+    // {
+      "$schema" = "https://json.schemastore.org/claude-code-settings.json";
+    }
+  );
+
   # Generate skill file entries from configured sources
   skillFiles = lib.foldl' (
     acc: sourceName:
@@ -377,7 +388,9 @@ in
     programs.claude-code = {
       enable = true;
       package = pkgs.claude-code;
-      inherit settings;
+      # Pass {} so upstream HM module skips creating ~/.claude/settings.json
+      # symlink; we manage it ourselves via activation as a mutable copy.
+      settings = { };
       memory.source = memoryFile;
 
       commandsDir = ./commands;
@@ -386,6 +399,18 @@ in
 
     # Symlink Nix-managed marketplaces + skills
     home.file = marketplaceSymlinks // skillFiles;
+
+    # Seed ~/.claude/settings.json as a mutable copy of the Nix-rendered
+    # settings. Only overwrites when the target is missing or a symlink to
+    # /nix/store, so runtime edits (e.g. /effort, /model) survive HM rebuilds.
+    home.activation.claudeSettingsSeed = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+      target="${homeDir}/.claude/settings.json"
+      run mkdir -p "${homeDir}/.claude"
+      if [ ! -e "$target" ] || { [ -L "$target" ] && [[ "$(readlink "$target")" == /nix/store/* ]]; }; then
+        run rm -f "$target"
+        run install -m 0644 ${settingsJson} "$target"
+      fi
+    '';
 
     # Create local plugins directory for runtime installs
     home.activation.claudePluginsSetup = mkIf cfg.plugins.allowRuntimeInstall (
