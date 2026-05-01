@@ -37,7 +37,9 @@ let
     export AWS_PROFILE=${bedrockConfig.awsProfile}
     export AWS_REGION=${bedrockConfig.awsRegion}
     ${optionalString (cfg.model != "") "export ANTHROPIC_MODEL='${cfg.model}'"}
-    ${optionalString (cfg.smallFastModel != "") "export ANTHROPIC_SMALL_FAST_MODEL='${cfg.smallFastModel}'"}
+    ${optionalString (
+      cfg.smallFastModel != ""
+    ) "export ANTHROPIC_SMALL_FAST_MODEL='${cfg.smallFastModel}'"}
     export CLAUDE_CODE_ENABLE_TELEMETRY=1
     export OTEL_METRICS_EXPORTER=otlp
     export OTEL_LOGS_EXPORTER=otlp
@@ -81,57 +83,54 @@ in
     home.packages = [ wrapperScript ];
 
     # Copy binaries + config at activation time (avoids pure eval restrictions)
-    home.activation.claudeBedrockSetup =
-      config.lib.dag.entryAfter [ "writeBoundary" ] ''
-        REPO="${cfg.repoPath}"
-        DEST="${homeDir}/claude-code-with-bedrock"
+    home.activation.claudeBedrockSetup = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+      REPO="${cfg.repoPath}"
+      DEST="${homeDir}/claude-code-with-bedrock"
 
-        if [ ! -d "$REPO" ]; then
-          errorEcho "claude-code-work: repo not found at $REPO"
-          errorEcho "Clone it: git clone git@github.com:healthsparq/kyruushealth-claude-code $REPO"
-          exit 1
-        fi
+      if [ ! -d "$REPO" ]; then
+        errorEcho "claude-code-work: repo not found at $REPO"
+        errorEcho "Clone it: git clone git@github.com:healthsparq/kyruushealth-claude-code $REPO"
+        exit 1
+      fi
 
-        CRED="$REPO/credential-process-${suffix}"
-        OTEL="$REPO/otel-helper-${suffix}"
-        CONF="$REPO/config.json"
+      CRED="$REPO/credential-process-${suffix}"
+      OTEL="$REPO/otel-helper-${suffix}"
+      CONF="$REPO/config.json"
 
-        if [ ! -f "$CRED" ]; then
-          errorEcho "claude-code-work: credential-process-${suffix} not found in $REPO"
-          exit 1
-        fi
+      if [ ! -f "$CRED" ]; then
+        errorEcho "claude-code-work: credential-process-${suffix} not found in $REPO"
+        exit 1
+      fi
 
-        if [ ! -f "$CONF" ]; then
-          errorEcho "claude-code-work: config.json not found in $REPO"
-          exit 1
-        fi
+      if [ ! -f "$CONF" ]; then
+        errorEcho "claude-code-work: config.json not found in $REPO"
+        exit 1
+      fi
 
-        run mkdir -p "$DEST"
-        run cp "$CRED" "$DEST/credential-process"
-        run chmod +x "$DEST/credential-process"
-        run cp "$CONF" "$DEST/config.json"
+      run mkdir -p "$DEST"
+      run cp "$CRED" "$DEST/credential-process"
+      run chmod +x "$DEST/credential-process"
+      run cp "$CONF" "$DEST/config.json"
 
-        if [ -f "$OTEL" ]; then
-          run cp "$OTEL" "$DEST/otel-helper"
-          run chmod +x "$DEST/otel-helper"
-        fi
-      '';
+      if [ -f "$OTEL" ]; then
+        run cp "$OTEL" "$DEST/otel-helper"
+        run chmod +x "$DEST/otel-helper"
+      fi
+    '';
 
     # Append ClaudeCode AWS profile if not present
-    home.activation.claudeBedrockAwsProfile =
-      config.lib.dag.entryAfter [ "claudeBedrockSetup" ] ''
-        if ! grep -q '\[profile ClaudeCode\]' "${homeDir}/.aws/config" 2>/dev/null; then
-          run mkdir -p "${homeDir}/.aws"
-          run bash -c 'cat >> "${homeDir}/.aws/config" << EOF
+    home.activation.claudeBedrockAwsProfile = config.lib.dag.entryAfter [ "claudeBedrockSetup" ] ''
+              if ! grep -q '\[profile ClaudeCode\]' "${homeDir}/.aws/config" 2>/dev/null; then
+                run mkdir -p "${homeDir}/.aws"
+                run bash -c 'cat >> "${homeDir}/.aws/config" << EOF
 
-[profile ClaudeCode]
-credential_process = ${homeDir}/claude-code-with-bedrock/credential-process
-region = ${bedrockConfig.awsRegion}
-EOF'
-        fi
-      '';
+      [profile ClaudeCode]
+      credential_process = ${homeDir}/claude-code-with-bedrock/credential-process
+      region = ${bedrockConfig.awsRegion}
+      EOF'
+              fi
+    '';
 
-    # otelHeadersHelper in settings.json — only invoked when telemetry is enabled (work mode)
-    programs.claude-code.settings.otelHeadersHelper = "~/claude-code-with-bedrock/otel-helper";
+    programs.claude-code.settings.otelHeadersHelper = "${homeDir}/claude-code-with-bedrock/otel-helper";
   };
 }

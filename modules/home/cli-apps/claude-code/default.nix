@@ -193,7 +193,6 @@ let
       deny = [ ];
     };
     env = {
-      CLAUDE_CODE_ENABLE_TELEMETRY = "0";
       CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR = "1";
       CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
       DIRENV_LOG_FORMAT = "";
