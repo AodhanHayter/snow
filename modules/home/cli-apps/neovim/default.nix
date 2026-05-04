@@ -58,8 +58,8 @@ in
       withNodeJs = true;
       withPython3 = true;
       extraLuaConfig = ''
-        ${lib.strings.fileContents ./config/init.lua}
         vim.g.fff_nvim_dir = "${inputs.self.packages.${system}.fff-nvim}"
+        ${lib.strings.fileContents ./config/init.lua}
       '';
     };
   };
