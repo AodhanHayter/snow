@@ -74,9 +74,9 @@ vim.api.nvim_create_autocmd('User', {
 ---
 
 -- fuzzy finder
-map('n', '<leader>t', ':lua require("telescope.builtin").find_files()<cr>', options)
+map('n', '<leader>t', ':lua require("fff").find_files()<cr>', options)
 map('n', '<leader>b', ':lua require("telescope.builtin").buffers()<cr>', options)
-map('n', '<leader>g', ':lua require("telescope.builtin").live_grep()<cr>', options)
+map('n', '<leader>g', ':lua require("fff").live_grep()<cr>', options)
 map('n', '<leader>ch', ':lua require("telescope.builtin").command_history()<cr>', options)
 map('n', '<leader>sh', ':lua require("telescope.builtin").search_history()<cr>', options)
 
