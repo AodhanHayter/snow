@@ -182,9 +182,8 @@ let
         "Bash(jq:*)"
         "Bash(yq:*)"
 
-        # devenv and direnv integration
+        # devenv integration
         "Bash(devenv:*)"
-        "Bash(direnv:*)"
 
         # rtk token-killer wrapper (auto-rewrites read-only cmds)
         "Bash(rtk:*)"

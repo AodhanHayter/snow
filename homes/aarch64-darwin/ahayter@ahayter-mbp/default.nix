@@ -54,7 +54,6 @@ with lib.modernage;
 
     tools = {
       devenv = enabled;
-      direnv = enabled;
       git = enabled;
       mcp-servers = enabled;
       sops = enabled;
