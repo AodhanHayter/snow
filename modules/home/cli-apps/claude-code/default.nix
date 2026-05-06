@@ -366,14 +366,21 @@ in
             subdir = "skills";
             names = [ ];
           };
-          mattpocock = {
+          mattpocock-engineering = {
             src = inputs.mattpocock-skills;
-            subdir = "";
+            subdir = "skills/engineering";
             names = [
-              "domain-model"
-              "grill-me"
+              "diagnose"
+              "grill-with-docs"
               "improve-codebase-architecture"
-              "ubiquitous-language"
+              "tdd"
+            ];
+          };
+          mattpocock-productivity = {
+            src = inputs.mattpocock-skills;
+            subdir = "skills/productivity";
+            names = [
+              "grill-me"
             ];
           };
         };
