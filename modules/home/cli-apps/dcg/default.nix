@@ -1,4 +1,10 @@
-{ lib, config, pkgs, inputs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 with lib;
 with lib.modernage;
 let
@@ -10,6 +16,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ inputs.self.packages.${pkgs.system}.dcg ];
+    home.packages = [ inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.dcg ];
   };
 }

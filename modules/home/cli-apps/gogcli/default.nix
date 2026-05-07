@@ -9,7 +9,7 @@ with lib;
 with lib.modernage;
 let
   cfg = config.modernage.cli-apps.gogcli;
-  gogcli = inputs.self.packages.${pkgs.system}.gogcli;
+  gogcli = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.gogcli;
 in
 {
   options.modernage.cli-apps.gogcli = {

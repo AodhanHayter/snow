@@ -406,7 +406,6 @@ in
       memory.source = memoryFile;
 
       commandsDir = ./commands;
-      skillsDir = ./skills;
     };
 
     # Symlink Nix-managed marketplaces + skills

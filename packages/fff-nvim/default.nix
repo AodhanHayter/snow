@@ -3,12 +3,11 @@
   stdenvNoCC,
   fetchFromGitHub,
   inputs,
-  system,
   vimUtils,
   ...
 }:
 let
-  fffLib = inputs.self.packages.${system}.fff-nvim-lib;
+  fffLib = inputs.self.packages.${stdenvNoCC.hostPlatform.system}.fff-nvim-lib;
   libname = if stdenvNoCC.hostPlatform.isDarwin then "libfff_nvim.dylib" else "libfff_nvim.so";
 in
 vimUtils.buildVimPlugin {
