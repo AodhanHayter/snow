@@ -48,3 +48,9 @@ description: Brief description for skill discovery
 ```
 
 Module option: `skillsDir = ./skills;`
+
+## Plugin Marketplaces
+
+- Attr key in `cfg.plugins.marketplaces` MUST equal marketplace.json `name` field (Claude Code uses it as marketplace identity; also used as symlink dir under `~/.claude/plugins/marketplaces/`).
+- `source.url` holds GitHub owner/repo path; used as `repo` in `extraKnownMarketplaces`.
+- Stale unused `lib/claude-code/` namespace exists (`mkKnownMarketplaces` etc.) — separate cleanup, do not extend.

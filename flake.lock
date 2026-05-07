@@ -243,6 +243,22 @@
         "type": "github"
       }
     },
+    "codex-plugin-cc": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1776544913,
+        "narHash": "sha256-zWddz18c3E15TPuEvjMkBkrwiFlK3ZqIG5YP5xX6ZII=",
+        "owner": "openai",
+        "repo": "codex-plugin-cc",
+        "rev": "807e03ac9d5aa23bc395fdec8c3767500a86b3cf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "openai",
+        "repo": "codex-plugin-cc",
+        "type": "github"
+      }
+    },
     "crate2nix": {
       "inputs": {
         "cachix": "cachix_2",
@@ -1680,6 +1696,7 @@
         "claude-lsp-plugins": "claude-lsp-plugins",
         "claude-plugins-official": "claude-plugins-official",
         "codex-cli-nix": "codex-cli-nix",
+        "codex-plugin-cc": "codex-plugin-cc",
         "darwin": "darwin",
         "deploy-rs": "deploy-rs",
         "determinate": "determinate",

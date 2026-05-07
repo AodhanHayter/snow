@@ -100,6 +100,11 @@
       flake = false;
     };
 
+    codex-plugin-cc = {
+      url = "github:openai/codex-plugin-cc";
+      flake = false;
+    };
+
     mattpocock-skills = {
       url = "github:mattpocock/skills";
       flake = false;

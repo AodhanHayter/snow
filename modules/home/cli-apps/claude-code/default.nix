@@ -31,7 +31,6 @@ let
     };
   };
 
-  # Get last segment of marketplace name (e.g., "anthropics/claude-plugins-official" -> "claude-plugins-official")
   getMarketplaceName = name: lib.last (lib.splitString "/" name);
 
   # Marketplaces with flakeInput defined (Nix-managed via symlinks)
@@ -43,7 +42,7 @@ let
     lib.nameValuePair (getMarketplaceName name) {
       source = {
         source = if m.source.type == "github" then "github" else m.source.type;
-        repo = name;
+        repo = m.source.url;
       };
     }
   ) cfg.plugins.marketplaces;
@@ -302,6 +301,13 @@ in
             };
             flakeInput = inputs.caveman;
           };
+          "openai-codex" = {
+            source = {
+              type = "github";
+              url = "openai/codex-plugin-cc";
+            };
+            flakeInput = inputs.codex-plugin-cc;
+          };
         };
         description = "Plugin marketplaces to register";
         example = literalExpression ''
@@ -331,6 +337,7 @@ in
           "elixir-lsp@claude-lsp-plugins" = true;
           "swift-lsp@claude-lsp-plugins" = true;
           "caveman@caveman" = true;
+          "codex@openai-codex" = true;
         };
         description = "Plugins to enable in format 'plugin-name@marketplace-name'";
         example = {

@@ -14,6 +14,9 @@ This is "Modern Age" - a comprehensive NixOS/Darwin/Home Manager configuration r
 - `nix build .#darwinConfigurations.<hostname>.system` - Build Darwin system
 - `deploy .#<hostname>` - Deploy to remote host using deploy-rs
 
+### Verifying module changes
+- `nix flake check` currently fails on `home.stateVersion` (pre-existing, unrelated). Bypass with direct eval: `nix eval --json '.#homeConfigurations."<user>@<host>".config.<path>'`
+
 ### Development
 - `nix develop` - Enter development shell
 - `nix fmt` - Format Nix files
