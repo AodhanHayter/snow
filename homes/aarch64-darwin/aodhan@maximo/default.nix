@@ -41,6 +41,7 @@ with lib.modernage;
       password-store = enabled;
       pulumi = enabled;
       ripgrep = enabled;
+      ssh = enabled;
       tealdeer = enabled;
       yq = enabled;
       zsh = disabled;

@@ -40,6 +40,7 @@ with lib.modernage;
       pulumi = enabled;
       tealdeer = enabled;
       ripgrep = enabled;
+      ssh = enabled;
       yq = enabled;
       zsh = enabled;
     };
