@@ -25,6 +25,10 @@ in
           hostname = "100.72.144.108";
           user = "aodhanhayter";
         };
+        "mac-mini.local" = {
+          hostname = "mac-mini.local";
+          user = "aodhanhayter";
+        };
         "maximo" = {
           hostname = "100.73.146.77";
           user = "aodhan";
