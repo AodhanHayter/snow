@@ -177,11 +177,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778354823,
-        "narHash": "sha256-fOHLkjzkL+Na9mA7hDiWji23ATf0LEKo4z2hGJ/BkBs=",
+        "lastModified": 1778527844,
+        "narHash": "sha256-L9X3AUVEyNN0Kfg5Gplw2S+eYjLhvTzrO2Ec21nvFBI=",
         "owner": "sadjow",
         "repo": "claude-code-nix",
-        "rev": "45184286c7660075779f062d0740ef95307709b5",
+        "rev": "f57197b166415cc8199b404b273275b5aa3823d5",
         "type": "github"
       },
       "original": {
@@ -209,11 +209,11 @@
     "claude-plugins-official": {
       "flake": false,
       "locked": {
-        "lastModified": 1778521056,
-        "narHash": "sha256-2XTMLIMnOzzvQlC0O+Ude2JOG8fQp2iBLyFpbcArXCI=",
+        "lastModified": 1778530473,
+        "narHash": "sha256-xmcDiV66PH3l33OBReazrqmialAReco/SbmADoRHxxI=",
         "owner": "anthropics",
         "repo": "claude-plugins-official",
-        "rev": "6196a61bdeece7b9889ecda1e45bd7085788ae75",
+        "rev": "45896c8f2fe68e68ca2a8e3554d4441f48475431",
         "type": "github"
       },
       "original": {
@@ -1217,11 +1217,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778509947,
-        "narHash": "sha256-q4VAN6lptgy7Vv4F1LKvvRNABHdj9B1EpTH81VhxzFQ=",
+        "lastModified": 1778551830,
+        "narHash": "sha256-DW2Lqq9FIiPtDayQVA/VXr4gJeB2F01j1r86JjOZgRo=",
         "owner": "natsukium",
         "repo": "mcp-servers-nix",
-        "rev": "91656c6c73e8955747f47b700041628cbd537095",
+        "rev": "15394d9466be6da415f90b5f93a3a412cbfdd5dc",
         "type": "github"
       },
       "original": {
