@@ -66,6 +66,43 @@ in
           set -gx AWS_SESSION_TOKEN (aws configure get default.aws_session_token)
           set -gx AWS_SECURITY_TOKEN (aws configure get default.aws_security_token)
         '';
+      }
+      // optionalAttrs pkgs.stdenv.isLinux {
+        # Unlock gnome-keyring login keyring from a TTY (for SSH where gcr-prompter can't show).
+        # Replaces any running daemon; reads password from stdin via `read -s`.
+        # Verifies via D-Bus because `gnome-keyring-daemon --unlock` exits 0 even on wrong password.
+        unlock-keyring = ''
+          read -s -P "keyring password: " kpw
+          echo
+          if test -z "$kpw"
+            echo "no password entered, aborting" >&2
+            return 1
+          end
+          echo -n "$kpw" | gnome-keyring-daemon --replace --unlock --components=secrets >/dev/null 2>&1
+          set -l rc $status
+          set -e kpw
+          if test $rc -ne 0
+            echo "gnome-keyring-daemon exited $rc" >&2
+            return $rc
+          end
+          # Daemon forks; give it a moment to claim the bus name and process the password.
+          sleep 0.3
+          set -l locked (busctl --user get-property org.freedesktop.secrets \
+            /org/freedesktop/secrets/collection/login \
+            org.freedesktop.Secret.Collection Locked 2>/dev/null \
+            | string replace -r '^b ' "")
+          switch "$locked"
+            case false
+              echo "keyring unlocked"
+              return 0
+            case true
+              echo "unlock failed: keyring is still locked (wrong password?)" >&2
+              return 1
+            case '*'
+              echo "could not verify keyring state via D-Bus (got: '$locked')" >&2
+              return 2
+          end
+        '';
       };
 
       plugins = [
