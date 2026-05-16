@@ -18,16 +18,13 @@ in
   config = mkIf cfg.enable {
     programs.zoxide = {
       enable = true;
-      enableZshIntegration = true;
       # Manage fish integration manually so init runs last (after fish/devenv/nix-your-shell).
       enableFishIntegration = false;
-      options = [
-        "--cmd"
-        "cd"
-      ];
     };
 
     programs.fish.interactiveShellInit = mkIf config.modernage.cli-apps.fish.enable (mkAfter ''
+      # Scrub leaked __zoxide_loop guard var (fish 4.x scope quirk with `VAR=val func`).
+      set -e __zoxide_loop
       ${config.programs.zoxide.package}/bin/zoxide init fish ${zoxideOpts} | source
     '');
   };
