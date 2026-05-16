@@ -1,8 +1,15 @@
-{ options, config, pkgs, lib, ... }:
+{
+  options,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 with lib.modernage;
-let cfg = config.modernage.security.doas;
+let
+  cfg = config.modernage.security.doas;
 in
 {
   options.modernage.security.doas = {
@@ -16,14 +23,17 @@ in
     # Enable and configure `doas`.
     security.doas = {
       enable = true;
-      extraRules = [{
-        users = [ config.modernage.user.name ];
-        noPass = true;
-        keepEnv = true;
-      }];
+      extraRules = [
+        {
+          users = [ config.modernage.user.name ];
+          noPass = true;
+        }
+      ];
     };
 
     # Add an alias to the shell for backward-compat and convenience.
-    environment.shellAliases = { sudo = "doas"; };
+    environment.shellAliases = {
+      sudo = "doas";
+    };
   };
 }
