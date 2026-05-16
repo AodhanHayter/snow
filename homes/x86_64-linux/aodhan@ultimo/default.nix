@@ -53,6 +53,10 @@ with lib.modernage;
       zsh = enabled;
     };
 
+    security = {
+      keyring-unlock = enabled;
+    };
+
     shell = enabled;
 
     tools = {
