@@ -1,8 +1,9 @@
-{ options
-, config
-, pkgs
-, lib
-, ...
+{
+  options,
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 with lib;
 with lib.modernage;
@@ -46,7 +47,12 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ gnupg paperkey pinentry_mac pinentry-curses ];
+    environment.systemPackages = with pkgs; [
+      gnupg
+      paperkey
+      pinentry_mac
+      pinentry-curses
+    ];
 
     programs = {
       gnupg.agent = {
@@ -75,7 +81,7 @@ in
         end
       '';
 
-      home.extraOptions.programs.zsh.initExtra = ''
+      home.extraOptions.programs.zsh.initContent = ''
         export GPG_TTY=$(tty)
         if [ -n "$SSH_CONNECTION" ]; then
           export PINENTRY_USER_DATA=curses
