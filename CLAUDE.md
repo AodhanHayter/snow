@@ -21,6 +21,9 @@ This is "Modern Age" - a comprehensive NixOS/Darwin/Home Manager configuration r
 - `nix develop` - Enter development shell
 - `nix fmt` - Format Nix files
 
+### Privilege Escalation
+- Linux hosts (e.g. `ultimo`) use `doas` instead of `sudo`. Use `doas nixos-rebuild switch --flake .#<host>` on Linux; `sudo darwin-rebuild switch --flake .` on macOS.
+
 ### Private Flake Inputs (SSH)
 `sudo darwin-rebuild` can't access the user's SSH agent for private git inputs (e.g., `berkeley-mono-nix`). Pre-fetch as your user first:
 ```bash

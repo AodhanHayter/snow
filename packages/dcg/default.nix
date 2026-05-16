@@ -1,7 +1,10 @@
 {
   lib,
+  stdenv,
   stdenvNoCC,
   fetchurl,
+  autoPatchelfHook,
+  openssl,
   ...
 }:
 let
@@ -18,6 +21,7 @@ let
   };
 
   platform = platforms.${system} or (throw "dcg: unsupported system ${system}");
+  isLinux = stdenvNoCC.hostPlatform.isLinux;
 in
 stdenvNoCC.mkDerivation rec {
   pname = "dcg";
@@ -30,6 +34,13 @@ stdenvNoCC.mkDerivation rec {
 
   sourceRoot = ".";
   unpackCmd = "tar xf $curSrc";
+
+  nativeBuildInputs = lib.optionals isLinux [ autoPatchelfHook ];
+
+  buildInputs = lib.optionals isLinux [
+    openssl
+    stdenv.cc.cc.lib
+  ];
 
   installPhase = ''
     install -Dm755 dcg $out/bin/dcg
