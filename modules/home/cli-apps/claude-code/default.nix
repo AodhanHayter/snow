@@ -224,6 +224,12 @@ let
       ];
     };
     includeCoAuthoredBy = false;
+    editorMode = "vim";
+    voiceEnabled = true;
+    voice = {
+      enabled = true;
+      mode = "hold";
+    };
   };
 
   # Merge enabled plugins and marketplace declarations into settings
@@ -331,7 +337,6 @@ in
           "commit-commands@claude-plugins-official" = true;
           "feature-dev@claude-plugins-official" = true;
           "frontend-design@claude-plugins-official" = true;
-          "dev-browser@dev-browser" = true;
           "nix-lsp@claude-lsp-plugins" = true;
           "python-lsp@claude-lsp-plugins" = true;
           "elixir-lsp@claude-lsp-plugins" = true;
@@ -380,6 +385,7 @@ in
               "diagnose"
               "grill-with-docs"
               "improve-codebase-architecture"
+              "prototype"
               "tdd"
             ];
           };
@@ -388,6 +394,7 @@ in
             subdir = "skills/productivity";
             names = [
               "grill-me"
+              "handoff"
             ];
           };
         };
