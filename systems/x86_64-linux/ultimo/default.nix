@@ -37,6 +37,21 @@ with lib.modernage;
 
       # Nix binary cache
       harmonia = enabled;
+
+      # Self-hosted GitHub Actions runners (containerized)
+      github-runners = {
+        enable = true;
+        instances = {
+          fissio-1 = {
+            url = "https://github.com/FissioAI/fissio-core";
+            subnet = 1;
+          };
+          fissio-2 = {
+            url = "https://github.com/FissioAI/fissio-core";
+            subnet = 2;
+          };
+        };
+      };
     };
 
     hardware = {
@@ -78,10 +93,10 @@ with lib.modernage;
   services.sunshine = {
     enable = true;
     autoStart = true;
-    capSysAdmin = true;  # Required for KMS capture
+    capSysAdmin = true; # Required for KMS capture
     openFirewall = true;
   };
-  modernage.user.extraGroups = [ "uinput" ];  # Required for Sunshine input control
+  modernage.user.extraGroups = [ "uinput" ]; # Required for Sunshine input control
   # Auto-login for remote desktop access via Sunshine
   services.displayManager.autoLogin = {
     enable = true;
