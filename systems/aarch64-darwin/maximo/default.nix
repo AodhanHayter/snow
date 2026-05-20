@@ -18,7 +18,9 @@ with lib.modernage;
     };
 
     services = {
-      tailscale = enabled;
+      tailscale = enabled // {
+        splitDns."postgres.database.azure.com" = [ "100.100.100.100" ];
+      };
     };
   };
 
