@@ -115,12 +115,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    devenv.url = "github:AodhanHayter/devenv/feature/claude-plugin-support";
-    devenv.inputs.nixpkgs.follows = "nixpkgs";
-    # Pin nixd before nix→2.34 bump (nixos-25.11 only has up to nixComponents_2_33)
-    nixd.url = "github:nix-community/nixd/8ecf93d4d9";
-    devenv.inputs.nixd.follows = "nixd";
+    devenv = {
+      url = "github:AodhanHayter/devenv/feature/claude-plugin-support";
+      inputs.nixpkgs.follows = "unstable";
+      inputs.nixd.follows = "nixd";
+    };
 
+    # Pin nixd before nix→2.34 bump (nixos-25.11 only has up to nixComponents_2_33)
+    nixd = {
+      url = "github:nix-community/nixd/8ecf93d4d9";
+    };
   };
 
   outputs =
