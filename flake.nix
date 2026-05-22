@@ -110,6 +110,11 @@
       flake = false;
     };
 
+    herdr-skill = {
+      url = "github:ogulcancelik/herdr";
+      flake = false;
+    };
+
     berkeley-mono = {
       url = "git+ssh://git@github.com/AodhanHayter/berkeley-mono-nix?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";

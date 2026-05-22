@@ -416,7 +416,15 @@ in
     };
 
     # Symlink Nix-managed marketplaces + skills
-    home.file = marketplaceSymlinks // skillFiles;
+    home.file =
+      marketplaceSymlinks
+      // skillFiles
+      // {
+        ".claude/skills/herdr".source = pkgs.runCommand "herdr-skill" { } ''
+          mkdir -p $out
+          cp ${inputs.herdr-skill}/SKILL.md $out/SKILL.md
+        '';
+      };
 
     # Seed ~/.claude/settings.json as a mutable copy of the Nix-rendered
     # settings. Only overwrites when the target is missing or a symlink to

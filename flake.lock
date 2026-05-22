@@ -772,6 +772,22 @@
         "type": "github"
       }
     },
+    "herdr-skill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779407335,
+        "narHash": "sha256-23u2E+u8Kp7aKDZWMQmMNrjC+uu+DJz8YqDPcFrCW5g=",
+        "owner": "ogulcancelik",
+        "repo": "herdr",
+        "rev": "716926f0c68e4e06fc308868cb919fec0bb68c53",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ogulcancelik",
+        "repo": "herdr",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -1166,6 +1182,7 @@
         "disko": "disko",
         "expert": "expert",
         "ghostty": "ghostty_2",
+        "herdr-skill": "herdr-skill",
         "home-manager": "home-manager",
         "mattpocock-skills": "mattpocock-skills",
         "mcp-servers-nix": "mcp-servers-nix",
