@@ -49,6 +49,19 @@ description: Brief description for skill discovery
 
 Module option: `skillsDir = ./skills;`
 
+## External Skills (SKILL.md at repo root + extra files)
+
+`skills.sources` expects skill folders, not root-level SKILL.md. For upstream repos with SKILL.md at root, wrap flake input to extract only SKILL.md:
+
+```nix
+home.file.".claude/skills/<name>".source = pkgs.runCommand "<name>-skill" { } ''
+  mkdir -p $out
+  cp ${inputs.<input>}/SKILL.md $out/SKILL.md
+'';
+```
+
+Refresh via `nix flake update <input>` — derivation re-runs on input change.
+
 ## Plugin Marketplaces
 
 - Attr key in `cfg.plugins.marketplaces` MUST equal marketplace.json `name` field (Claude Code uses it as marketplace identity; also used as symlink dir under `~/.claude/plugins/marketplaces/`).
