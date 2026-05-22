@@ -2,67 +2,60 @@ In all interactions and commit messages, be extremely concise and sacrifice gram
 
 When working in a repository use the agentlocal directory to store ephemeral files.
 
-## Jira
-
-- When given or asked about a Jira ticket use the `acli` cli tool to retrieve its contents:
-
-    # Examples
-    # command format:
-    # $ acli jira workitem view [key] [flags]
-
-    # View work item with work item keys
-    $ acli jira workitem view KEY-123
-
-    # View work item by reading work item keys from a JSON file
-    $ acli jira workitem view KEY-123 --json
-
-    # View work item with work item keys and a list of field to return
-    $ acli jira workitem view KEY-123 --fields summary,comment
-
 ## GitHub
 
 - Your primary method for interacting with GitHub should be the GitHub CLI.
 
-## Plans
+## Coding Guidelines
 
-- At the end of each plan, give me a list of unresolved questions to answer, if any. Make the questions extremely concise. Sacrifice grammar for the sake of concision.
+Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed. These bias toward caution over speed; use judgment on trivial tasks.
 
-## Shell
+### 1. Think Before Coding
 
-- `rm` is aliased to interactive mode; use `rm -f` to bypass in scripts.
+Don't assume. Don't hide confusion. Surface tradeoffs.
 
-## Skills
+- State assumptions explicitly. If uncertain, ask.
+- If multiple interpretations exist, present them — don't pick silently.
+- If a simpler approach exists, say so. Push back when warranted.
+- If something is unclear, stop. Name what's confusing. Ask.
 
-Skills are directories in `skills/` with a `SKILL.md` entrypoint:
-```
-skills/<skill-name>/SKILL.md
-```
+### 2. Simplicity First
 
-Format:
-```md
----
-name: skill-name
-description: Brief description for skill discovery
----
-# Skill content...
-```
+Minimum code that solves the problem. Nothing speculative.
 
-Module option: `skillsDir = ./skills;`
+- No features beyond what was asked.
+- No abstractions for single-use code.
+- No "flexibility" or "configurability" that wasn't requested.
+- No error handling for impossible scenarios.
+- If 200 lines could be 50, rewrite.
 
-## External Skills (SKILL.md at repo root + extra files)
+Test: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
 
-`skills.sources` expects skill folders, not root-level SKILL.md. For upstream repos with SKILL.md at root, wrap flake input to extract only SKILL.md:
+### 3. Surgical Changes
 
-```nix
-home.file.".claude/skills/<name>".source = pkgs.runCommand "<name>-skill" { } ''
-  mkdir -p $out
-  cp ${inputs.<input>}/SKILL.md $out/SKILL.md
-'';
-```
+Touch only what you must. Clean up only your own mess.
 
-Refresh via `nix flake update <input>` — derivation re-runs on input change.
+- Don't "improve" adjacent code, comments, or formatting.
+- Don't refactor things that aren't broken.
+- Match existing style, even if you'd do it differently.
+- If you notice unrelated dead code, mention it — don't delete it.
+- Remove imports/variables/functions that YOUR changes made unused.
+- Don't remove pre-existing dead code unless asked.
 
-## Plugin Marketplaces
+Test: Every changed line should trace directly to the user's request.
 
-- Attr key in `cfg.plugins.marketplaces` MUST equal marketplace.json `name` field (Claude Code uses it as marketplace identity; also used as symlink dir under `~/.claude/plugins/marketplaces/`).
-- `source.url` holds GitHub owner/repo path; used as `repo` in `extraKnownMarketplaces`.
+Exception: greenfield/prototype work — relax surgical constraint when no existing code to disturb.
+
+### 4. Goal-Driven Execution
+
+Define success criteria. Loop until verified.
+
+- "Add validation" → "Write tests for invalid inputs, then make them pass"
+- "Fix the bug" → "Write a test that reproduces it, then make it pass"
+- "Refactor X" → "Ensure tests pass before and after"
+
+For multi-step tasks, state a brief plan with verification per step.
+
+Strong success criteria enable independent looping. Weak criteria ("make it work") require constant clarification.
+
+Skip the verify-loop when no test infrastructure exists (e.g., Nix config repos, pure documentation). Substitute with whatever check fits: `nix flake check`, manual run, type check.
