@@ -70,12 +70,14 @@ in
             cfg.default-substituter.url
             "https://nixpkgs-python.cachix.org"
             "http://ultimo:5000"
+            "https://herdr-nix.cachix.org"
           ]
           ++ (mapAttrsToList (name: value: name) cfg.extra-substituters);
           trusted-public-keys = [
             cfg.default-substituter.key
             "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
             "ultimo.cache:2b5vN/ZXS0uALs01YAxo7eNrqS4dtHuw1peDCs+DpYc="
+            "herdr-nix.cachix.org-1:+AT7TY8E6j/Pe9lB8Vjmp15Y4RPb8YtOnOwr/fboDS8="
           ]
           ++ (mapAttrsToList (name: value: value.key) cfg.extra-substituters);
 

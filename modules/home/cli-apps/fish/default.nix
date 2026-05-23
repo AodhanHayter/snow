@@ -45,6 +45,7 @@ in
 
       shellAbbrs = {
         ccd = "claude --dangerously-skip-permissions";
+        cca = "claude --permission-mode auto";
       };
 
       functions = {
