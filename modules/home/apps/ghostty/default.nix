@@ -20,9 +20,7 @@ let
     shell-integration = fish
     shell-integration-features = cursor,sudo,title,ssh-terminfo,ssh-env
 
-    # set update channel to install from main
-    # to get latest changes
-    auto-update-channel = tip
+    auto-update-channel = stable
 
     # keybindings
     ## windows
