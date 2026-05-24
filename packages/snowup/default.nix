@@ -23,6 +23,10 @@ rustPlatform.buildRustPackage {
 
   doCheck = false;
 
+  postInstall = ''
+    ln -s snowup $out/bin/up
+  '';
+
   meta = {
     description = "TUI for reviewing flake.lock updates and rebuilding the modernage host";
     homepage = "https://github.com/AodhanHayter/snow";

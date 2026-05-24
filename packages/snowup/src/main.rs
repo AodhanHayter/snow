@@ -10,9 +10,9 @@ use std::path::PathBuf;
 #[derive(Parser, Debug)]
 #[command(version, about = "TUI for reviewing flake.lock updates and rebuilding the host")]
 struct Cli {
-    /// Path to flake directory (default: cwd)
-    #[arg(short = 'C', long, default_value = ".")]
-    flake_dir: PathBuf,
+    /// Path to flake directory (default: $HOME/development/snow)
+    #[arg(short = 'C', long)]
+    flake_dir: Option<PathBuf>,
 
     /// Override host name (default: `hostname -s`)
     #[arg(long)]
@@ -23,12 +23,19 @@ struct Cli {
     no_rebuild: bool,
 }
 
+fn default_flake_dir() -> PathBuf {
+    let home = std::env::var_os("HOME")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| PathBuf::from("."));
+    home.join("development/snow")
+}
+
 fn main() -> Result<()> {
     let cli = Cli::parse();
-    let flake_dir = cli
-        .flake_dir
+    let requested = cli.flake_dir.unwrap_or_else(default_flake_dir);
+    let flake_dir = requested
         .canonicalize()
-        .with_context(|| format!("flake-dir: {}", cli.flake_dir.display()))?;
+        .with_context(|| format!("flake-dir: {}", requested.display()))?;
     let lock_path = flake_dir.join("flake.lock");
     if !lock_path.exists() {
         anyhow::bail!("no flake.lock at {}", lock_path.display());
