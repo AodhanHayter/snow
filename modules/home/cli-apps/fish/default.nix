@@ -15,10 +15,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = [
-      pkgs.nix-your-shell
-      pkgs.worktrunk
-    ];
+    home.packages = [ pkgs.nix-your-shell ];
 
     programs.fish = {
       enable = true;
@@ -32,9 +29,6 @@ in
 
         # nix shell integration — stay in fish inside nix-shell/nix develop
         nix-your-shell fish | source
-
-        # worktrunk shell integration — enables `wt switch` to cd
-        wt config shell init fish | source
 
         # syntax highlighting colors (matches prezto theme)
         set fish_color_command blue

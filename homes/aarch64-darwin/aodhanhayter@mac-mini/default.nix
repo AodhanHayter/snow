@@ -41,6 +41,7 @@ with lib.modernage;
       tealdeer = enabled;
       ripgrep = enabled;
       ssh = enabled;
+      worktrunk = enabled;
       yq = enabled;
       zsh = enabled;
     };
