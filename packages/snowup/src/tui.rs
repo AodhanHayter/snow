@@ -39,6 +39,7 @@ struct App {
     phase: Phase,
     started: Instant,
     backup_lock: String,
+    exit_message: Option<String>,
 }
 
 enum Phase {
@@ -97,7 +98,11 @@ pub fn run(cfg: Config) -> Result<()> {
     let mut term = setup_terminal()?;
     let res = run_inner(&mut term, cfg, backup_lock);
     teardown_terminal(&mut term)?;
-    res
+    let msg = res?;
+    if let Some(m) = msg {
+        println!("{m}");
+    }
+    Ok(())
 }
 
 fn setup_terminal() -> Result<Terminal<CrosstermBackend<io::Stdout>>> {
@@ -119,12 +124,13 @@ fn run_inner(
     term: &mut Terminal<CrosstermBackend<io::Stdout>>,
     cfg: Config,
     backup_lock: String,
-) -> Result<()> {
+) -> Result<Option<String>> {
     let mut app = App {
         phase: Phase::Updating(start_update(&cfg.flake_dir)?),
         cfg,
         started: Instant::now(),
         backup_lock,
+        exit_message: None,
     };
 
     loop {
@@ -132,9 +138,12 @@ fn run_inner(
         if poll_events(&mut app)? {
             break;
         }
+        if app.exit_message.is_some() {
+            break;
+        }
         thread::sleep(Duration::from_millis(80));
     }
-    Ok(())
+    Ok(app.exit_message)
 }
 
 fn start_update(flake_dir: &std::path::Path) -> Result<Updating> {
@@ -273,12 +282,7 @@ fn transition_after_update(app: &mut App) -> Result<()> {
     let new = flake::parse(&new_lock_str)?;
     let deltas = flake::diff(&old, &new);
     if deltas.is_empty() {
-        app.phase = Phase::Done(Done {
-            success: true,
-            title: "no inputs changed".into(),
-            body: vec!["flake.lock is already current. press q to exit.".into()],
-            log_tail: u.log,
-        });
+        app.exit_message = Some("flake.lock already current — no inputs changed.".into());
         return Ok(());
     }
     let selected = vec![true; deltas.len()];
