@@ -12,7 +12,7 @@ let
 in
 {
   options.modernage.cli-apps.snowup = {
-    enable = mkBoolOpt false "Whether or not to install snowup (flake update + rebuild TUI).";
+    enable = mkBoolOpt false "Whether or not to install snowup (flake update + rebuild driver).";
   };
 
   config = mkIf cfg.enable {

@@ -1,6 +1,8 @@
 {
   lib,
   rustPlatform,
+  makeWrapper,
+  fzf,
   ...
 }:
 rustPlatform.buildRustPackage {
@@ -21,14 +23,17 @@ rustPlatform.buildRustPackage {
     lockFile = ./Cargo.lock;
   };
 
+  nativeBuildInputs = [ makeWrapper ];
+
   doCheck = false;
 
   postInstall = ''
+    wrapProgram $out/bin/snowup --prefix PATH : ${lib.makeBinPath [ fzf ]}
     ln -s snowup $out/bin/up
   '';
 
   meta = {
-    description = "TUI for reviewing flake.lock updates and rebuilding the modernage host";
+    description = "Flake update + rebuild driver with fzf-based selection";
     homepage = "https://github.com/AodhanHayter/snow";
     license = lib.licenses.mit;
     mainProgram = "snowup";

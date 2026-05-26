@@ -1,14 +1,13 @@
 mod flake;
+mod flow;
 mod host;
-mod runner;
-mod tui;
 
 use anyhow::{Context, Result};
 use clap::Parser;
 use std::path::PathBuf;
 
 #[derive(Parser, Debug)]
-#[command(version, about = "TUI for reviewing flake.lock updates and rebuilding the host")]
+#[command(version, about = "Flake update + rebuild driver (fzf-based selection)")]
 struct Cli {
     /// Path to flake directory (default: $HOME/development/snow)
     #[arg(short = 'C', long)]
@@ -21,6 +20,10 @@ struct Cli {
     /// Only update the flake lock; skip rebuild
     #[arg(long)]
     no_rebuild: bool,
+
+    /// Internal: render fzf preview for a TSV row
+    #[arg(long, hide = true)]
+    preview_row: Option<String>,
 }
 
 fn default_flake_dir() -> PathBuf {
@@ -32,6 +35,11 @@ fn default_flake_dir() -> PathBuf {
 
 fn main() -> Result<()> {
     let cli = Cli::parse();
+
+    if let Some(line) = cli.preview_row {
+        return flow::preview_row(&line);
+    }
+
     let requested = cli.flake_dir.unwrap_or_else(default_flake_dir);
     let flake_dir = requested
         .canonicalize()
@@ -45,7 +53,7 @@ fn main() -> Result<()> {
         None => host::hostname().unwrap_or_else(|_| "unknown".into()),
     };
     let os = host::detect_os();
-    tui::run(tui::Config {
+    flow::run(flow::Config {
         flake_dir,
         host,
         os,
