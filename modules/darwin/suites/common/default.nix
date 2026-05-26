@@ -24,6 +24,7 @@ in
 
       apps = {
         mos = enabled;
+        utm = enabled;
       };
 
       cli-apps = {
