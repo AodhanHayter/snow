@@ -35,9 +35,6 @@ with lib.modernage;
       # ZEC DCA bot
       crypt-dca = disabled;
 
-      # Nix binary cache
-      harmonia = enabled;
-
       # Self-hosted GitHub Actions runners (containerized)
       github-runners = {
         enable = true;
