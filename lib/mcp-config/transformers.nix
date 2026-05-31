@@ -37,4 +37,18 @@ with lib;
       mcpAttr = if serverKey != null then { ${serverKey} = transformedServers; } else transformedServers;
     in
     mcpAttr;
+
+  # Convert base MCP config to Codex config.toml format.
+  toCodexFormat =
+    mcpConfig:
+    mapAttrs (
+      _: server:
+      {
+        command = server.command;
+        args = server.args or [ ];
+      }
+      // optionalAttrs (server ? env) {
+        env = server.env;
+      }
+    ) mcpConfig;
 }

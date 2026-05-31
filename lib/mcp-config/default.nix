@@ -21,5 +21,8 @@ in
         serverKey ? null,
       }:
       transformers.toOpenCodeFormat (base.mkMcpConfig { inherit config pkgs; }) serverKey;
+
+    asCodexFormat =
+      { config, pkgs }: transformers.toCodexFormat (base.mkMcpConfig { inherit config pkgs; });
   };
 }

@@ -10,51 +10,10 @@ with lib.modernage;
 let
   cfg = config.modernage.cli-apps.claude-code;
   homeDir = config.home.homeDirectory;
+  agentDefaults = agentConfig.defaults inputs;
 
-  # Marketplace submodule type
-  marketplaceModule = types.submodule {
-    options = {
-      source = mkOption {
-        type = types.submodule {
-          options = {
-            type = mkOpt types.str "github" "Source type: github, git, or local";
-            url = mkOpt types.str "" "Repository URL (e.g., owner/repo)";
-          };
-        };
-        description = "Marketplace source configuration";
-      };
-      flakeInput = mkOption {
-        type = types.nullOr types.path;
-        default = null;
-        description = "Flake input for Nix-managed (immutable) marketplace";
-      };
-    };
-  };
-
-  getMarketplaceName = name: lib.last (lib.splitString "/" name);
-
-  # Marketplaces with flakeInput defined (Nix-managed via symlinks)
-  nixManagedMarketplaces = filterAttrs (_: m: m.flakeInput != null) cfg.plugins.marketplaces;
-
-  # Build extraKnownMarketplaces for settings.json
-  extraKnownMarketplaces = lib.mapAttrs' (
-    name: m:
-    lib.nameValuePair (getMarketplaceName name) {
-      source = {
-        source = if m.source.type == "github" then "github" else m.source.type;
-        repo = m.source.url;
-      };
-    }
-  ) cfg.plugins.marketplaces;
-
-  # Generate symlinks for Nix-managed marketplaces
-  marketplaceSymlinks = lib.mapAttrs' (
-    name: marketplace:
-    lib.nameValuePair ".claude/plugins/marketplaces/${getMarketplaceName name}" {
-      source = marketplace.flakeInput;
-      force = true;
-    }
-  ) nixManagedMarketplaces;
+  extraKnownMarketplaces = agentConfig.mkClaudeExtraKnownMarketplaces cfg.plugins.marketplaces;
+  marketplaceSymlinks = agentConfig.mkClaudeMarketplaceSymlinks cfg.plugins.marketplaces;
 
   notifyScript = pkgs.writeShellScript "claude-notify" ''
     [ -z "$TMUX" ] && exit 0
@@ -190,12 +149,7 @@ let
       ];
       deny = [ ];
     };
-    env = {
-      CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR = "1";
-      CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
-      DIRENV_LOG_FORMAT = "";
-      DIRENV_WARN_TIMEOUT = "0";
-    };
+    env = agentDefaults.env;
     hooks = {
       Notification = [
         {
@@ -253,23 +207,7 @@ let
     }
   );
 
-  # Generate skill file entries from configured sources
-  skillFiles = lib.foldl' (
-    acc: sourceName:
-    let
-      s = cfg.skills.sources.${sourceName};
-      prefix = if s.subdir == "" then "" else "${s.subdir}/";
-    in
-    acc
-    // listToAttrs (
-      map (skillName: {
-        name = ".claude/skills/${skillName}";
-        value = {
-          source = "${s.src}/${prefix}${skillName}";
-        };
-      }) s.names
-    )
-  ) { } (attrNames cfg.skills.sources);
+  skillFiles = agentConfig.mkSkillFiles ".claude/skills" cfg.skills.sources;
 in
 {
   options.modernage.cli-apps.claude-code = {
@@ -277,44 +215,8 @@ in
 
     plugins = {
       marketplaces = mkOption {
-        type = types.attrsOf marketplaceModule;
-        default = {
-          "anthropics/claude-plugins-official" = {
-            source = {
-              type = "github";
-              url = "anthropics/claude-plugins-official";
-            };
-            flakeInput = inputs.claude-plugins-official;
-          };
-          "anthropics/skills" = {
-            source = {
-              type = "github";
-              url = "anthropics/skills";
-            };
-            flakeInput = inputs.anthropics-skills;
-          };
-          "AodhanHayter/claude-lsp-plugins" = {
-            source = {
-              type = "github";
-              url = "AodhanHayter/claude-lsp-plugins";
-            };
-            flakeInput = inputs.claude-lsp-plugins;
-          };
-          "JuliusBrussee/caveman" = {
-            source = {
-              type = "github";
-              url = "JuliusBrussee/caveman";
-            };
-            flakeInput = inputs.caveman;
-          };
-          "openai-codex" = {
-            source = {
-              type = "github";
-              url = "openai/codex-plugin-cc";
-            };
-            flakeInput = inputs.codex-plugin-cc;
-          };
-        };
+        type = types.attrsOf agentConfig.marketplaceModule;
+        default = agentDefaults.plugins.marketplaces;
         description = "Plugin marketplaces to register";
         example = literalExpression ''
           {
@@ -328,22 +230,7 @@ in
 
       enabled = mkOption {
         type = types.attrsOf types.bool;
-        default = {
-          "plugin-dev@claude-plugins-official" = true;
-          "playground@claude-plugins-official" = true;
-          "pr-review-toolkit@claude-plugins-official" = true;
-          "claude-md-management@claude-plugins-official" = true;
-          "code-simplifier@claude-plugins-official" = true;
-          "commit-commands@claude-plugins-official" = true;
-          "feature-dev@claude-plugins-official" = true;
-          "frontend-design@claude-plugins-official" = true;
-          "nix-lsp@claude-lsp-plugins" = true;
-          "python-lsp@claude-lsp-plugins" = true;
-          "elixir-lsp@claude-lsp-plugins" = true;
-          "swift-lsp@claude-lsp-plugins" = true;
-          "caveman@caveman" = true;
-          "codex@openai-codex" = true;
-        };
+        default = agentDefaults.plugins.claudeEnabled;
         description = "Plugins to enable in format 'plugin-name@marketplace-name'";
         example = {
           "code-review@claude-plugins-official" = true;
@@ -360,44 +247,8 @@ in
 
     skills = {
       sources = mkOption {
-        type = types.attrsOf (
-          types.submodule {
-            options = {
-              src = mkOption {
-                type = types.path;
-                description = "Flake input path containing skill folders";
-              };
-              subdir = mkOpt types.str "" "Subdir within src holding skill folders (empty = root)";
-              names = mkOpt (types.listOf types.str) [ ] "Skill folder names to symlink";
-            };
-          }
-        );
-        default = {
-          anthropics = {
-            src = inputs.anthropics-skills;
-            subdir = "skills";
-            names = [ ];
-          };
-          mattpocock-engineering = {
-            src = inputs.mattpocock-skills;
-            subdir = "skills/engineering";
-            names = [
-              "diagnose"
-              "grill-with-docs"
-              "improve-codebase-architecture"
-              "prototype"
-              "tdd"
-            ];
-          };
-          mattpocock-productivity = {
-            src = inputs.mattpocock-skills;
-            subdir = "skills/productivity";
-            names = [
-              "grill-me"
-              "handoff"
-            ];
-          };
-        };
+        type = types.attrsOf agentConfig.skillSourceModule;
+        default = agentDefaults.skills.sources;
         description = "External skill sources to symlink into ~/.claude/skills";
       };
     };
