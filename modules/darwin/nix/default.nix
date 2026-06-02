@@ -17,7 +17,7 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       deploy-rs
-      nixfmt-rfc-style
+      nixfmt
       nix-index
       nix-prefetch-git
     ];

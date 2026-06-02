@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 with lib.modernage;
 let
@@ -10,6 +15,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ dogdns ];
+    # dogdns removed in nixos-26.05 (unmaintained upstream); doggo is the recommended replacement
+    home.packages = with pkgs; [ doggo ];
   };
 }

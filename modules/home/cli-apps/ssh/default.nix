@@ -15,47 +15,47 @@ in
     programs.ssh = {
       enable = true;
       enableDefaultConfig = false;
-      matchBlocks = {
+      # HM 26.05: `matchBlocks` -> `settings`, per-block options use upstream
+      # OpenSSH directive names directly (no `extraOptions` wrapper).
+      settings = {
         # Tailnet hosts (Tailscale IPs)
         "ultimo" = {
-          hostname = "100.106.9.108";
-          user = "aodhan";
+          HostName = "100.106.9.108";
+          User = "aodhan";
         };
         "mac-mini" = {
-          hostname = "100.72.144.108";
-          user = "aodhanhayter";
+          HostName = "100.72.144.108";
+          User = "aodhanhayter";
         };
         "mac-mini.local" = {
-          hostname = "mac-mini.local";
-          user = "aodhanhayter";
+          HostName = "mac-mini.local";
+          User = "aodhanhayter";
         };
         "maximo" = {
-          hostname = "100.73.146.77";
-          user = "aodhan";
+          HostName = "100.73.146.77";
+          User = "aodhan";
         };
 
         # LAN lab nodes (mDNS)
         "apollo" = {
-          hostname = "apollo.local";
-          user = "aodhan";
+          HostName = "apollo.local";
+          User = "aodhan";
         };
         "atlas" = {
-          hostname = "atlas.local";
-          user = "aodhan";
+          HostName = "atlas.local";
+          User = "aodhan";
         };
         "hermes" = {
-          hostname = "hermes.local";
-          user = "aodhan";
+          HostName = "hermes.local";
+          User = "aodhan";
         };
 
         # Fallback defaults — IgnoreUnknown suppresses UseKeychain errors on non-macOS
         "*" = {
-          extraOptions = {
-            IgnoreUnknown = "UseKeychain";
-            AddKeysToAgent = "yes";
-            UseKeychain = "yes";
-          };
-          identityFile = "~/.ssh/id_ed25519";
+          IgnoreUnknown = "UseKeychain";
+          AddKeysToAgent = "yes";
+          UseKeychain = "yes";
+          IdentityFile = "~/.ssh/id_ed25519";
         };
       };
     };

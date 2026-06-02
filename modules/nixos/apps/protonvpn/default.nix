@@ -1,8 +1,9 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.modernage;
@@ -15,6 +16,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [ pkgs.protonvpn-gui ];
+    environment.systemPackages = [ pkgs.proton-vpn ];
   };
 }

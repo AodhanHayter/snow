@@ -25,7 +25,7 @@ in
       dockerfile-language-server
       expert
       lua-language-server
-      # marksman # disabled: swift build broken on nixos-25.11
+      marksman
       nil
       nixd
       nixpkgs-fmt
@@ -57,7 +57,8 @@ in
       vimdiffAlias = true;
       withNodeJs = true;
       withPython3 = true;
-      extraLuaConfig = ''
+      withRuby = false; # adopt HM 26.05 default (no ruby provider)
+      initLua = ''
         vim.g.fff_nvim_dir = "${inputs.self.packages.${system}.fff-nvim}"
         ${lib.strings.fileContents ./config/init.lua}
       '';

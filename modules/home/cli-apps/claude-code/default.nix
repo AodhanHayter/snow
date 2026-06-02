@@ -53,9 +53,7 @@ let
 
   # Merge RTK awareness into Claude memory so Claude knows rtk exists and
   # which commands to invoke explicitly (rtk gain, rtk discover, ...).
-  memoryFile = pkgs.writeText "claude-memory.md" (
-    builtins.readFile ./CLAUDE.md + "\n\n" + builtins.readFile ./rtk-awareness.md
-  );
+  memoryText = builtins.readFile ./CLAUDE.md + "\n\n" + builtins.readFile ./rtk-awareness.md;
 
   # Base settings (without plugins)
   baseSettings = {
@@ -261,7 +259,8 @@ in
       # Pass {} so upstream HM module skips creating ~/.claude/settings.json
       # symlink; we manage it ourselves via activation as a mutable copy.
       settings = { };
-      memory.source = memoryFile;
+      # `memory.source`/`memory.text` renamed to `context` in HM 26.05
+      context = memoryText;
 
       commandsDir = ./commands;
     };
@@ -298,7 +297,7 @@ in
     );
 
     home.packages = with pkgs; [
-      claude-code-acp
+      claude-agent-acp
       rtk
     ];
   };
