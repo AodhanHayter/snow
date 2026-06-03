@@ -24,6 +24,12 @@
     # Hardware Configuration
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
+    # WSL support
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Generate System Images
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
