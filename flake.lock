@@ -119,11 +119,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780369239,
-        "narHash": "sha256-1hpcdHjLYsdBGzOYK/r1l+UvPrtkgt3wVhLF9D5OWmI=",
+        "lastModified": 1780440050,
+        "narHash": "sha256-GUwh7tKnK1ZibdzRIbZ2CrKz9/PJ6BQUXW6Ru3rn56g=",
         "owner": "sadjow",
         "repo": "claude-code-nix",
-        "rev": "3cc73775ecceb02a798519a5527f4eb400c8c8e4",
+        "rev": "fcf0beee92892f9193ad52549ed265091bbefde7",
         "type": "github"
       },
       "original": {
@@ -151,11 +151,11 @@
     "claude-plugins-official": {
       "flake": false,
       "locked": {
-        "lastModified": 1780412775,
-        "narHash": "sha256-ImC0VnmNAlE8lq/uKopSVbcz40NSrjcoSYRPbCkt2ys=",
+        "lastModified": 1780496504,
+        "narHash": "sha256-N0Ez81Pz4ai6yJZh/k6lXP+jRgt0OdWhj7qTBoJME70=",
         "owner": "anthropics",
         "repo": "claude-plugins-official",
-        "rev": "63457674ddf04606bd15a2be20f31559e86f1967",
+        "rev": "1d93263223815e0793831645843e0d72d9ed541b",
         "type": "github"
       },
       "original": {
@@ -775,11 +775,11 @@
     "herdr-skill": {
       "flake": false,
       "locked": {
-        "lastModified": 1780407747,
-        "narHash": "sha256-0GeJkMudL3BRecnkaysbcgZ9bz5II/GppYZx+QRleXo=",
+        "lastModified": 1780500956,
+        "narHash": "sha256-iIlz2jwAaeGq94maP8Blds7QiR2MtfobnzTu10Jopng=",
         "owner": "ogulcancelik",
         "repo": "herdr",
-        "rev": "bed8f1ebe9417d448837c107d92a8770f60b6d1c",
+        "rev": "03f68b7275f07c98769bf699d2aa14805b921f8d",
         "type": "github"
       },
       "original": {
