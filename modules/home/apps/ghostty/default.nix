@@ -8,43 +8,6 @@ with lib;
 with lib.modernage;
 let
   cfg = config.modernage.apps.ghostty;
-  ghosttyConfig = ''
-    theme = nord
-    font-family = Berkeley Mono
-    font-size = 16
-    cursor-style = block
-    mouse-hide-while-typing = true
-    macos-titlebar-style = transparent
-    copy-on-select = clipboard
-    quick-terminal-position = bottom
-    shell-integration = fish
-    shell-integration-features = cursor,sudo,title,ssh-terminfo,ssh-env
-
-    auto-update-channel = stable
-
-    # keybindings
-    ## windows
-    keybind = ctrl+g>n=new_window
-
-    ## tabs
-    keybind = ctrl+g>c=new_tab
-    keybind = ctrl+g>n=next_tab
-    keybind = ctrl+g>p=previous_tab
-
-    ## splits
-
-    keybind = ctrl+g>shift+'=new_split:down
-    keybind = ctrl+g>shift+5=new_split:right
-    keybind = ctrl+g>e=equalize_splits
-
-    keybind = ctrl+g>j=goto_split:bottom
-    keybind = ctrl+g>k=goto_split:top
-    keybind = ctrl+g>h=goto_split:left
-    keybind = ctrl+g>l=goto_split:right
-
-    # shortcuts
-    keybind = ctrl+g>q=toggle_quick_terminal
-  '';
 in
 {
   options.modernage.apps.ghostty = with types; {
@@ -52,12 +15,47 @@ in
   };
 
   config = mkIf cfg.enable {
-    # Ghostty doesn't package a darwin build for ghostty because of how macos binary distribution works
-    # manually installing is best for MacOS right now
-    home.packages = if pkgs.stdenv.isLinux then [ pkgs.ghostty ] else [ ];
+    programs.ghostty = {
+      enable = true;
 
-    xdg.configFile = {
-      "ghostty/config".text = ghosttyConfig;
+      # Ghostty doesn't package a darwin build because of how macos binary
+      # distribution works; install the app manually there. package = null keeps
+      # the config managed while skipping the (unavailable) nixpkgs build.
+      package = if pkgs.stdenv.isLinux then pkgs.ghostty else null;
+
+      settings = {
+        theme = "nord";
+        font-family = "Berkeley Mono";
+        font-size = 16;
+        cursor-style = "block";
+        mouse-hide-while-typing = true;
+        macos-titlebar-style = "transparent";
+        copy-on-select = "clipboard";
+        quick-terminal-position = "bottom";
+        shell-integration = "fish";
+        shell-integration-features = "cursor,sudo,title,ssh-terminfo,ssh-env";
+
+        auto-update-channel = "stable";
+
+        keybind = [
+          # windows
+          "ctrl+g>n=new_window"
+          # tabs
+          "ctrl+g>c=new_tab"
+          "ctrl+g>n=next_tab"
+          "ctrl+g>p=previous_tab"
+          # splits
+          "ctrl+g>shift+'=new_split:down"
+          "ctrl+g>shift+5=new_split:right"
+          "ctrl+g>e=equalize_splits"
+          "ctrl+g>j=goto_split:bottom"
+          "ctrl+g>k=goto_split:top"
+          "ctrl+g>h=goto_split:left"
+          "ctrl+g>l=goto_split:right"
+          # shortcuts
+          "ctrl+g>q=toggle_quick_terminal"
+        ];
+      };
     };
   };
 }
