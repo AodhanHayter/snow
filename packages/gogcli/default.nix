@@ -5,16 +5,16 @@
 }:
 buildGoModule rec {
   pname = "gogcli";
-  version = "0.6.0";
+  version = "0.31.1";
 
   src = fetchFromGitHub {
-    owner = "steipete";
+    owner = "openclaw";
     repo = "gogcli";
     rev = "v${version}";
-    hash = "sha256-DynVRDrqV0Zs2dvTDPbQryXw3gaYIyC9xjFWhEyPcOI=";
+    hash = "sha256-kTMxHPY3bv85X3H0TQGHLvL/nVVjh5fDF/S/z6Xd+bw=";
   };
 
-  vendorHash = "sha256-tS73R7tg/YOBQGjkY+mn2MpzFHVedPC8iXFHTbhMRBQ=";
+  vendorHash = "sha256-fof2DVm6Cn1ZW7gKSYLHX6M6nPbtYBn6EKinptjhhrE=";
 
   # Tests require network access for OAuth flow
   doCheck = false;
@@ -27,7 +27,7 @@ buildGoModule rec {
 
   meta = {
     description = "CLI for Google Suite (Gmail, Calendar, Drive, Docs, Sheets, Contacts, Tasks)";
-    homepage = "https://github.com/steipete/gogcli";
+    homepage = "https://github.com/openclaw/gogcli";
     license = lib.licenses.mit;
     mainProgram = "gog";
   };
