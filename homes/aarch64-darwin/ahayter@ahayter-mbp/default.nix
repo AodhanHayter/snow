@@ -39,6 +39,7 @@ with lib.modernage;
       gemini-cli = disabled;
       gh = enabled;
       home-manager = enabled;
+      hunk = enabled;
       jq = enabled;
       neovim = enabled;
       opencode = enabled;

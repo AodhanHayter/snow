@@ -75,6 +75,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hunk = {
+      url = "github:modem-dev/hunk";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Claude Code plugins/skills sources
     anthropics-skills = {
       url = "github:anthropics/skills";
@@ -170,6 +175,7 @@
 
       homes.modules = with inputs; [
         sops-nix.homeManagerModules.sops
+        hunk.homeManagerModules.default
         # home-manager(master) defaults home.shell.enableNushellIntegration to true;
         # nushell unused here and pinned fzf < 0.73.0 trips its integration assertion.
         { home.shell.enableNushellIntegration = false; }
