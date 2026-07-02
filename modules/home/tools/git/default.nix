@@ -114,7 +114,8 @@ in
 
     programs.diff-so-fancy = {
       enable = true;
-      enableGitIntegration = true;
+      # hunk provides the git pager (modernage.cli-apps.hunk)
+      enableGitIntegration = false;
     };
   };
 }
