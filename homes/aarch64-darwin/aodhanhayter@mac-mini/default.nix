@@ -33,6 +33,7 @@ with lib.modernage;
       fzf = enabled;
       gh = enabled;
       home-manager = enabled;
+      hunk = enabled;
       jq = enabled;
       neovim = enabled;
       opencode = enabled;

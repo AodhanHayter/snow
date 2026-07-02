@@ -35,6 +35,7 @@ with lib.modernage;
       gh = enabled;
       gogcli = enabled;
       home-manager = enabled;
+      hunk = enabled;
       jq = enabled;
       neovim = enabled;
       opencode = enabled;
