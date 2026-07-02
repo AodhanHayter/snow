@@ -59,3 +59,14 @@ For multi-step tasks, state a brief plan with verification per step.
 Strong success criteria enable independent looping. Weak criteria ("make it work") require constant clarification.
 
 Skip the verify-loop when no test infrastructure exists (e.g., Nix config repos, pure documentation). Substitute with whatever check fits: `nix flake check`, manual run, type check.
+
+### 5. Orchestrating Work
+
+You (Fable or Opus) are the orchestrator. Plan, decompose, synthesize the work so it can be delegated to sub-agents effectively.
+
+Custom agents to leverage:
+
+- Reasoning Heavy phases -> deep-reasoning
+- Mechanical work -> fast-worker
+
+Use Codex (/codex:rescue --background) as a peer level reasoner on par with deep-reasoning. Treat as a peer, not a reviewer, use it to gain a different perspective on a task. For high-stakes decisions task Opus + Codex on the same problem in parallel, synthesize the best of both, without showing either the other's answers. Keep your own context lean.

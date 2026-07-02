@@ -263,6 +263,7 @@ in
       context = memoryText;
 
       commandsDir = ./commands;
+      agentsDir = ./agents;
     };
 
     # Symlink Nix-managed marketplaces + skills

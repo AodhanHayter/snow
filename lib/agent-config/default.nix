@@ -87,6 +87,7 @@ in
       env = {
         CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR = "1";
         CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
+        CLAUDE_CODE_SUBAGENT_MODEL = "claude-sonnet-5";
         DIRENV_LOG_FORMAT = "";
         DIRENV_WARN_TIMEOUT = "0";
       };

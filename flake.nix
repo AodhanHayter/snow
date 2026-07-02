@@ -9,7 +9,8 @@
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Home Manager
-    home-manager.url = "github:nix-community/home-manager/release-26.05";
+    # tracking master: programs.devenv module not yet backported to release-26.05
+    home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # macOS Support
@@ -120,12 +121,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    devenv = {
-      url = "github:AodhanHayter/devenv/feature/claude-plugin-support";
-      inputs.nixpkgs.follows = "unstable";
-      inputs.nixd.follows = "nixd";
-    };
-
     # Pin nixd before nix→2.34 bump (nixos-25.11 only has up to nixComponents_2_33)
     nixd = {
       url = "github:nix-community/nixd/8ecf93d4d9";
@@ -175,6 +170,9 @@
 
       homes.modules = with inputs; [
         sops-nix.homeManagerModules.sops
+        # home-manager(master) defaults home.shell.enableNushellIntegration to true;
+        # nushell unused here and pinned fzf < 0.73.0 trips its integration assertion.
+        { home.shell.enableNushellIntegration = false; }
       ];
 
       deploy = lib.mkDeploy { inherit (inputs) self; };
