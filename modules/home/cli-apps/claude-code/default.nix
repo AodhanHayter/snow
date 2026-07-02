@@ -39,18 +39,6 @@ let
     chmod +x $out
   '';
 
-  # RTK token-saving PreToolUse hook. Rewrites Bash commands to `rtk <cmd>`
-  # via `rtk rewrite`. Sourced from github:rtk-ai/rtk hooks/claude.
-  rtkRewriteScript = pkgs.writeShellScript "rtk-rewrite" ''
-    export PATH="${
-      lib.makeBinPath [
-        pkgs.jq
-        pkgs.rtk
-      ]
-    }:$PATH"
-    ${builtins.readFile ./rtk-rewrite.sh}
-  '';
-
   # Merge RTK awareness into Claude memory so Claude knows rtk exists and
   # which commands to invoke explicitly (rtk gain, rtk discover, ...).
   memoryText = builtins.readFile ./CLAUDE.md + "\n\n" + builtins.readFile ./rtk-awareness.md;
@@ -141,8 +129,14 @@ let
         # devenv integration
         "Bash(devenv:*)"
 
-        # rtk token-killer wrapper (auto-rewrites read-only cmds)
-        "Bash(rtk:*)"
+        # rtk meta commands only. Hook-rewritten commands are auto-allowed by
+        # `rtk hook claude` itself; anything else (notably `rtk proxy <cmd>`,
+        # which executes arbitrary commands) must prompt.
+        "Bash(rtk gain)"
+        "Bash(rtk gain:*)"
+        "Bash(rtk discover)"
+        "Bash(rtk discover:*)"
+        "Bash(rtk --version)"
 
       ];
       deny = [ ];
@@ -164,8 +158,10 @@ let
           matcher = "Bash";
           hooks = [
             {
+              # RTK token-saving rewrite (git status -> rtk git status).
+              # Built into the rtk binary; rtk is on PATH via home.packages.
               type = "command";
-              command = "${rtkRewriteScript}";
+              command = "rtk hook claude";
             }
             {
               type = "command";

@@ -13,16 +13,6 @@ let
   agentDefaults = agentConfig.defaults inputs;
   dcg = inputs.self.packages.${pkgs.system}.dcg;
 
-  rtkRewriteScript = pkgs.writeShellScript "rtk-rewrite" ''
-    export PATH="${
-      lib.makeBinPath [
-        pkgs.jq
-        pkgs.rtk
-      ]
-    }:$PATH"
-    ${builtins.readFile ../claude-code/rtk-rewrite.sh}
-  '';
-
   dcgCodexHookScript = pkgs.writeShellScript "dcg-codex-hook" ''
     set -euo pipefail
 
@@ -64,8 +54,10 @@ let
           matcher = "Bash";
           hooks = [
             {
+              # RTK token-saving rewrite; built into the rtk binary,
+              # rtk is on PATH via home.packages.
               type = "command";
-              command = "${rtkRewriteScript}";
+              command = "rtk hook claude";
             }
             {
               type = "command";
