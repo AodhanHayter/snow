@@ -132,10 +132,10 @@ in
         };
 
         claudeEnabled = mkEnabled commonPlugins "claude-plugins-official" // {
-          "nix-lsp@claude-lsp-plugins" = true;
-          "python-lsp@claude-lsp-plugins" = true;
-          "elixir-lsp@claude-lsp-plugins" = true;
-          "swift-lsp@claude-lsp-plugins" = true;
+          "nix-lsp@claude-lsp-plugins" = false;
+          "python-lsp@claude-lsp-plugins" = false;
+          "elixir-lsp@claude-lsp-plugins" = false;
+          "swift-lsp@claude-lsp-plugins" = false;
           "caveman@caveman" = true;
           "codex@openai-codex" = true;
         };
@@ -158,11 +158,17 @@ in
           src = inputs.mattpocock-skills;
           subdir = "skills/engineering";
           names = [
-            "diagnose"
+            "diagnosing-bugs"
+            "domain-modeling"
+            "codebase-design"
+            "code-review"
             "grill-with-docs"
             "improve-codebase-architecture"
             "prototype"
+            "research"
             "tdd"
+            "to-spec"
+            "to-tickets"
           ];
         };
         mattpocock-productivity = {
@@ -170,7 +176,9 @@ in
           subdir = "skills/productivity";
           names = [
             "grill-me"
+            "grilling"
             "handoff"
+            "writing-great-skills"
           ];
         };
       };

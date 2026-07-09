@@ -15,14 +15,6 @@ let
   extraKnownMarketplaces = agentConfig.mkClaudeExtraKnownMarketplaces cfg.plugins.marketplaces;
   marketplaceSymlinks = agentConfig.mkClaudeMarketplaceSymlinks cfg.plugins.marketplaces;
 
-  notifyScript = pkgs.writeShellScript "claude-notify" ''
-    [ -z "$TMUX" ] && exit 0
-    INPUT=$(cat)
-    TITLE=$(echo "$INPUT" | ${pkgs.jq}/bin/jq -r '.title // "Claude Code"')
-    MESSAGE=$(echo "$INPUT" | ${pkgs.jq}/bin/jq -r '.message // "Notification"')
-    osascript -e "display notification \"$MESSAGE\" with title \"$TITLE\" sound name \"Glass\""
-  '';
-
   statuslineScript = pkgs.runCommand "claude-statusline" { } ''
     substitute ${./statusline.sh} $out \
       --replace-fail "@PATH@" "${
@@ -143,16 +135,6 @@ let
     };
     env = agentDefaults.env;
     hooks = {
-      Notification = [
-        {
-          hooks = [
-            {
-              type = "command";
-              command = "${notifyScript}";
-            }
-          ];
-        }
-      ];
       PreToolUse = [
         {
           matcher = "Bash";
@@ -271,6 +253,12 @@ in
           mkdir -p $out
           cp ${inputs.herdr-skill}/SKILL.md $out/SKILL.md
         '';
+
+        # Hunk bundles its skill inside the package output; reference the
+        # package so it tracks nix-managed hunk updates.
+        ".claude/skills/hunk-review".source = "${
+          inputs.hunk.packages.${pkgs.stdenv.hostPlatform.system}.hunk
+        }/skills/hunk-review";
       };
 
     # Seed ~/.claude/settings.json as a mutable copy of the Nix-rendered

@@ -1,7 +1,5 @@
 In all interactions and commit messages, be extremely concise and sacrifice grammar for the sake of concision.
 
-When working in a repository use the agentlocal directory to store ephemeral files.
-
 ## GitHub
 
 - Your primary method for interacting with GitHub should be the GitHub CLI.
