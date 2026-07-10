@@ -169,6 +169,7 @@ in
             "tdd"
             "to-spec"
             "to-tickets"
+            "wayfinder"
           ];
         };
         mattpocock-productivity = {

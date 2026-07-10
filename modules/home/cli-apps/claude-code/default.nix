@@ -242,6 +242,11 @@ in
 
       commandsDir = ./commands;
       agentsDir = ./agents;
+
+      # Local skills shipped in-module. Attrset form (not path) so the whole
+      # skills/ dir isn't symlinked, which would collide with the home.file
+      # skill entries below (herdr, hunk-review).
+      skills.codex-computer-use = ./skills/codex-computer-use;
     };
 
     # Symlink Nix-managed marketplaces + skills

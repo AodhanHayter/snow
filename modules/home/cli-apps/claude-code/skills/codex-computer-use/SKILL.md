@@ -1,6 +1,6 @@
 ---
 name: codex-computer-use
-description: Ask Codex CLI (gpt-5.5) to run local app verification that needs computer use, browser automation, simulators, screenshots, app launching, or independent runtime inspection. This is how gpt-5.5 is invoked for computer-use work.
+description: Ask Codex CLI (gpt-5.6) to run local app verification that needs computer use, browser automation, simulators, screenshots, app launching, or independent runtime inspection. This is how gpt-5.6 is invoked for computer-use work.
 ---
 
 # Codex Computer Use
@@ -29,18 +29,21 @@ Keep it one task per run. Split unrelated checks into separate runs.
 
 ```bash
 codex exec \
-  --model gpt-5.5 \
+  --model gpt-5.6-luna \
   -s danger-full-access \
   -C <repo-root> \
-  "<contract prompt>"
+  "<contract prompt>" </dev/null
 ```
 
 - `-s danger-full-access` — **required.** Computer-use spawns GUI processes and reaches the network; the `workspace-write` sandbox blocks both. This is why the skill's guardrail above governs disruptive runs.
 - `-C <repo-root>` — sets Codex's working root. Add `--skip-git-repo-check` if the target is not a git repo.
-- `--model` — `gpt-5.5` is the default for this skill; override only if the user names a different model.
+- `--model` — `gpt-5.6-luna` is the default for this skill; override only if the user names a different model.
+- `</dev/null` — **required.** `codex exec` in a non-TTY hangs on "Reading additional input from stdin..." unless stdin is closed.
 - Codex's final message lands on stdout — the Bash result carries the verdict back. No output file needed.
 - Long runs (booting a simulator, multi-step flows) can exceed a foreground call — run the Bash command in the background and poll.
 
 ### 3. Read the verdict and relay it
 
 Scan Codex's stdout for the `VERDICT:` line. The step is **not** done until that line is present — a run with no verdict is an incomplete run, not a pass. Relay to the user: the verdict, the one-line reason, and the evidence paths. On `FAIL`, report what Codex observed; do not re-verify by reading code.
+
+Exception: if stdout shows tool-spawn errors (e.g. `failed to spawn code-mode host`, or every tool call erroring), the Codex install itself is broken — stop, surface the error to the user, and do not retry or fall back to verifying by reading code.
