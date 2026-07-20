@@ -44,11 +44,9 @@ let
     };
     permissions = {
       allow = [
+        # Edit(**) covers Write/MultiEdit/NotebookEdit; Read(**) covers Grep/Glob
         "Read(**)"
         "Edit(**)"
-        "MultiEdit(**)"
-        "Write(**)"
-        "Glob(**)"
         "Grep(**)"
         "LS(**)"
         "WebSearch"

@@ -23,6 +23,7 @@ with lib.modernage;
       zoxide = enabled;
       awscli = enabled;
       bat = enabled;
+      beads-rust = enabled;
       claude-code = enabled;
       codex-cli = enabled;
       dcg = enabled;
