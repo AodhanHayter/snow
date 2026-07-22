@@ -35,6 +35,7 @@ with lib.modernage;
       gemini-cli = disabled;
       gh = enabled;
       gogcli = enabled;
+      herdr = enabled;
       home-manager = enabled;
       hunk = enabled;
       jq = enabled;

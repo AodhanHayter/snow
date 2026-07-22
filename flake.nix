@@ -121,6 +121,11 @@
       flake = false;
     };
 
+    herdr = {
+      url = "github:ogulcancelik/herdr";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     berkeley-mono = {
       url = "git+ssh://git@github.com/AodhanHayter/berkeley-mono-nix?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
