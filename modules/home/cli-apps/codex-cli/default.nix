@@ -12,6 +12,7 @@ let
   homeDir = config.home.homeDirectory;
   agentDefaults = agentConfig.defaults inputs;
   dcg = inputs.self.packages.${pkgs.system}.dcg;
+  codex-acp = inputs.self.packages.${pkgs.system}.codex-acp;
 
   dcgCodexHookScript = pkgs.writeShellScript "dcg-codex-hook" ''
     set -euo pipefail
@@ -212,10 +213,11 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      codex-cli
-      rtk
+    home.packages = [
+      pkgs.codex-cli
+      pkgs.rtk
       dcg
+      codex-acp
     ];
 
     home.file = skillFiles;
