@@ -19,6 +19,7 @@ with lib.modernage;
       ghostty = enabled;
       gnucash = enabled;
       obs-studio = enabled;
+      obsidian = enabled;
       omnissa-horizon-client = enabled;
     };
 

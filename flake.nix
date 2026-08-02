@@ -121,6 +121,11 @@
       flake = false;
     };
 
+    simple-english-skill = {
+      url = "github:AminBlg/SimpleEnglish";
+      flake = false;
+    };
+
     herdr = {
       url = "github:ogulcancelik/herdr";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -14,6 +14,7 @@ with lib.modernage;
 
     apps = {
       ghostty = enabled;
+      obsidian = enabled;
     };
 
     cli-apps = {

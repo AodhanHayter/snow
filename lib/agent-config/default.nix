@@ -174,6 +174,11 @@ in
             "wayfinder"
           ];
         };
+        simple-english = {
+          src = inputs.simple-english-skill;
+          subdir = "skills";
+          names = [ "simple-english" ];
+        };
         mattpocock-productivity = {
           src = inputs.mattpocock-skills;
           subdir = "skills/productivity";
