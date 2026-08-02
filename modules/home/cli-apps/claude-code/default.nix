@@ -252,10 +252,7 @@ in
       marketplaceSymlinks
       // skillFiles
       // {
-        ".claude/skills/herdr".source = pkgs.runCommand "herdr-skill" { } ''
-          mkdir -p $out
-          cp ${inputs.herdr-skill}/SKILL.md $out/SKILL.md
-        '';
+        ".claude/skills/herdr".source = "${inputs.herdr-skill}/skills/herdr";
 
         # Hunk bundles its skill inside the package output; reference the
         # package so it tracks nix-managed hunk updates.
