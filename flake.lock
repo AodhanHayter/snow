@@ -635,6 +635,26 @@
         "url": "https://flakehub.com/f/cachix/git-hooks.nix/0.1.941"
       }
     },
+    "grok-build-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785788186,
+        "narHash": "sha256-CozzdqR0NEvRxJpRnd5X64n97/l/xvpAJmKMNWMZUb4=",
+        "owner": "AodhanHayter",
+        "repo": "grok-build-nix",
+        "rev": "5f9cf195e8de72fd79aa0e4d253438de78376e23",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AodhanHayter",
+        "repo": "grok-build-nix",
+        "type": "github"
+      }
+    },
     "herdr": {
       "inputs": {
         "nixpkgs": [
@@ -1093,6 +1113,7 @@
         "disko": "disko",
         "expert": "expert",
         "ghostty": "ghostty",
+        "grok-build-nix": "grok-build-nix",
         "herdr": "herdr",
         "herdr-skill": "herdr-skill",
         "home-manager": "home-manager",
