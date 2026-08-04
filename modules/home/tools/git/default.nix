@@ -86,6 +86,11 @@ in
         help = {
           autocorrect = "prompt";
         };
+        init = {
+          # git's built-in fallback is already master, but it has long warned
+          # that it may change; pin it so new repos don't drift to main.
+          defaultBranch = "master";
+        };
         merge = {
           conflictStyle = "zdiff3";
         };
