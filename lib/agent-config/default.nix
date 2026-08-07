@@ -142,10 +142,11 @@ in
           mkEnabled commonPlugins "claude-plugins-official"
           // {
             "caveman@caveman-repo" = true;
-            # openai-bundled marketplace ships with codex itself; this plugin
-            # provides the Computer Use MCP server + skill used by the
-            # codex-computer-use Claude skill.
-            "computer-use@openai-bundled" = true;
+            # computer-use@openai-bundled intentionally omitted: as of codex
+            # 0.147.0 the openai-bundled marketplace resolves out of
+            # ~/.cache/codex-runtimes/codex-primary-runtime/plugins, a runtime
+            # codex downloads itself and which the nix package never fetches,
+            # so `codex plugin add` always fails.
           }
         );
       };

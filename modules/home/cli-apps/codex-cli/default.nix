@@ -165,8 +165,10 @@ let
     with target.open("wb") as f:
         tomli_w.dump(merged, f)
   '';
+  # a plugin that fails to resolve must not fail the whole activation
   pluginInstallCommands = concatMapStringsSep "\n" (plugin: ''
-    run ${pkgs.coreutils}/bin/env CODEX_HOME="${homeDir}/.codex" ${pkgs.codex-cli}/bin/codex plugin add ${escapeShellArg plugin} >/dev/null
+    run ${pkgs.coreutils}/bin/env CODEX_HOME="${homeDir}/.codex" ${pkgs.codex-cli}/bin/codex plugin add ${escapeShellArg plugin} >/dev/null \
+      || warnEcho "codex: could not install plugin ${plugin}"
   '') (attrNames cfg.plugins.enabled);
 in
 {

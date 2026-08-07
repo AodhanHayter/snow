@@ -12,8 +12,8 @@ let
 
   # nix-prefetch-url per platform; must be re-fetched on every codex version bump
   hostHashes = {
-    "aarch64-apple-darwin" = "0im248hb4vb7wd0k4fkg87chszsac022ijy7d49m9zmy60j2iybc";
-    "x86_64-unknown-linux-musl" = "0gcr30mf1mgfwqfpiqhmvjb0qyq23vwgfgjii7s2nz4lb9fcdn96";
+    "aarch64-apple-darwin" = "0ppvvn9fwqp0d77fsaqnbiga3ysglfjyxzmpsc4434dzhxhvzkan";
+    "x86_64-unknown-linux-musl" = "0mj3vnhrgyxp71wqi0x22y32wnyv4iv5z2dmrngyqqw3mkxasih1";
   };
 
   # upstream package.nix omits the code-mode-host sidecar codex needs for all

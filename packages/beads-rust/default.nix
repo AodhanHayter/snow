@@ -27,6 +27,10 @@ rustPlatform.buildRustPackage rec {
     cp ${./Cargo.lock} Cargo.lock
   '';
 
+  # fsqlite-pager 0.1.16 uses nightly-only `#![feature(...)]`; allow it to
+  # compile on the stable rustc nixpkgs ships.
+  RUSTC_BOOTSTRAP = 1;
+
   # Tests shell out / hit network (assert_cmd, self-update); build only.
   doCheck = false;
 
