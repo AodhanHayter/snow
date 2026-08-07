@@ -27,7 +27,9 @@ Keep it one task per run. Split unrelated checks into separate runs.
 
 ### 2. Run Codex
 
-Computer Use is a Codex **plugin**, not a CLI flag. Preflight once per session: `codex plugin list | grep computer-use` must show `installed, enabled`. If missing, run `codex plugin add computer-use@openai-bundled` — without the plugin Codex has no Computer Use tools and silently falls back to Chrome or code reading.
+Computer Use is a Codex **plugin**, not a CLI flag. Preflight once per session: `codex plugin list | grep computer-use` must show `installed, enabled`. Without the plugin Codex has no Computer Use tools and silently falls back to Chrome or code reading.
+
+If it is missing, stop and tell the user — do not try to install it. It lives in the `openai-bundled` marketplace, which codex 0.147.0 resolves out of `~/.cache/codex-runtimes/codex-primary-runtime/plugins`, a runtime codex downloads itself and the nix package never fetches. `codex plugin add computer-use@openai-bundled` fails with `plugin \`computer-use\` was not found in marketplace \`openai-bundled\``.
 
 ```bash
 codex exec \
