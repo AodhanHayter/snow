@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ channels, ... }:
 final: prev: {
-  expert = inputs.expert.packages.${prev.stdenv.hostPlatform.system}.default;
+  inherit (channels.unstable.beamPackages) expert;
 }

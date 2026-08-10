@@ -60,11 +60,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    expert = {
-      url = "github:elixir-lang/expert?ref=v0.1.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     claude-code-nix = {
       url = "github:sadjow/claude-code-nix";
       inputs.nixpkgs.follows = "nixpkgs";
