@@ -39,7 +39,7 @@ let
   baseSettings = {
     statusLine = {
       type = "command";
-      command = "${statuslineScript}";
+      command = "${homeDir}/.claude/bin/claude-statusline";
       padding = 0;
     };
     permissions = {
@@ -252,6 +252,10 @@ in
       marketplaceSymlinks
       // skillFiles
       // {
+        # Stable path for the statusline so the mutable settings.json never
+        # holds a /nix/store path that can be garbage-collected on rebuild.
+        ".claude/bin/claude-statusline".source = statuslineScript;
+
         ".claude/skills/herdr".source = "${inputs.herdr-skill}/skills/herdr";
 
         # Hunk bundles its skill inside the package output; reference the
