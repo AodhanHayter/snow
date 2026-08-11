@@ -17,6 +17,7 @@ with lib.modernage;
 
     tools = {
       sops = enabled;
+      podman = enabled;
     };
 
     services = {
