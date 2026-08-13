@@ -102,11 +102,6 @@
       flake = false;
     };
 
-    claude-lsp-plugins = {
-      url = "github:AodhanHayter/claude-lsp-plugins";
-      flake = false;
-    };
-
     caveman = {
       url = "github:JuliusBrussee/caveman";
       flake = false;

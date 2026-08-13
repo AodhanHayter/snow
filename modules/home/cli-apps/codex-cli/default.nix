@@ -10,7 +10,7 @@ with lib.modernage;
 let
   cfg = config.modernage.cli-apps.codex-cli;
   homeDir = config.home.homeDirectory;
-  agentDefaults = agentConfig.defaults inputs;
+  shared = config.modernage.coding-agents;
   dcg = inputs.self.packages.${pkgs.system}.dcg;
   codex-acp = inputs.self.packages.${pkgs.system}.codex-acp;
 
@@ -53,28 +53,22 @@ let
       PreToolUse = [
         {
           matcher = "Bash";
-          hooks = [
-            {
-              # RTK token-saving rewrite; built into the rtk binary,
-              # rtk is on PATH via home.packages.
-              type = "command";
-              command = "rtk hook claude";
+          # dcg needs a codex-specific wrapper to translate its output, so
+          # only the command differs from the shared guard definition.
+          hooks = agentConfig.mkBashGuardHooks (
+            shared.guards
+            // {
+              dcg = shared.guards.dcg // {
+                command = "${dcgCodexHookScript}";
+              };
             }
-            {
-              type = "command";
-              command = "${dcgCodexHookScript}";
-            }
-          ];
+          );
         }
       ];
     };
   };
 
-  agentsFile = pkgs.writeText "codex-agents.md" (
-    builtins.readFile ../claude-code/CLAUDE.md
-    + "\n\n"
-    + builtins.readFile ../claude-code/rtk-awareness.md
-  );
+  agentsFile = pkgs.writeText "codex-agents.md" shared.instructions;
 
   # Upstream caveman dropped its codex-native marketplace manifest
   # (.agents/plugins/marketplace.json) in 25d22f8; codex can't enumerate the
@@ -127,14 +121,26 @@ let
     mcp_servers = mcp.asCodexFormat { inherit config pkgs; };
     shell_environment_policy = {
       "inherit" = "core";
-      set = agentDefaults.env // {
+      set = shared.env // {
         CLAUDE_CODE_ENABLE_TELEMETRY = "0";
       };
     };
   } cfg.extraConfig;
 
   configToml = (pkgs.formats.toml { }).generate "codex-config.toml" codexConfig;
-  skillFiles = agentConfig.mkSkillFiles ".codex/skills" cfg.skills.sources;
+  skillFiles = agentConfig.mkSkillFiles ".codex/skills" cfg.skills;
+
+  # Plugins the shared set enables that codex cannot resolve.
+  # computer-use@openai-bundled is likewise never enabled: as of codex 0.147.0
+  # the openai-bundled marketplace resolves out of
+  # ~/.cache/codex-runtimes/codex-primary-runtime/plugins, a runtime codex
+  # downloads itself and which the nix package never fetches, so
+  # `codex plugin add` always fails.
+  unsupportedPlugins = [ "codex@openai-codex" ];
+
+  defaultPlugins = mapAttrs' (
+    id: _: nameValuePair (agentConfig.mkCodexPluginId id) { enabled = true; }
+  ) (filterAttrs (id: enabled: enabled && !elem id unsupportedPlugins) shared.plugins.enabled);
   pythonWithToml = pkgs.python3.withPackages (ps: [ ps.tomli-w ]);
   mergeCodexConfigScript = pkgs.writeText "merge-codex-config.py" ''
     import pathlib
@@ -182,7 +188,7 @@ in
     plugins = {
       marketplaces = mkOption {
         type = types.attrsOf agentConfig.marketplaceModule;
-        default = agentDefaults.plugins.marketplaces;
+        default = shared.plugins.marketplaces;
         description = "Plugin marketplaces to register in Codex.";
       };
 
@@ -196,15 +202,15 @@ in
             };
           }
         );
-        default = agentDefaults.plugins.codexEnabled;
+        default = defaultPlugins;
         description = "Codex plugins to enable in format 'plugin-name@marketplace-name'.";
       };
     };
 
-    skills.sources = mkOption {
-      type = types.attrsOf agentConfig.skillSourceModule;
-      default = agentDefaults.skills.sources;
-      description = "External skill sources to symlink into ~/.codex/skills.";
+    skills = mkOption {
+      type = types.attrsOf types.path;
+      default = shared.skills.resolved;
+      description = "Skills to symlink into ~/.codex/skills, as name -> directory.";
     };
 
     extraConfig = mkOption {
@@ -215,6 +221,8 @@ in
   };
 
   config = mkIf cfg.enable {
+    modernage.coding-agents.enable = true;
+
     home.packages = [
       pkgs.codex-cli
       pkgs.rtk

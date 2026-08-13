@@ -2,7 +2,6 @@
   lib,
   config,
   pkgs,
-  inputs,
   ...
 }:
 with lib;
@@ -10,7 +9,7 @@ with lib.modernage;
 let
   cfg = config.modernage.cli-apps.claude-code;
   homeDir = config.home.homeDirectory;
-  agentDefaults = agentConfig.defaults inputs;
+  shared = config.modernage.coding-agents;
 
   extraKnownMarketplaces = agentConfig.mkClaudeExtraKnownMarketplaces cfg.plugins.marketplaces;
   marketplaceSymlinks = agentConfig.mkClaudeMarketplaceSymlinks cfg.plugins.marketplaces;
@@ -30,10 +29,6 @@ let
       }"
     chmod +x $out
   '';
-
-  # Merge RTK awareness into Claude memory so Claude knows rtk exists and
-  # which commands to invoke explicitly (rtk gain, rtk discover, ...).
-  memoryText = builtins.readFile ./CLAUDE.md + "\n\n" + builtins.readFile ./rtk-awareness.md;
 
   # Base settings (without plugins)
   baseSettings = {
@@ -131,23 +126,12 @@ let
       ];
       deny = [ ];
     };
-    env = agentDefaults.env;
+    env = shared.env;
     hooks = {
       PreToolUse = [
         {
           matcher = "Bash";
-          hooks = [
-            {
-              # RTK token-saving rewrite (git status -> rtk git status).
-              # Built into the rtk binary; rtk is on PATH via home.packages.
-              type = "command";
-              command = "rtk hook claude";
-            }
-            {
-              type = "command";
-              command = "dcg";
-            }
-          ];
+          hooks = agentConfig.mkBashGuardHooks shared.guards;
         }
       ];
     };
@@ -181,7 +165,7 @@ let
     }
   );
 
-  skillFiles = agentConfig.mkSkillFiles ".claude/skills" cfg.skills.sources;
+  skillFiles = agentConfig.mkSkillFiles ".claude/skills" cfg.skills;
 in
 {
   options.modernage.cli-apps.claude-code = {
@@ -190,7 +174,7 @@ in
     plugins = {
       marketplaces = mkOption {
         type = types.attrsOf agentConfig.marketplaceModule;
-        default = agentDefaults.plugins.marketplaces;
+        default = shared.plugins.marketplaces;
         description = "Plugin marketplaces to register";
         example = literalExpression ''
           {
@@ -204,7 +188,7 @@ in
 
       enabled = mkOption {
         type = types.attrsOf types.bool;
-        default = agentDefaults.plugins.claudeEnabled;
+        default = shared.plugins.enabled;
         description = "Plugins to enable in format 'plugin-name@marketplace-name'";
         example = {
           "code-review@claude-plugins-official" = true;
@@ -219,16 +203,19 @@ in
       };
     };
 
-    skills = {
-      sources = mkOption {
-        type = types.attrsOf agentConfig.skillSourceModule;
-        default = agentDefaults.skills.sources;
-        description = "External skill sources to symlink into ~/.claude/skills";
-      };
+    skills = mkOption {
+      type = types.attrsOf types.path;
+      default = shared.skills.resolved;
+      description = "Skills to symlink into ~/.claude/skills, as name -> directory.";
     };
   };
 
   config = mkIf cfg.enable {
+    modernage.coding-agents.enable = true;
+
+    # commandsDir/agentsDir are only set when the shared module has them: the
+    # upstream option takes a path, and an empty (hence untracked) directory
+    # never lands in the flake source.
     programs.claude-code = {
       enable = true;
       package = pkgs.claude-code;
@@ -236,18 +223,18 @@ in
       # symlink; we manage it ourselves via activation as a mutable copy.
       settings = { };
       # `memory.source`/`memory.text` renamed to `context` in HM 26.05
-      context = memoryText;
-
-      commandsDir = ./commands;
-      agentsDir = ./agents;
-
-      # Local skills shipped in-module. Attrset form (not path) so the whole
-      # skills/ dir isn't symlinked, which would collide with the home.file
-      # skill entries below (herdr, hunk-review).
-      skills.codex-computer-use = ./skills/codex-computer-use;
+      context = shared.instructions;
+    }
+    // optionalAttrs (shared.commandsDir != null) {
+      inherit (shared) commandsDir;
+    }
+    // optionalAttrs (shared.agentsDir != null) {
+      inherit (shared) agentsDir;
     };
 
-    # Symlink Nix-managed marketplaces + skills
+    # Symlink Nix-managed marketplaces + skills. Skills go through home.file
+    # rather than programs.claude-code.skills so every entry (in-repo, flake
+    # input, skill collection) lands the same way without colliding.
     home.file =
       marketplaceSymlinks
       // skillFiles
@@ -255,14 +242,6 @@ in
         # Stable path for the statusline so the mutable settings.json never
         # holds a /nix/store path that can be garbage-collected on rebuild.
         ".claude/bin/claude-statusline".source = statuslineScript;
-
-        ".claude/skills/herdr".source = "${inputs.herdr-skill}/skills/herdr";
-
-        # Hunk bundles its skill inside the package output; reference the
-        # package so it tracks nix-managed hunk updates.
-        ".claude/skills/hunk-review".source = "${
-          inputs.hunk.packages.${pkgs.stdenv.hostPlatform.system}.hunk
-        }/skills/hunk-review";
       };
 
     # Seed ~/.claude/settings.json as a mutable copy of the Nix-rendered

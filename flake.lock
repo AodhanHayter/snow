@@ -130,22 +130,6 @@
         "type": "github"
       }
     },
-    "claude-lsp-plugins": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1767143828,
-        "narHash": "sha256-ND1h9FztOhQjr2x56rcvGUYXaMiZogjvWjGm+u0ZtL4=",
-        "owner": "AodhanHayter",
-        "repo": "claude-lsp-plugins",
-        "rev": "91829977a92ce5fb3790b5a05173d26c6b3b69a8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "AodhanHayter",
-        "repo": "claude-lsp-plugins",
-        "type": "github"
-      }
-    },
     "claude-plugins-official": {
       "flake": false,
       "locked": {
@@ -1101,7 +1085,6 @@
         "berkeley-mono": "berkeley-mono",
         "caveman": "caveman",
         "claude-code-nix": "claude-code-nix",
-        "claude-lsp-plugins": "claude-lsp-plugins",
         "claude-plugins-official": "claude-plugins-official",
         "codex-cli-nix": "codex-cli-nix",
         "codex-plugin-cc": "codex-plugin-cc",

@@ -81,117 +81,22 @@ in
       skillSourceModule
       getMarketplaceName
       commonPlugins
+      mkEnabled
       ;
 
-    defaults = inputs: {
-      env = {
-        CLAUDE_CODE_SUBAGENT_MODEL = "claude-sonnet-5";
-        CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR = "1";
-        CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
+    # Bash PreToolUse hooks shared by agents that use the claude hook schema.
+    # Order is load order and it matters: rtk rewrites the command, dcg audits
+    # the command that actually executes.
+    mkBashGuardHooks =
+      guards:
+      optional guards.rtk.enable {
+        type = "command";
+        command = guards.rtk.command;
+      }
+      ++ optional guards.dcg.enable {
+        type = "command";
+        command = guards.dcg.command;
       };
-
-      plugins = {
-        marketplaces = {
-          "anthropics/claude-plugins-official" = {
-            source = {
-              type = "github";
-              url = "anthropics/claude-plugins-official";
-            };
-            flakeInput = inputs.claude-plugins-official;
-          };
-          "anthropics/skills" = {
-            source = {
-              type = "github";
-              url = "anthropics/skills";
-            };
-            flakeInput = inputs.anthropics-skills;
-          };
-          "AodhanHayter/claude-lsp-plugins" = {
-            source = {
-              type = "github";
-              url = "AodhanHayter/claude-lsp-plugins";
-            };
-            flakeInput = inputs.claude-lsp-plugins;
-          };
-          "JuliusBrussee/caveman" = {
-            source = {
-              type = "github";
-              url = "JuliusBrussee/caveman";
-            };
-            flakeInput = inputs.caveman;
-          };
-          "openai-codex" = {
-            source = {
-              type = "github";
-              url = "openai/codex-plugin-cc";
-            };
-            flakeInput = inputs.codex-plugin-cc;
-          };
-        };
-
-        claudeEnabled = mkEnabled commonPlugins "claude-plugins-official" // {
-          "nix-lsp@claude-lsp-plugins" = false;
-          "python-lsp@claude-lsp-plugins" = false;
-          "elixir-lsp@claude-lsp-plugins" = false;
-          "swift-lsp@claude-lsp-plugins" = false;
-          "caveman@caveman" = true;
-          "codex@openai-codex" = true;
-        };
-
-        codexEnabled = mapAttrs (_: enabled: { inherit enabled; }) (
-          mkEnabled commonPlugins "claude-plugins-official"
-          // {
-            "caveman@caveman-repo" = true;
-            # computer-use@openai-bundled intentionally omitted: as of codex
-            # 0.147.0 the openai-bundled marketplace resolves out of
-            # ~/.cache/codex-runtimes/codex-primary-runtime/plugins, a runtime
-            # codex downloads itself and which the nix package never fetches,
-            # so `codex plugin add` always fails.
-          }
-        );
-      };
-
-      skills.sources = {
-        anthropics = {
-          src = inputs.anthropics-skills;
-          subdir = "skills";
-          names = [ ];
-        };
-        mattpocock-engineering = {
-          src = inputs.mattpocock-skills;
-          subdir = "skills/engineering";
-          names = [
-            "diagnosing-bugs"
-            "domain-modeling"
-            "codebase-design"
-            "code-review"
-            "grill-with-docs"
-            "improve-codebase-architecture"
-            "prototype"
-            "research"
-            "tdd"
-            "to-spec"
-            "to-tickets"
-            "wayfinder"
-          ];
-        };
-        simple-english = {
-          src = inputs.simple-english-skill;
-          subdir = "skills";
-          names = [ "simple-english" ];
-        };
-        mattpocock-productivity = {
-          src = inputs.mattpocock-skills;
-          subdir = "skills/productivity";
-          names = [
-            "grill-me"
-            "grilling"
-            "handoff"
-            "writing-great-skills"
-          ];
-        };
-      };
-    };
 
     mkClaudeExtraKnownMarketplaces =
       marketplaces:
@@ -218,6 +123,14 @@ in
     mkCodexMarketplaceName =
       name: if name == "JuliusBrussee/caveman" then "caveman-repo" else getMarketplaceName name;
 
+    # Rewrite a canonical 'plugin@marketplace' id into codex's marketplace naming.
+    mkCodexPluginId =
+      id:
+      let
+        parts = splitString "@" id;
+      in
+      if length parts == 2 && elemAt parts 1 == "caveman" then "${head parts}@caveman-repo" else id;
+
     mkCodexMarketplaces =
       marketplaces:
       mapAttrs' (
@@ -240,8 +153,9 @@ in
         }
       ) marketplaces;
 
-    mkSkillFiles =
-      root: sources:
+    # Flatten skill collections into name -> directory.
+    mkSkillLinks =
+      sources:
       foldl' (
         acc: sourceName:
         let
@@ -251,10 +165,14 @@ in
         acc
         // listToAttrs (
           map (skillName: {
-            name = "${root}/${skillName}";
-            value.source = "${s.src}/${prefix}${skillName}";
+            name = skillName;
+            value = "${s.src}/${prefix}${skillName}";
           }) s.names
         )
       ) { } (attrNames sources);
+
+    # Mirror flattened skills into an agent's skills directory.
+    mkSkillFiles =
+      root: skills: mapAttrs' (name: src: nameValuePair "${root}/${name}" { source = src; }) skills;
   };
 }

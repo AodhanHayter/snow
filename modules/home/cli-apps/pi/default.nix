@@ -9,16 +9,8 @@ with lib;
 with lib.modernage;
 let
   cfg = config.modernage.cli-apps.pi;
-  homeDir = config.home.homeDirectory;
+  shared = config.modernage.coding-agents;
   dcg = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.dcg;
-
-  # Same global instructions Claude Code (~/.claude/CLAUDE.md) and Codex
-  # (~/.codex/AGENTS.md) get. pi only discovers context files from cwd upwards
-  # plus ~/.pi/agent/AGENTS.md, so ship them via --append-system-prompt instead.
-  rulesText =
-    builtins.readFile ../claude-code/CLAUDE.md
-    + "\n\n"
-    + builtins.readFile ../claude-code/rtk-awareness.md;
 
   managedSettings = {
     defaultProvider = cfg.provider;
@@ -33,10 +25,10 @@ let
     # twice fails with a tool name conflict.
     packages = cfg.packages;
 
-    # Reuse the Claude Code resource tree: skills are the same SKILL.md format,
-    # and pi prompt templates use the same frontmatter as Claude commands.
-    skills = [ "${homeDir}/.claude/skills" ];
-    prompts = [ "${homeDir}/.claude/commands" ];
+    # Shared agent resource tree: skills are the same SKILL.md format, and pi
+    # prompt templates use the same frontmatter as the shared commands.
+    skills = [ "${shared.resourceDir}/skills" ];
+    prompts = optional (shared.commandsDir != null) "${shared.resourceDir}/commands";
     enableSkillCommands = true;
   }
   // optionalAttrs (cfg.model != null) { defaultModel = cfg.model; };
@@ -64,9 +56,15 @@ in
   };
 
   config = mkIf cfg.enable {
+    modernage.coding-agents.enable = true;
+
     programs.pi.coding-agent = {
       enable = true;
-      rules = rulesText;
+
+      # pi only discovers context files from cwd upwards plus
+      # ~/.pi/agent/AGENTS.md, so ship the shared instructions via
+      # --append-system-prompt instead.
+      rules = shared.instructions;
       inherit (cfg) extensions;
       settings = recursiveUpdate managedSettings cfg.settings;
 
