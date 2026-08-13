@@ -41,6 +41,7 @@ with lib.modernage;
       neovim = enabled;
       opencode = enabled;
       password-store = enabled;
+      pi = enabled;
       pulumi = enabled;
       tealdeer = enabled;
       ripgrep = enabled;

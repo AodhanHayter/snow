@@ -80,6 +80,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # pi coding agent. nixpkgs intentionally not followed: upstream pins
+    # unstable + bun2nix and pushes those exact builds to pi.cachix.org.
+    pi-nix = {
+      url = "github:lukasl-dev/pi.nix";
+    };
+
     # Claude Code plugins/skills sources
     anthropics-skills = {
       url = "github:anthropics/skills";
@@ -186,6 +192,7 @@
       homes.modules = with inputs; [
         sops-nix.homeManagerModules.sops
         hunk.homeManagerModules.default
+        pi-nix.homeModules.default
         # home-manager(master) defaults home.shell.enableNushellIntegration to true;
         # nushell unused here and pinned fzf < 0.73.0 trips its integration assertion.
         { home.shell.enableNushellIntegration = false; }

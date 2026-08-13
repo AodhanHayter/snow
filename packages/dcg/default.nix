@@ -1,10 +1,7 @@
 {
   lib,
-  stdenv,
   stdenvNoCC,
   fetchurl,
-  autoPatchelfHook,
-  openssl,
   ...
 }:
 let
@@ -12,20 +9,20 @@ let
   platforms = {
     "aarch64-darwin" = {
       target = "aarch64-apple-darwin";
-      hash = "sha256-Kg1ZTx7FSxqUU8N2xKnGJ371SMhp9gusRsvSKSglHoM=";
+      hash = "sha256-cqv8jalejJAhuG1qs9RKgXgSyIEdmCqF3VjcVo31OAA=";
     };
     "x86_64-linux" = {
-      target = "x86_64-unknown-linux-gnu";
-      hash = "sha256-FwSlM/DkDtErrDwTJzrB4JXiDD7r7VDMZxH3Bz6qUFw=";
+      # 0.10+ ships musl static-pie only for x86_64 linux.
+      target = "x86_64-unknown-linux-musl";
+      hash = "sha256-Kg3PpxFsr53hGnpO46NRuvtSHgF5RBbzxryLNEc1nMs=";
     };
   };
 
   platform = platforms.${system} or (throw "dcg: unsupported system ${system}");
-  isLinux = stdenvNoCC.hostPlatform.isLinux;
 in
 stdenvNoCC.mkDerivation rec {
   pname = "dcg";
-  version = "0.4.0";
+  version = "0.10.0";
 
   src = fetchurl {
     url = "https://github.com/Dicklesworthstone/destructive_command_guard/releases/download/v${version}/dcg-${platform.target}.tar.xz";
@@ -34,13 +31,6 @@ stdenvNoCC.mkDerivation rec {
 
   sourceRoot = ".";
   unpackCmd = "tar xf $curSrc";
-
-  nativeBuildInputs = lib.optionals isLinux [ autoPatchelfHook ];
-
-  buildInputs = lib.optionals isLinux [
-    openssl
-    stdenv.cc.cc.lib
-  ];
 
   installPhase = ''
     install -Dm755 dcg $out/bin/dcg
