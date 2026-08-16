@@ -89,6 +89,11 @@ in
               "wayfinder"
             ];
           };
+          humanlayer = {
+            src = inputs.humanlayer-skills;
+            subdir = "plugins/show-me/skills";
+            names = [ "show-me" ];
+          };
           simple-english = {
             src = inputs.simple-english-skill;
             subdir = "skills";

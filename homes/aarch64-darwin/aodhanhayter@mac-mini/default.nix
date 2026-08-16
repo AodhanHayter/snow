@@ -39,6 +39,7 @@ with lib.modernage;
       hunk = enabled;
       jq = enabled;
       neovim = enabled;
+      omp = enabled;
       opencode = enabled;
       password-store = enabled;
       pi = enabled;

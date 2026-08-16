@@ -86,6 +86,13 @@
       url = "github:lukasl-dev/pi.nix";
     };
 
+    # oh-my-pi (omp) coding agent, a fork of pi. nixpkgs intentionally not
+    # followed: upstream pins unstable + bun2nix and pushes those exact builds
+    # to nix-community.cachix.org.
+    omp = {
+      url = "github:can1357/oh-my-pi";
+    };
+
     # Claude Code plugins/skills sources
     anthropics-skills = {
       url = "github:anthropics/skills";
@@ -119,6 +126,11 @@
 
     herdr-skill = {
       url = "github:ogulcancelik/herdr";
+      flake = false;
+    };
+
+    humanlayer-skills = {
+      url = "github:humanlayer/skills";
       flake = false;
     };
 
@@ -188,6 +200,7 @@
         sops-nix.homeManagerModules.sops
         hunk.homeManagerModules.default
         pi-nix.homeModules.default
+        omp.homeManagerModules.default
         # home-manager(master) defaults home.shell.enableNushellIntegration to true;
         # nushell unused here and pinned fzf < 0.73.0 trips its integration assertion.
         { home.shell.enableNushellIntegration = false; }
