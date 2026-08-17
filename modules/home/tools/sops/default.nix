@@ -42,6 +42,13 @@ in
         "coinbase/api_key" = { };
         "coinbase/api_secret" = { };
       };
+
+      # Per-user nix.conf: github token to avoid API throttling on flake updates.
+      templates."nix-access-tokens.conf" = {
+        mode = "0600";
+        path = "${home-directory}/.config/nix/nix.conf";
+        content = "access-tokens = github.com=${config.sops.placeholder."github/token"}";
+      };
     };
 
   };
