@@ -139,6 +139,11 @@
       flake = false;
     };
 
+    developer-documentation-skill = {
+      url = "github:NateBJones-Projects/developer-documentation-skill";
+      flake = false;
+    };
+
     herdr = {
       url = "github:ogulcancelik/herdr";
       inputs.nixpkgs.follows = "nixpkgs";
