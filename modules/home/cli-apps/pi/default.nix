@@ -30,6 +30,38 @@ let
     skills = [ "${shared.resourceDir}/skills" ];
     prompts = optional (shared.commandsDir != null) "${shared.resourceDir}/commands";
     enableSkillCommands = true;
+
+    # pi-subagents model tiering (docs/models.md): cheap recon, mid-tier
+    # execution, top reasoning only for oracle. Without this every subagent
+    # inherits the (expensive) parent session model. Custom agents that pin
+    # `model:` in frontmatter still win over defaultModel.
+    subagents = {
+      defaultModel = "openai-codex/gpt-5.6-terra";
+      defaultThinking = "high";
+      agentOverrides = {
+        scout = {
+          model = "openai-codex/gpt-5.6-luna";
+          thinking = "low";
+        };
+        researcher = {
+          model = "openai-codex/gpt-5.6-luna";
+          thinking = "low";
+        };
+        worker = {
+          model = "openai-codex/gpt-5.6-terra";
+          fallbackModels = [ "anthropic/claude-sonnet-5" ];
+        };
+        reviewer = {
+          model = "openai-codex/gpt-5.6-terra";
+          fallbackModels = [ "anthropic/claude-opus-5" ];
+        };
+        oracle = {
+          model = "openai-codex/gpt-5.6-sol";
+          thinking = "high";
+          fallbackModels = [ "anthropic/claude-fable-5" ];
+        };
+      };
+    };
   }
   // optionalAttrs (cfg.model != null) { defaultModel = cfg.model; };
 in
@@ -50,6 +82,16 @@ in
       "npm:pi-dcg"
       "npm:@gotgenes/pi-anthropic-auth"
       "npm:pi-vim"
+      "npm:@dietrichgebert/ponytail"
+      "npm:pi-web-access"
+      "npm:pi-subagents"
+      "npm:@ff-labs/pi-fff"
+      "npm:pi-context-view"
+      "npm:pi-mcp-adapter"
+      "npm:@narumitw/pi-btw"
+      "npm:@narumitw/pi-goal"
+      "npm:@quintinshaw/pi-dynamic-workflows"
+      "npm:pi-clarify"
     ] "Extension sources pi installs itself into ~/.pi/agent/npm.";
 
     settings = mkOpt types.attrs { } "Extra settings merged into ~/.pi/agent/settings.json.";
@@ -78,6 +120,13 @@ in
         # than one that blocks until it's fixed.
         PI_DCG_ON_ERROR.value = "block";
       };
+    };
+
+    # pi-subagents only discovers user agents under ~/.pi/agent/agents;
+    # link the shared agent definitions there so deep-reasoner/fast-worker
+    # are runnable as pi subagents too.
+    home.file.".pi/agent/agents" = mkIf (shared.agentsDir != null) {
+      source = shared.agentsDir;
     };
   };
 }

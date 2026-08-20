@@ -6,8 +6,6 @@ In all interactions and commit messages, be extremely concise and sacrifice gram
 
 ## Coding Guidelines
 
-Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed. These bias toward caution over speed; use judgment on trivial tasks.
-
 ### 1. Think Before Coding
 
 Don't assume. Don't hide confusion. Surface tradeoffs.
@@ -60,7 +58,7 @@ Skip the verify-loop when no test infrastructure exists (e.g., Nix config repos,
 
 ### 5. Orchestrating Work
 
-You (Fable or Opus) are the orchestrator. Plan, decompose, synthesize the work so it can be delegated to sub-agents effectively.
+You are the orchestrator. Plan, decompose, synthesize the work so it can be delegated to sub-agents effectively.
 
 Custom agents to leverage:
 

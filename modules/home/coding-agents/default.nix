@@ -58,6 +58,9 @@ in
       external = mkOpt (types.attrsOf types.path) {
         herdr = "${inputs.herdr-skill}/skills/herdr";
 
+        # Repo root is the skill itself (SKILL.md at top level).
+        developer-documentation = "${inputs.developer-documentation-skill}";
+
         # Hunk bundles its skill inside the package output; reference the
         # package so it tracks nix-managed hunk updates.
         hunk-review = "${inputs.hunk.packages.${pkgs.stdenv.hostPlatform.system}.hunk}/skills/hunk-review";
