@@ -93,6 +93,12 @@
       url = "github:can1357/oh-my-pi";
     };
 
+    # agent-browser et al. nixpkgs intentionally not followed: upstream pins
+    # unstable and pushes those exact builds to cache.numtide.com.
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+    };
+
     # Claude Code plugins/skills sources
     anthropics-skills = {
       url = "github:anthropics/skills";

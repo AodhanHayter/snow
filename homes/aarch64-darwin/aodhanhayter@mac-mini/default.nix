@@ -18,6 +18,7 @@ with lib.modernage;
     };
 
     cli-apps = {
+      agent-browser = enabled;
       ast-grep = enabled;
       fish = enabled;
       starship = enabled;
@@ -32,6 +33,7 @@ with lib.modernage;
       entr = enabled;
       eza = enabled;
       fd = enabled;
+      ffmpeg = enabled;
       fzf = enabled;
       gh = enabled;
       grok = enabled;
