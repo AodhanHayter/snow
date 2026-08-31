@@ -44,7 +44,7 @@ with lib.modernage;
       hunk = enabled;
       jq = enabled;
       neovim = enabled;
-      omp = enabled;
+      omp = disabled; # upstream bun.nix out of sync with bun.lock; costly build
       opencode = enabled;
       password-store = enabled;
       pi = enabled;
