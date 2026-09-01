@@ -36,23 +36,24 @@ let
     # inherits the (expensive) parent session model. Custom agents that pin
     # `model:` in frontmatter still win over defaultModel.
     subagents = {
-      defaultModel = "openai-codex/gpt-5.6-terra";
+      defaultModel = "anthropic/claude-opus-5";
       defaultThinking = "high";
       agentOverrides = {
         scout = {
           model = "openai-codex/gpt-5.6-luna";
-          thinking = "low";
+          thinking = "xhigh";
         };
         researcher = {
           model = "openai-codex/gpt-5.6-luna";
-          thinking = "low";
+          thinking = "xhigh";
         };
         worker = {
-          model = "openai-codex/gpt-5.6-terra";
+          model = "openai-codex/gpt-5.6-luna";
+          thinking = "xhigh";
           fallbackModels = [ "anthropic/claude-sonnet-5" ];
         };
         reviewer = {
-          model = "openai-codex/gpt-5.6-terra";
+          model = "openai-codex/gpt-5.6-sol";
           fallbackModels = [ "anthropic/claude-opus-5" ];
         };
         oracle = {
@@ -97,6 +98,13 @@ in
     ] "Extension sources pi installs itself into ~/.pi/agent/npm.";
 
     settings = mkOpt types.attrs { } "Extra settings merged into ~/.pi/agent/settings.json.";
+
+    subagentConfig = mkOpt types.attrs { } ''
+      pi-subagents extension config written to
+      ~/.pi/agent/extensions/subagent/config.json (concurrency, fleetView,
+      timeouts, missions, artifactDir, ...). Settings-level subagents.* keys
+      (models, agentOverrides) belong in `settings` instead.
+    '';
   };
 
   config = mkIf cfg.enable {
@@ -129,6 +137,10 @@ in
     # are runnable as pi subagents too.
     home.file.".pi/agent/agents" = mkIf (shared.agentsDir != null) {
       source = shared.agentsDir;
+    };
+
+    home.file.".pi/agent/extensions/subagent/config.json" = mkIf (cfg.subagentConfig != { }) {
+      text = builtins.toJSON cfg.subagentConfig;
     };
   };
 }
