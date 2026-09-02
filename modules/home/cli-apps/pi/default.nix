@@ -94,7 +94,7 @@ in
       "npm:@quintinshaw/pi-dynamic-workflows"
       "npm:pi-clarify"
       "npm:pi-agent-browser-native"
-      "npp:pi-mermaid"
+      "npm:pi-mermaid"
     ] "Extension sources pi installs itself into ~/.pi/agent/npm.";
 
     settings = mkOpt types.attrs { } "Extra settings merged into ~/.pi/agent/settings.json.";
