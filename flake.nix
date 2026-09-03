@@ -95,8 +95,9 @@
 
     # agent-browser et al. nixpkgs intentionally not followed: upstream pins
     # unstable and pushes those exact builds to cache.numtide.com.
+    # Pinned to agent-browser 0.34.0 (rev bumps to 0.35.0 next commit).
     llm-agents = {
-      url = "github:numtide/llm-agents.nix";
+      url = "github:numtide/llm-agents.nix/d86ec80d3cb2c99165fbfa18a6a4e86a0e864814";
     };
 
     # Claude Code plugins/skills sources

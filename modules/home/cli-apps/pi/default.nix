@@ -81,7 +81,11 @@ in
     packages = mkOpt (types.listOf types.str) [
       "npm:pi-rtk-optimizer"
       "npm:pi-dcg"
-      "npm:@gotgenes/pi-anthropic-auth"
+      # Fork carrying the fable-5.1 client-version fix; revert to
+      # npm:@gotgenes/pi-anthropic-auth once upstream merges it.
+      # Ref syntax is "@<ref>", not "#<ref>": pi's parseGitUrl only splits on
+      # "@", so a "#" stays in the clone URL and the fetch fails.
+      "git:github.com/nothingrotf/pi-anthropic-auth@fix/fable-5-1-client-version"
       "npm:pi-vim"
       "npm:@dietrichgebert/ponytail"
       "npm:pi-web-access"
