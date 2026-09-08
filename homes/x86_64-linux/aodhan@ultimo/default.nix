@@ -31,7 +31,6 @@ with lib.modernage;
       zoxide = enabled;
       awscli = disabled;
       bat = enabled;
-      beads-rust = enabled;
       claude-code = enabled;
       codex-cli = enabled;
       dcg = enabled;
