@@ -29,6 +29,7 @@ in
         prefix = "ctrl+a";
         switch_tab = "prefix+1..9";
         switch_workspace = "prefix+shift+1..9";
+        goto = "prefix+t";
 
         # tmux-style bindings (prefix is the leader)
         split_vertical = "prefix+%";
