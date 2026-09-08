@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  inputs,
   config,
   osConfig ? { },
   format ? "unknown",
@@ -44,7 +45,10 @@ with lib.modernage;
       gh = enabled;
       gogcli = enabled;
       grok = enabled;
-      herdr = enabled;
+      herdr = {
+        enable = true;
+        plugins.agent-usage = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.herdr-agent-usage;
+      };
       home-manager = enabled;
       hunk = enabled;
       jq = enabled;

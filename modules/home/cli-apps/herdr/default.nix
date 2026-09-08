@@ -20,10 +20,24 @@ in
       mkOpt types.package inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default
         "The herdr package to use.";
 
+    plugins = mkOpt (types.attrsOf types.path) { } "Herdr plugins to link.";
+
     settings = mkOpt (types.attrsOf types.anything) {
       onboarding = false;
 
-      theme.name = "nord";
+      theme = {
+        name = "nord";
+        custom = {
+          sidebar_bg = "#252a34";
+          active_row_bg = "#434c5e";
+          selection_bg = "#5e81ac";
+          accent = "#88c0d0";
+          green = "#a3be8c";
+          blue = "#81a1c1";
+          red = "#bf616a";
+          yellow = "#ebcb8b";
+        };
+      };
 
       keys = {
         prefix = "ctrl+a";
@@ -49,11 +63,76 @@ in
         # leader+. / leader+, step to next / previous agent
         next_agent = "prefix+.";
         previous_agent = "prefix+,";
+
+        command = [
+          {
+            key = "ctrl+shift+u";
+            type = "plugin_action";
+            command = "usagebar.open-limits";
+            description = "Agent Usage: open limits pane";
+          }
+          {
+            key = "ctrl+shift+m";
+            type = "plugin_action";
+            command = "usagebar.refresh";
+            description = "Agent Usage: refresh meters";
+          }
+        ];
       };
 
       ui = {
         show_agent_labels_on_pane_borders = true;
         toast.delivery = "terminal";
+
+        sidebar.agents = {
+          row_gap = 0;
+          rows = [
+            [
+              "state_icon"
+              {
+                token = "agent";
+                fg = "#eceff4";
+                bold = true;
+              }
+              {
+                token = "workspace";
+                fg = "#b48ead";
+              }
+            ]
+            [
+              {
+                token = "$provider";
+                fg = "#88c0d0";
+                bold = true;
+              }
+              {
+                token = "$limit";
+                fg = "#a3be8c";
+                bold = true;
+              }
+            ]
+            [
+              {
+                token = "$cache_high";
+                fg = "#a3be8c";
+              }
+              {
+                token = "$cache_mid";
+                fg = "#ebcb8b";
+              }
+              {
+                token = "$cache_low";
+                fg = "#bf616a";
+              }
+            ]
+            [
+              {
+                token = "$context";
+                fg = "#81a1c1";
+              }
+            ]
+          ];
+        };
       };
 
       experimental.pane_history = false;
@@ -72,6 +151,14 @@ in
         run rm -f "$configTarget"
       fi
       run install -m 0644 ${configToml} "$configTarget"
+    '';
+
+    home.activation.herdrPlugins = config.lib.dag.entryAfter [ "herdrConfig" ] ''
+      ${lib.concatStringsSep "\n" (
+        lib.mapAttrsToList (
+          _: path: "run ${cfg.package}/bin/herdr plugin link ${lib.escapeShellArg (toString path)}"
+        ) cfg.plugins
+      )}
     '';
   };
 }

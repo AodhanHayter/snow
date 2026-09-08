@@ -156,6 +156,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    herdr-agent-usage = {
+      url = "github:senna-lang/herdr-agent-usage?ref=v0.5.13";
+      flake = false;
+    };
+
     berkeley-mono = {
       url = "git+ssh://git@github.com/AodhanHayter/berkeley-mono-nix?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";

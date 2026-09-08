@@ -784,6 +784,23 @@
         "type": "github"
       }
     },
+    "herdr-agent-usage": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1788738713,
+        "narHash": "sha256-oYtdBTHrA6jCzmhoI8sz/flvReaKiYOdAFovg4J+5YU=",
+        "owner": "senna-lang",
+        "repo": "herdr-agent-usage",
+        "rev": "df95abc0ba2edb002697d49a218868f87f823a3e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "senna-lang",
+        "ref": "v0.5.13",
+        "repo": "herdr-agent-usage",
+        "type": "github"
+      }
+    },
     "herdr-skill": {
       "flake": false,
       "locked": {
@@ -1390,6 +1407,7 @@
         "ghostty": "ghostty",
         "grok-build-nix": "grok-build-nix",
         "herdr": "herdr",
+        "herdr-agent-usage": "herdr-agent-usage",
         "herdr-skill": "herdr-skill",
         "home-manager": "home-manager",
         "humanlayer-skills": "humanlayer-skills",
