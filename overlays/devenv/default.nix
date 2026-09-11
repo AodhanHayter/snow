@@ -1,5 +1,5 @@
-{ channels, ... }:
+{ inputs, ... }:
 final: prev: {
-  # devenv 2.3 not yet in nixpkgs-unstable; tracking NixOS/nixpkgs#560896
-  inherit (channels.unstable) devenv;
+  # upstream flake tracks releases ahead of nixpkgs; cached in devenv.cachix.org
+  devenv = inputs.devenv.packages.${prev.stdenv.hostPlatform.system}.devenv;
 }

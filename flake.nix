@@ -8,6 +8,11 @@
     # NixPkgs Unstable (nixos-unstable)
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    # devenv (upstream flake; binaries in devenv.cachix.org)
+    # no nixpkgs follows: overriding it would bust the cache
+    # 'latest' is a moving tag on the newest release; nix flake update devenv to bump
+    devenv.url = "github:cachix/devenv/latest";
+
     # Home Manager
     # tracking master: programs.devenv module not yet backported to release-26.05
     home-manager.url = "github:nix-community/home-manager/master";
