@@ -85,15 +85,9 @@ in
       ;
 
     # Bash PreToolUse hooks shared by agents that use the claude hook schema.
-    # Order is load order and it matters: rtk rewrites the command, dcg audits
-    # the command that actually executes.
     mkBashGuardHooks =
       guards:
-      optional guards.rtk.enable {
-        type = "command";
-        command = guards.rtk.command;
-      }
-      ++ optional guards.dcg.enable {
+      optional guards.dcg.enable {
         type = "command";
         command = guards.dcg.command;
       };

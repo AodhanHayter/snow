@@ -113,16 +113,6 @@ let
 
         # devenv integration
         "Bash(devenv:*)"
-
-        # rtk meta commands only. Hook-rewritten commands are auto-allowed by
-        # `rtk hook claude` itself; anything else (notably `rtk proxy <cmd>`,
-        # which executes arbitrary commands) must prompt.
-        "Bash(rtk gain)"
-        "Bash(rtk gain:*)"
-        "Bash(rtk discover)"
-        "Bash(rtk discover:*)"
-        "Bash(rtk --version)"
-
       ];
       deny = [ ];
     };
@@ -266,7 +256,6 @@ in
 
     home.packages = with pkgs; [
       claude-agent-acp
-      rtk
     ];
   };
 }

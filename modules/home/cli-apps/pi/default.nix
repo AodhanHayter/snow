@@ -76,10 +76,7 @@ in
     extensions = mkOpt (types.listOf types.path) [
     ] "Store-pinned extension sources passed to pi via --extension.";
 
-    # Order is load order, and it matters: rtk-optimizer rewrites bash commands,
-    # so it must run before pi-dcg audits the command that actually executes.
     packages = mkOpt (types.listOf types.str) [
-      "npm:pi-rtk-optimizer"
       "npm:pi-dcg"
       "npm:@gotgenes/pi-anthropic-auth"
       "npm:pi-vim"

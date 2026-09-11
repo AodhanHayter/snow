@@ -225,7 +225,6 @@ in
 
     home.packages = [
       pkgs.codex-cli
-      pkgs.rtk
       dcg
       codex-acp
     ];

@@ -33,7 +33,6 @@ in
 
     instructionFiles = mkOpt (types.listOf types.path) [
       ./instructions/AGENTS.md
-      ./instructions/rtk-awareness.md
     ] "Files concatenated into the global instruction text.";
 
     instructions = mkOpt types.lines (concatMapStringsSep "\n\n" builtins.readFile
@@ -177,13 +176,7 @@ in
     };
 
     # Bash guards run as PreToolUse hooks by every agent that supports hooks.
-    # Order matters: rtk rewrites the command, dcg audits what actually runs.
     guards = {
-      rtk = {
-        enable = mkBoolOpt true "Whether to run the rtk token-saving rewrite hook.";
-        command = mkOpt types.str "rtk hook claude" "Command implementing the rtk hook.";
-      };
-
       dcg = {
         enable = mkBoolOpt true "Whether to run the dcg command guard hook.";
         command = mkOpt types.str "dcg" "Command implementing the dcg guard.";
