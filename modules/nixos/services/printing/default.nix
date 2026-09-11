@@ -1,8 +1,16 @@
-{options, config, lib, pkgs, ...}:
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-with lib.modernage; let
+with lib.modernage;
+let
   cfg = config.modernage.services.printing;
-in {
+in
+{
   options.modernage.services.printing = with types; {
     enable = mkBoolOpt false "Whether or not to enable printing.";
   };

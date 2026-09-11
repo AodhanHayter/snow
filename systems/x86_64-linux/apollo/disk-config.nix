@@ -36,7 +36,7 @@
               };
             };
             root = {
-              size = "100%";  # Use remaining space
+              size = "100%"; # Use remaining space
               content = {
                 type = "filesystem";
                 format = "ext4";

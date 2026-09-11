@@ -8,8 +8,10 @@
 
 with lib;
 with lib.modernage;
-let cfg = config.modernage.security.yubikey-manager;
-in {
+let
+  cfg = config.modernage.security.yubikey-manager;
+in
+{
   options.modernage.security.yubikey-manager = with types; {
     enable = mkBoolOpt false "Whether to enable the YubiKey manager";
   };

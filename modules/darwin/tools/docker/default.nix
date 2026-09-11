@@ -1,13 +1,15 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 
 with lib;
 with lib.modernage;
-let cfg = config.modernage.tools.docker;
+let
+  cfg = config.modernage.tools.docker;
 in
 {
   options.modernage.tools.docker = with types; {

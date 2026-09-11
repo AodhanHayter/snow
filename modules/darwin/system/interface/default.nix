@@ -1,12 +1,14 @@
-{ options
-, config
-, pkgs
-, lib
-, ...
+{
+  options,
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 with lib;
 with lib.modernage;
-let cfg = config.modernage.system.interface;
+let
+  cfg = config.modernage.system.interface;
 in
 {
   options.modernage.system.interface = with types; {

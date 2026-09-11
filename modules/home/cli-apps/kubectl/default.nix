@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 with lib.modernage;
 let
@@ -11,6 +16,8 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [ kubectl ];
-    home.shellAliases = { k = "kubectl"; };
+    home.shellAliases = {
+      k = "kubectl";
+    };
   };
 }

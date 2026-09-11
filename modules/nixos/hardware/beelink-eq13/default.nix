@@ -1,6 +1,13 @@
-{ options, config, lib, modulesPath, ...}:
+{
+  options,
+  config,
+  lib,
+  modulesPath,
+  ...
+}:
 with lib;
-with lib.modernage; let
+with lib.modernage;
+let
   cfg = config.modernage.hardware.beelink-eq13;
 in
 {

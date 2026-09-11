@@ -1,14 +1,16 @@
-{ options
-, config
-, pkgs
-, lib
-, inputs
-, ...
+{
+  options,
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
 }:
 
 with lib;
 with lib.modernage;
-let cfg = config.modernage.home;
+let
+  cfg = config.modernage.home;
 in
 {
   # imports = with inputs; [
@@ -16,10 +18,10 @@ in
   # ];
 
   options.modernage.home = with types; {
-    file = mkOpt attrs { }
-      (mdDoc "A set of files to be managed by home-manager's `home.file`.");
-    configFile = mkOpt attrs { }
-      (mdDoc "A set of files to be managed by home-manager's `xdg.configFile`.");
+    file = mkOpt attrs { } (mdDoc "A set of files to be managed by home-manager's `home.file`.");
+    configFile = mkOpt attrs { } (
+      mdDoc "A set of files to be managed by home-manager's `xdg.configFile`."
+    );
     extraOptions = mkOpt attrs { } "Options to pass directly to home-manager.";
   };
 
@@ -36,8 +38,7 @@ in
       useUserPackages = true;
       useGlobalPkgs = true;
 
-      users.${config.modernage.user.name} =
-        mkAliasDefinitions options.modernage.home.extraOptions;
+      users.${config.modernage.user.name} = mkAliasDefinitions options.modernage.home.extraOptions;
     };
   };
 }

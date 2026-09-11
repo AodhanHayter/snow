@@ -11,8 +11,8 @@ let
   cfg = config.modernage.cli-apps.codex-cli;
   homeDir = config.home.homeDirectory;
   shared = config.modernage.coding-agents;
-  dcg = inputs.self.packages.${pkgs.system}.dcg;
-  codex-acp = inputs.self.packages.${pkgs.system}.codex-acp;
+  dcg = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.dcg;
+  codex-acp = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.codex-acp;
 
   dcgCodexHookScript = pkgs.writeShellScript "dcg-codex-hook" ''
     set -euo pipefail

@@ -23,10 +23,12 @@ in
   };
 
   config = mkIf cfg.enable {
-    assertions = [{
-      assertion = hasCrypt;
-      message = "crypt-dca requires the 'crypt' flake input";
-    }];
+    assertions = [
+      {
+        assertion = hasCrypt;
+        message = "crypt-dca requires the 'crypt' flake input";
+      }
+    ];
     # Ensure host directories exist + symlink config.yaml from flake source
     systemd.tmpfiles.rules = [
       "d ${dataDir}/data 0750 root root -"

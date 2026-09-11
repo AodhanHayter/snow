@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 with lib.modernage;
 let
@@ -17,7 +22,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    boot.kernelModules = [ "i2c-dev" "i2c-piix4" ];
+    boot.kernelModules = [
+      "i2c-dev"
+      "i2c-piix4"
+    ];
     hardware.i2c.enable = true;
     services.udev.packages = [ pkgs.openrgb ];
 

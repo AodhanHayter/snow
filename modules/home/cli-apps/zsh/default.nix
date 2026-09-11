@@ -47,6 +47,8 @@ in
     programs = {
       zsh = {
         enable = true;
+        # lock legacy default; new default moves to $XDG_CONFIG_HOME/zsh at stateVersion 26.05
+        dotDir = config.home.homeDirectory;
         enableCompletion = true;
         syntaxHighlighting.enable = true;
         completionInit = ''

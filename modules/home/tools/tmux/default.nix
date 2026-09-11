@@ -18,13 +18,19 @@ let
     onedark = pkgs.tmuxPlugins.onedark-theme;
   };
 
-  themePlugin = if cfg.theme != null then [ themePlugins.${cfg.theme} ] else [];
+  themePlugin = if cfg.theme != null then [ themePlugins.${cfg.theme} ] else [ ];
 in
 {
   options.modernage.tools.tmux = with types; {
     enable = mkBoolOpt false "Whether or not to install and configure tmux.";
-    theme = mkOpt (nullOr (enum [ "nord" "catppuccin" "dracula" "tokyo-night" "gruvbox" "onedark" ])) "nord"
-      "Tmux color theme. Set to null to disable.";
+    theme = mkOpt (nullOr (enum [
+      "nord"
+      "catppuccin"
+      "dracula"
+      "tokyo-night"
+      "gruvbox"
+      "onedark"
+    ])) "nord" "Tmux color theme. Set to null to disable.";
   };
 
   config = mkIf cfg.enable {

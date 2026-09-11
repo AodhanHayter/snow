@@ -19,7 +19,10 @@ in
       mkOpt str "password"
         "The initial password to use when the user is first created.";
     prompt-init = mkBoolOpt true "Whether or not to show an initial message when opening a new shell.";
-    shell = mkOpt (enum [ "fish" "zsh" ]) "fish" "Default login shell.";
+    shell = mkOpt (enum [
+      "fish"
+      "zsh"
+    ]) "fish" "Default login shell.";
     extraGroups = mkOpt (listOf str) [ ] "Groups for the user to be assigned.";
     extraOptions = mkOpt attrs { } (mdDoc "Extra options passed to `users.users.<name>`.");
   };
@@ -154,6 +157,7 @@ in
       uid = 1000;
 
       extraGroups = [ "steamcmd" ] ++ cfg.extraGroups;
-    } // cfg.extraOptions;
+    }
+    // cfg.extraOptions;
   };
 }

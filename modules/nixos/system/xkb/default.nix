@@ -1,12 +1,14 @@
-{ options
-, config
-, lib
-, ...
+{
+  options,
+  config,
+  lib,
+  ...
 }:
 
 with lib;
 with lib.modernage;
-let cfg = config.modernage.system.xkb;
+let
+  cfg = config.modernage.system.xkb;
 in
 {
   options.modernage.system.xkb = with types; {

@@ -1,5 +1,4 @@
 { channels, ... }:
-final: prev:
-{
+final: prev: {
   inherit (channels.unstable) brave;
 }

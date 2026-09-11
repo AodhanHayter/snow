@@ -1,9 +1,10 @@
-{ options
-, config
-, pkgs
-, lib
-, inputs
-, ...
+{
+  options,
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
 }:
 
 with lib;
@@ -13,10 +14,10 @@ let
 in
 {
   options.modernage.home = with types; {
-    file = mkOpt attrs { }
-      "A set of files to be managed by home-manager's <option>home.file</option>.";
-    configFile = mkOpt attrs { }
-      "A set of files to be managed by home-manager's <option>xdg.configFile</option>.";
+    file = mkOpt attrs { } "A set of files to be managed by home-manager's <option>home.file</option>.";
+    configFile =
+      mkOpt attrs { }
+        "A set of files to be managed by home-manager's <option>xdg.configFile</option>.";
     extraOptions = mkOpt attrs { } "Options to pass directly to home-manager.";
     homeConfig = mkOpt attrs { } "Final config for home-manager.";
   };
@@ -29,7 +30,8 @@ in
       xdg.configFile = mkAliasDefinitions options.modernage.home.configFile;
     };
 
-    snowfallorg.users.${config.modernage.user.name}.home.config = mkAliasDefinitions options.modernage.home.extraOptions;
+    snowfallorg.users.${config.modernage.user.name}.home.config =
+      mkAliasDefinitions options.modernage.home.extraOptions;
 
     home-manager = {
       useUserPackages = true;

@@ -1,9 +1,15 @@
-{pkgs, lib, inputs, ...}:
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 let
   inherit (inputs) nixos-hardware;
 in
 with lib;
-with lib.modernage; {
+with lib.modernage;
+{
 
   imports = with nixos-hardware.nixosModules; [
     apple-macbook-pro-11-5

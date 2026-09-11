@@ -1,6 +1,7 @@
-{pkgs, lib, ...}:
+{ pkgs, lib, ... }:
 with lib;
-with lib.modernage; {
+with lib.modernage;
+{
 
   networking.wireless.enable = mkForce false;
 

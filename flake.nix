@@ -14,8 +14,7 @@
     devenv.url = "github:cachix/devenv/latest";
 
     # Home Manager
-    # tracking master: programs.devenv module not yet backported to release-26.05
-    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # macOS Support
@@ -223,7 +222,7 @@
         hunk.homeManagerModules.default
         pi-nix.homeModules.default
         omp.homeManagerModules.default
-        # home-manager(master) defaults home.shell.enableNushellIntegration to true;
+        # home-manager defaults home.shell.enableNushellIntegration to true;
         # nushell unused here and pinned fzf < 0.73.0 trips its integration assertion.
         { home.shell.enableNushellIntegration = false; }
       ];

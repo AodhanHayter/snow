@@ -1,8 +1,9 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
 with lib.modernage;
@@ -21,7 +22,11 @@ in
       extraOptions = {
         programs.browserpass = {
           enable = true;
-          browsers = [ "brave" "chrome" "firefox" ];
+          browsers = [
+            "brave"
+            "chrome"
+            "firefox"
+          ];
         };
       };
     };

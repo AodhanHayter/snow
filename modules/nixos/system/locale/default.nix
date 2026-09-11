@@ -1,13 +1,15 @@
-{ options
-, config
-, pkgs
-, lib
-, ...
+{
+  options,
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 
 with lib;
 with lib.modernage;
-let cfg = config.modernage.system.locale;
+let
+  cfg = config.modernage.system.locale;
 in
 {
   options.modernage.system.locale = with types; {
@@ -17,6 +19,8 @@ in
   config = mkIf cfg.enable {
     i18n.defaultLocale = "en_US.UTF-8";
 
-    console = { keyMap = mkForce "us"; };
+    console = {
+      keyMap = mkForce "us";
+    };
   };
 }

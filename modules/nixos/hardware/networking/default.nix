@@ -1,11 +1,13 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
-with lib.modernage; let
+with lib.modernage;
+let
   cfg = config.modernage.hardware.networking;
 in
 {
@@ -21,7 +23,8 @@ in
     networking = {
       hosts = {
         "127.0.0.1" = [ "local.test" ] ++ (cfg.hosts."127.0.0.1" or [ ]);
-      } // cfg.hosts;
+      }
+      // cfg.hosts;
 
       networkmanager = {
         enable = true;
@@ -31,7 +34,6 @@ in
         };
       };
     };
-
 
     # Fixes an issue that normally causes nixos-rebuild to fail.
     # https://github.com/NixOS/nixpkgs/issues/180175

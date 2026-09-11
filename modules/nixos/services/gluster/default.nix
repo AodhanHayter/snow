@@ -1,15 +1,18 @@
-{ options
-, config
-, pkgs
-, lib
-, ...
+{
+  options,
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 with lib;
-with lib.modernage; let
+with lib.modernage;
+let
   cfg = config.modernage.services.gluster;
   allNodes = [ cfg.nodeAddress ] ++ cfg.peerNodes;
-  brickList = builtins.concatStringsSep " "
-    (map (node: "${node}:${cfg.brickPath}/${cfg.volumeName}") allNodes);
+  brickList = builtins.concatStringsSep " " (
+    map (node: "${node}:${cfg.brickPath}/${cfg.volumeName}") allNodes
+  );
 in
 {
   options.modernage.services.gluster = with types; {
@@ -40,7 +43,10 @@ in
       # Allow ports for bricks (49152:49251)
       # This range allows up to 100 bricks per node
       allowedTCPPortRanges = [
-        { from = 49152; to = 49252; }
+        {
+          from = 49152;
+          to = 49252;
+        }
       ];
 
       extraCommands = ''

@@ -1,17 +1,18 @@
-{ options
-, config
-, lib
-, pkgs
-, ...
+{
+  options,
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 with lib;
-with lib.modernage; let
+with lib.modernage;
+let
   cfg = config.modernage.cli-apps.neovim;
 in
 {
   options.modernage.cli-apps.neovim = with types; {
-    enable =
-      mkBoolOpt false "Whether or not to enable neovim configuration.";
+    enable = mkBoolOpt false "Whether or not to enable neovim configuration.";
   };
 
   config = mkIf cfg.enable {

@@ -13,4 +13,3 @@ in
     programs.home-manager = enabled;
   };
 }
-
