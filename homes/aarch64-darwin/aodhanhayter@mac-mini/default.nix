@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  inputs,
   ...
 }:
 
@@ -34,8 +35,14 @@ with lib.modernage;
       fd = enabled;
       ffmpeg = enabled;
       fzf = enabled;
+      gemini-cli = disabled;
       gh = enabled;
+      gogcli = enabled;
       grok = enabled;
+      herdr = {
+        enable = true;
+        plugins.agent-usage = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.herdr-agent-usage;
+      };
       home-manager = enabled;
       hunk = enabled;
       jq = enabled;
@@ -45,12 +52,12 @@ with lib.modernage;
       password-store = enabled;
       pi = enabled;
       pulumi = enabled;
-      tealdeer = enabled;
       ripgrep = enabled;
       ssh = enabled;
+      tealdeer = enabled;
       worktrunk = enabled;
       yq = enabled;
-      zsh = enabled;
+      zsh = disabled;
     };
 
     shell = enabled;
@@ -61,6 +68,7 @@ with lib.modernage;
       mcp-servers = enabled;
       sops = enabled;
       tmux = enabled;
+      bun = enabled;
     };
   };
 
