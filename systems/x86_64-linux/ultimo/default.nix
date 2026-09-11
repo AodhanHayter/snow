@@ -87,6 +87,13 @@ with lib.modernage;
   # SSD health maintenance
   services.fstrim.enable = true;
 
+  # DNS fallback: MagicDNS (100.100.100.100) stays primary, but when tailscaled
+  # loses its upstream resolvers it SERVFAILs every query. glibc retries the next
+  # nameserver on SERVFAIL, so append a public resolver as a safety net.
+  networking.resolvconf.extraConfig = ''
+    name_servers_append="1.1.1.1"
+  '';
+
   # Sunshine remote desktop (NVIDIA hardware encoding)
   services.sunshine = {
     enable = true;
