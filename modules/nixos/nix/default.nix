@@ -70,7 +70,6 @@ in
             cfg.default-substituter.url
             "https://nixpkgs-python.cachix.org"
             "https://devenv.cachix.org"
-            "https://herdr-nix.cachix.org"
             "https://claude-code.cachix.org"
             "https://nix-community.cachix.org"
             "https://pi.cachix.org"
@@ -80,7 +79,6 @@ in
             cfg.default-substituter.key
             "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
             "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
-            "herdr-nix.cachix.org-1:+AT7TY8E6j/Pe9lB8Vjmp15Y4RPb8YtOnOwr/fboDS8="
             "claude-code.cachix.org-1:YeXf2aNu7UTX8Vwrze0za1WEDS+4DuI2kVeWEE4fsRk="
             "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
             "pi.cachix.org-1:lGeoGJaZ5ZDabuRzkcD5EBTNnDM4HJ1vqeOxlWk1Flk="
