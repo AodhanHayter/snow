@@ -29,7 +29,7 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      context7-mcp
+      # context7-mcp
       # github-mcp-server
       # mcp-server-filesystem
       # mcp-server-git

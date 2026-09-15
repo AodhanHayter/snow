@@ -44,22 +44,19 @@ let
           thinking = "xhigh";
         };
         researcher = {
-          model = "openai-codex/gpt-5.6-luna";
+          model = "anthropic/claude-opus-5";
           thinking = "xhigh";
         };
         worker = {
           model = "openai-codex/gpt-5.6-luna";
           thinking = "xhigh";
-          fallbackModels = [ "anthropic/claude-sonnet-5" ];
         };
         reviewer = {
-          model = "openai-codex/gpt-5.6-sol";
-          fallbackModels = [ "anthropic/claude-opus-5" ];
+          model = "openai-codex/gpt-6-astra";
         };
         oracle = {
-          model = "openai-codex/gpt-5.6-sol";
+          model = "anthropic/claude-fable-5";
           thinking = "high";
-          fallbackModels = [ "anthropic/claude-fable-5" ];
         };
       };
     };
