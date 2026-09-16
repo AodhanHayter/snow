@@ -90,13 +90,6 @@
       url = "github:lukasl-dev/pi.nix";
     };
 
-    # oh-my-pi (omp) coding agent, a fork of pi. nixpkgs intentionally not
-    # followed: upstream pins unstable + bun2nix and pushes those exact builds
-    # to nix-community.cachix.org.
-    omp = {
-      url = "github:can1357/oh-my-pi";
-    };
-
     # agent-browser et al. nixpkgs intentionally not followed: upstream pins
     # unstable and pushes those exact builds to cache.numtide.com.
     llm-agents = {
@@ -220,7 +213,6 @@
         sops-nix.homeManagerModules.sops
         hunk.homeManagerModules.default
         pi-nix.homeModules.default
-        omp.homeManagerModules.default
         # home-manager defaults home.shell.enableNushellIntegration to true;
         # nushell unused here and pinned fzf < 0.73.0 trips its integration assertion.
         { home.shell.enableNushellIntegration = false; }
