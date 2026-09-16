@@ -47,6 +47,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    # pinentry-mac: always store/read passphrase from login Keychain,
+    # which unlocks at login -> no prompts for agents.
+    system.defaults.CustomUserPreferences."org.gpgtools.common".UseKeychain = true;
+
     environment.systemPackages = with pkgs; [
       gnupg
       paperkey
