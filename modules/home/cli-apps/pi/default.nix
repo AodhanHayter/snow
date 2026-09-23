@@ -90,6 +90,7 @@ in
       "npm:pi-agent-browser-native"
       "npm:pi-mermaid"
       "npm:pi-hunk"
+      "npm:pi-elixir"
     ] "Extension sources pi installs itself into ~/.pi/agent/npm.";
 
     settings = mkOpt types.attrs { } "Extra settings merged into ~/.pi/agent/settings.json.";

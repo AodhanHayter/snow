@@ -25,7 +25,7 @@ in
       dockerfile-language-server
       expert
       lua-language-server
-      marksman
+      # marksman # pulls dotnet; uncached source build takes hours
       nil
       nixd
       nixpkgs-fmt
