@@ -36,26 +36,27 @@ let
     # inherits the (expensive) parent session model. Custom agents that pin
     # `model:` in frontmatter still win over defaultModel.
     subagents = {
-      defaultModel = "anthropic/claude-opus-5";
+      defaultModel = "anthropic/claude-opus-5-5";
       defaultThinking = "high";
       agentOverrides = {
         scout = {
-          model = "openai-codex/gpt-5.6-luna";
-          thinking = "xhigh";
+          model = "openai-codex/gpt-6-luna";
+          thinking = "low";
         };
         researcher = {
-          model = "anthropic/claude-opus-5";
+          model = "openai-codex/gpt-6-astra";
           thinking = "xhigh";
         };
         worker = {
-          model = "openai-codex/gpt-5.6-luna";
-          thinking = "xhigh";
+          model = "anthropic/claude-opus-5-5";
+          thinking = "low";
         };
         reviewer = {
           model = "openai-codex/gpt-6-astra";
+          thinking = "xhigh";
         };
         oracle = {
-          model = "anthropic/claude-fable-5";
+          model = "anthropic/claude-fable-5-1";
           thinking = "high";
         };
       };
