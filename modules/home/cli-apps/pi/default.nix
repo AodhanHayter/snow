@@ -40,8 +40,8 @@ let
       defaultThinking = "high";
       agentOverrides = {
         scout = {
-          model = "openai-codex/gpt-6-luna";
-          thinking = "low";
+          model = "anthropic/claude-sonnet-5-5";
+          thinking = "high";
         };
         researcher = {
           model = "openai-codex/gpt-6-astra";
@@ -49,7 +49,7 @@ let
         };
         worker = {
           model = "anthropic/claude-opus-5-5";
-          thinking = "low";
+          thinking = "medium";
         };
         reviewer = {
           model = "openai-codex/gpt-6-astra";
