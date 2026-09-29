@@ -83,7 +83,6 @@ in
       "npm:pi-subagents"
       "npm:@ff-labs/pi-fff"
       "npm:pi-context-view"
-      "npm:pi-mcp-adapter"
       "npm:@narumitw/pi-btw"
       "npm:@narumitw/pi-goal"
       "npm:@quintinshaw/pi-dynamic-workflows"
