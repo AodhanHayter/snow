@@ -1,28 +1,38 @@
-# Generation of MCP server configurations with format transformations
+# Shared MCP servers, rendered per agent format.
 { lib, ... }:
 
+with lib;
 let
-  base = import ./base.nix { inherit lib; };
-  transformers = import ./transformers.nix { inherit lib; };
+  servers = pkgs: {
+    nixos.command = "${pkgs.mcp-nixos}/bin/mcp-nixos";
+  };
 in
-
 {
-  # Generate base MCP server configurations
   mcp = {
-    mkMcpConfig = base.mkMcpConfig;
-
-    asAnthropicFormat =
-      { config, pkgs }: transformers.toAnthropicFormat base.mkMcpConfig { inherit config pkgs; };
+    # Claude/pi `mcpServers` shape.
+    asAnthropicFormat = { pkgs }: servers pkgs;
 
     asOpenCodeFormat =
-      {
-        config,
-        pkgs,
-        serverKey ? null,
-      }:
-      transformers.toOpenCodeFormat (base.mkMcpConfig { inherit config pkgs; }) serverKey;
+      { pkgs }:
+      mapAttrs (
+        _: server:
+        {
+          type = "local";
+          command = [ server.command ] ++ server.args or [ ];
+        }
+        // optionalAttrs (server ? env) { environment = server.env; }
+      ) (servers pkgs);
 
+    # Codex only accepts these keys under [mcp_servers.<name>].
     asCodexFormat =
-      { config, pkgs }: transformers.toCodexFormat (base.mkMcpConfig { inherit config pkgs; });
+      { pkgs }:
+      mapAttrs (
+        _: server:
+        {
+          inherit (server) command;
+          args = server.args or [ ];
+        }
+        // optionalAttrs (server ? env) { inherit (server) env; }
+      ) (servers pkgs);
   };
 }

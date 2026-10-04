@@ -29,7 +29,7 @@ in
         model = "anthropic/claude-sonnet-4-20250514";
         autoshare = false;
         autoupdate = false;
-        mcp = mcp.asOpenCodeFormat { inherit config pkgs; };
+        mcp = mcp.asOpenCodeFormat { inherit pkgs; };
       };
     };
   };

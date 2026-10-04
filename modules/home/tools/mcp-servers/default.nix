@@ -40,9 +40,7 @@ in
       mode = "0600";
       path = claudDesktopConfigPath;
       content = builtins.toJSON {
-        mcpServers = mcp.asAnthropicFormat {
-          inherit config pkgs;
-        };
+        mcpServers = mcp.asAnthropicFormat { inherit pkgs; };
       };
     };
   };

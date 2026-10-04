@@ -63,6 +63,16 @@ let
     };
   }
   // optionalAttrs (cfg.model != null) { defaultModel = cfg.model; };
+
+  # pi's built-in MCP reads the same mcpServers shape as Claude.
+  mcpJson = pkgs.writeText "pi-mcp.json" (
+    builtins.toJSON { mcpServers = mcp.asAnthropicFormat { inherit pkgs; }; }
+  );
+  mcpMerge = pkgs.writeText "pi-mcp-merge.jq" ''
+    .mcpServers as $u
+    | .mcpServers += ($m[0].mcpServers | with_entries(
+        .value = (($u[.key] // {}) | with_entries(select(.key | IN("exposure", "toolExposure", "enabled")))) + .value))
+  '';
 in
 {
   options.modernage.cli-apps.pi = {
@@ -136,6 +146,16 @@ in
     home.file.".pi/agent/agents" = mkIf (shared.agentsDir != null) {
       source = shared.agentsDir;
     };
+
+    # /mcp writes exposure/enable toggles back to mcp.json, so keep it a real
+    # file instead of symlinking. Managed servers replace their entries,
+    # keeping only the keys /mcp writes; other servers and keys are untouched.
+    home.activation.piMcpConfig = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+      target="${config.home.homeDirectory}/.pi/agent/mcp.json"
+      run mkdir -p "$(dirname "$target")"
+      [ -f "$target" ] || run install -m 0600 ${mcpJson} "$target"
+      run ${pkgs.bash}/bin/bash -c '${pkgs.jq}/bin/jq -f ${mcpMerge} "$1" --slurpfile m "$2" > "$1.tmp" && chmod 0600 "$1.tmp" && mv "$1.tmp" "$1"' _ "$target" ${mcpJson}
+    '';
 
     home.file.".pi/agent/extensions/subagent/config.json" = mkIf (cfg.subagentConfig != { }) {
       text = builtins.toJSON cfg.subagentConfig;

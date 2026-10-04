@@ -118,7 +118,7 @@ let
     };
     marketplaces = agentConfig.mkCodexMarketplaces codexMarketplaces;
     plugins = cfg.plugins.enabled;
-    mcp_servers = mcp.asCodexFormat { inherit config pkgs; };
+    mcp_servers = mcp.asCodexFormat { inherit pkgs; };
     shell_environment_policy = {
       "inherit" = "core";
       set = shared.env // {
