@@ -12,7 +12,7 @@ let
   homeDir = config.home.homeDirectory;
   shared = config.modernage.coding-agents;
   dcg = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.dcg;
-  codex-acp = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.codex-acp;
+  codex-acp = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex-acp;
 
   dcgCodexHookScript = pkgs.writeShellScript "dcg-codex-hook" ''
     set -euo pipefail

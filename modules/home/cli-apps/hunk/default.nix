@@ -18,7 +18,7 @@ in
   config = mkIf cfg.enable {
     programs.hunk = {
       enable = true;
-      package = inputs.hunk.packages.${pkgs.stdenv.hostPlatform.system}.hunk;
+      package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.hunk;
       enableGitIntegration = false;
     };
   };

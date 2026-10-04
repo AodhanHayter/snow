@@ -108,6 +108,8 @@ in
 
     programs.pi.coding-agent = {
       enable = true;
+      # llm-agents build is in cache.numtide.com; pi.nix's own often isn't
+      package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi;
 
       # pi only discovers context files from cwd upwards plus
       # ~/.pi/agent/AGENTS.md, so ship the shared instructions via

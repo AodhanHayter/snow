@@ -1,4 +1,4 @@
 { inputs, ... }:
 final: prev: {
-  claude-code = inputs.claude-code-nix.packages.${prev.stdenv.hostPlatform.system}.claude-code;
+  claude-code = inputs.llm-agents.packages.${prev.stdenv.hostPlatform.system}.claude-code;
 }

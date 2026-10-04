@@ -17,7 +17,7 @@ in
     enable = mkBoolOpt false "Whether or not to install herdr.";
 
     package =
-      mkOpt types.package inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default
+      mkOpt types.package inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.herdr
         "The herdr package to use.";
 
     plugins = mkOpt (types.attrsOf types.path) { } "Herdr plugins to link.";

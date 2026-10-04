@@ -1,4 +1,4 @@
 { inputs, ... }:
 final: prev: {
-  opencode = inputs.opencode.packages.${prev.stdenv.hostPlatform.system}.default;
+  opencode = inputs.llm-agents.packages.${prev.stdenv.hostPlatform.system}.opencode;
 }

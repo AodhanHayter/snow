@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }:
 with lib;
@@ -254,8 +255,8 @@ in
       ''
     );
 
-    home.packages = with pkgs; [
-      claude-agent-acp
+    home.packages = [
+      inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-agent-acp
     ];
   };
 }

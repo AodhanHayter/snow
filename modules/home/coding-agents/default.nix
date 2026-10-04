@@ -9,7 +9,6 @@
 {
   lib,
   config,
-  pkgs,
   inputs,
   ...
 }:
@@ -62,7 +61,7 @@ in
 
         # Hunk bundles its skill inside the package output; reference the
         # package so it tracks nix-managed hunk updates.
-        hunk-review = "${inputs.hunk.packages.${pkgs.stdenv.hostPlatform.system}.hunk}/skills/hunk-review";
+        hunk-review = "${inputs.hunk}/packages/hunk/skills/hunk-review";
       } "Skills pulled from a single flake input or package, as name -> directory.";
 
       sources = mkOption {

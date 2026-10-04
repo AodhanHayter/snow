@@ -5,8 +5,8 @@
     # NixPkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
-    # NixPkgs Unstable (nixos-unstable)
-    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    # NixPkgs Unstable; nixpkgs-unstable gates on darwin + linux builds
+    unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     # devenv (upstream flake; binaries in devenv.cachix.org)
     # no nixpkgs follows: overriding it would bust the cache
@@ -55,27 +55,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    opencode = {
-      url = "github:AodhanHayter/opencode-flake?ref=fix-builds-for-macos";
-    };
-
     mcp-servers-nix = {
       url = "github:natsukium/mcp-servers-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    claude-code-nix = {
-      url = "github:sadjow/claude-code-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    codex-cli-nix = {
-      url = "github:sadjow/codex-cli-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    grok-build-nix = {
-      url = "github:AodhanHayter/grok-build-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -90,8 +71,9 @@
       url = "github:lukasl-dev/pi.nix";
     };
 
-    # agent-browser et al. nixpkgs intentionally not followed: upstream pins
-    # unstable and pushes those exact builds to cache.numtide.com.
+    # AI agent CLIs (claude-code, codex, pi, ...). nixpkgs intentionally not
+    # followed: upstream pins unstable and pushes those exact builds to
+    # cache.numtide.com.
     llm-agents = {
       url = "github:numtide/llm-agents.nix";
     };
@@ -145,11 +127,6 @@
     developer-documentation-skill = {
       url = "github:NateBJones-Projects/developer-documentation-skill";
       flake = false;
-    };
-
-    herdr = {
-      url = "github:ogulcancelik/herdr";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     herdr-agent-usage = {
