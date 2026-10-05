@@ -8,7 +8,10 @@
 with lib;
 with lib.modernage;
 {
-  imports = [ ./hardware.nix ];
+  imports = [
+    ./hardware.nix
+    ./cooling.nix
+  ];
 
   modernage = {
     prototype = {
