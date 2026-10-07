@@ -38,6 +38,7 @@ in
         "llm/anthropic_api_key" = { };
         "llm/anthropic_api_key_kyruus" = { };
         "llm/groq_api_key" = { };
+        "llm/jev_api_key" = { };
         "search/brave_api_key" = { };
         "coinbase/api_key" = { };
         "coinbase/api_secret" = { };
