@@ -101,6 +101,7 @@ in
       "npm:pi-mermaid"
       "npm:pi-hunk"
       "npm:pi-elixir"
+      "npm:@ahayter/pi-optchat-rs"
     ] "Extension sources pi installs itself into ~/.pi/agent/npm.";
 
     settings = mkOpt types.attrs { } "Extra settings merged into ~/.pi/agent/settings.json.";
