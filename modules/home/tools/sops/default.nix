@@ -32,6 +32,7 @@ in
       defaultSopsFormat = "yaml";
       age.keyFile = "${home-directory}/.config/sops/age/keys.txt";
       secrets = {
+        "ers/token" = { };
         "github/token" = { };
         "llm/gemini_api_key" = { };
         "llm/gemini_api_key_kyruus" = { };
