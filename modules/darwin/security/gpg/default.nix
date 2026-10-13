@@ -36,8 +36,9 @@ let
     no-symkey-cache
   '';
   gpgAgentConf = ''
-    default-cache-ttl 86400
-    max-cache-ttl 86400
+    default-cache-ttl 34560000
+    max-cache-ttl 34560000
+    allow-preset-passphrase
     pinentry-program ${pinentry-wrapper}
   '';
 in

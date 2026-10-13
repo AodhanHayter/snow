@@ -59,6 +59,15 @@ with lib.modernage;
       zsh = disabled;
     };
 
+    security.gpg-unlock = {
+      enable = true;
+      keygrips = [
+        "6E8A6A4863276BD9ABE492016C252A2188C6EE30" # master
+        "6F4B0E5EDC30EFCE840B549EE4AAB0DBACB6E943" # 2026 [S]
+        "0E9147D59A2C4CBC2A8248C83EDC30369535B4E8" # 2026 [E]
+      ];
+    };
+
     shell = enabled;
 
     tools = {

@@ -25,6 +25,14 @@ let
     '') cfg.keygrips}
     unset pw
   '';
+  # SSH logins have no gui/<uid> launchd domain, so the launchd agents never run; redo their work at login.
+  loginScript = pkgs.writeShellScript "gpg-unlock-login" ''
+    ${pkgs.gnupg}/bin/gpg-connect-agent "keyinfo ${head cfg.keygrips}" /bye \
+      | ${pkgs.gawk}/bin/awk '$7 == "1" { f = 1 } END { exit !f }' && exit 0
+    [ -r "${config.sops.secrets."gpg/passphrase".path}" ] \
+      || ${config.launchd.agents.sops-nix.config.Program} >/dev/null
+    exec ${unlockScript}
+  '';
 in
 {
   options.modernage.security.gpg-unlock = with types; {
@@ -34,10 +42,22 @@ in
         "GPG keygrips (uppercase hex) whose passphrase should be preset at session start.";
   };
 
-  config = mkIf (cfg.enable && pkgs.stdenv.isLinux) {
+  config = mkIf cfg.enable {
     sops.secrets."gpg/passphrase" = { };
 
-    systemd.user.services.gpg-unlock = {
+    # Darwin: no unit ordering; script exits 1 until sops-nix has decrypted, launchd retries.
+    launchd.agents.gpg-unlock = mkIf pkgs.stdenv.isDarwin {
+      enable = true;
+      config = {
+        ProgramArguments = [ "${unlockScript}" ];
+        RunAtLoad = true;
+        KeepAlive.SuccessfulExit = false;
+      };
+    };
+
+    programs.fish.loginShellInit = mkIf pkgs.stdenv.isDarwin "${loginScript}";
+
+    systemd.user.services.gpg-unlock = mkIf pkgs.stdenv.isLinux {
       Unit = {
         Description = "Preset GPG passphrase into gpg-agent at session start";
         After = [
