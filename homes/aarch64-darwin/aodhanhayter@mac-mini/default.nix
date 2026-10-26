@@ -15,6 +15,7 @@ with lib.modernage;
 
     apps = {
       ghostty = enabled;
+      rex = enabled;
       obsidian = enabled;
     };
 

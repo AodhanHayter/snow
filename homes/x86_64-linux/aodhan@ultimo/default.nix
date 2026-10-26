@@ -22,6 +22,7 @@ with lib.modernage;
       obs-studio = enabled;
       obsidian = enabled;
       omnissa-horizon-client = enabled;
+      rex = enabled;
     };
 
     cli-apps = {
