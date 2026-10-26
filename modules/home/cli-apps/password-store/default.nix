@@ -24,5 +24,9 @@ in
     };
 
     programs.browserpass.enable = true;
+
+    # macOS blocks writes to Chrome's policies dir, and Chrome on macOS ignores JSON policies anyway
+    home.file."Library/Application Support/Google/Chrome/NativeMessagingHosts/../policies/managed/com.github.browserpass.native.json".enable =
+      mkIf pkgs.stdenv.isDarwin false;
   };
 }
