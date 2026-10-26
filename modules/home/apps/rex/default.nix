@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib;
@@ -17,5 +18,12 @@ in
   # Run `rex config reload` after switching.
   config = mkIf cfg.enable {
     xdg.configFile."rex/init.lua".source = ./init.lua;
+
+    # macOS app doesn't put its CLI on PATH; wrap the bundled binary.
+    home.packages = optional pkgs.stdenv.isDarwin (
+      pkgs.writeShellScriptBin "rex" ''
+        exec "/Applications/Rex Beta.app/Contents/Helpers/Rex Server.rex/Contents/MacOS/rex" "$@"
+      ''
+    );
   };
 }
