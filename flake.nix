@@ -78,6 +78,12 @@
       url = "github:numtide/llm-agents.nix";
     };
 
+    # perles (beads TUI). nixpkgs intentionally not followed: builds are
+    # pushed to perles-nix.cachix.org against its own lock.
+    perles-nix = {
+      url = "github:AodhanHayter/perles-nix";
+    };
+
     # Claude Code plugins/skills sources
     anthropics-skills = {
       url = "github:anthropics/skills";

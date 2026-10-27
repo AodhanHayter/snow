@@ -1386,6 +1386,22 @@
     },
     "nixpkgs_8": {
       "locked": {
+        "lastModified": 1789073787,
+        "narHash": "sha256-xfX/toC2QV707s06GbP4II/TxYF0fNQj7s5/LClNDKc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "aff8a0b28396750446e5537a96461bc4facdb287",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_9": {
+      "locked": {
         "lastModified": 1789286504,
         "narHash": "sha256-eiEK7cKZORNEvX0GeF3RtNEF/JXhgf2RqSp3230q13E=",
         "owner": "nixos",
@@ -1400,13 +1416,31 @@
         "type": "github"
       }
     },
+    "perles-nix": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_8"
+      },
+      "locked": {
+        "lastModified": 1793130854,
+        "narHash": "sha256-nlqIzgb3mWFbq/4dTqS5s0Ye9Zt2Jt3gDyWQUjEc51U=",
+        "owner": "AodhanHayter",
+        "repo": "perles-nix",
+        "rev": "c0ac13d24d4bad65bad2466b8a6e456ab7b38c36",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AodhanHayter",
+        "repo": "perles-nix",
+        "type": "github"
+      }
+    },
     "pi-nix": {
       "inputs": {
         "bun2nix": "bun2nix_3",
         "bun2nix-x86_64-darwin": "bun2nix-x86_64-darwin",
         "flake-parts": "flake-parts_6",
         "jail-nix": "jail-nix",
-        "nixpkgs": "nixpkgs_8",
+        "nixpkgs": "nixpkgs_9",
         "nixpkgs-x86_64-darwin": "nixpkgs-x86_64-darwin"
       },
       "locked": {
@@ -1450,6 +1484,7 @@
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_7",
+        "perles-nix": "perles-nix",
         "pi-nix": "pi-nix",
         "simple-english-skill": "simple-english-skill",
         "snowfall-lib": "snowfall-lib",

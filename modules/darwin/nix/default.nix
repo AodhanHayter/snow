@@ -31,8 +31,8 @@ in
       trusted-users = root ${config.modernage.user.name}
       allowed-users = root ${config.modernage.user.name}
       extra-nix-path = nixpkgs=flake:nixpkgs
-      extra-substituters = https://nixpkgs-python.cachix.org https://devenv.cachix.org https://claude-code.cachix.org https://nix-community.cachix.org https://pi.cachix.org https://cache.numtide.com
-      extra-trusted-public-keys = nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU= devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw= claude-code.cachix.org-1:YeXf2aNu7UTX8Vwrze0za1WEDS+4DuI2kVeWEE4fsRk= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= pi.cachix.org-1:lGeoGJaZ5ZDabuRzkcD5EBTNnDM4HJ1vqeOxlWk1Flk= niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=
+      extra-substituters = https://nixpkgs-python.cachix.org https://devenv.cachix.org https://claude-code.cachix.org https://nix-community.cachix.org https://pi.cachix.org https://cache.numtide.com https://perles-nix.cachix.org
+      extra-trusted-public-keys = nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU= devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw= claude-code.cachix.org-1:YeXf2aNu7UTX8Vwrze0za1WEDS+4DuI2kVeWEE4fsRk= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= pi.cachix.org-1:lGeoGJaZ5ZDabuRzkcD5EBTNnDM4HJ1vqeOxlWk1Flk= niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g= perles-nix.cachix.org-1:33DY5Dd6f0ESCPzpkqe3IsTvVlN5GzfafZwk7lrTzGI=
       extra-experimental-features = external-builders wasm-builtin
       external-builders = [{"systems":["aarch64-linux","x86_64-linux"],"program":"/usr/local/bin/determinate-nixd","args":["builder"]}]
     '';

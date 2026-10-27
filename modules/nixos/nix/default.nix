@@ -74,6 +74,7 @@ in
             "https://nix-community.cachix.org"
             "https://pi.cachix.org"
             "https://cache.numtide.com"
+            "https://perles-nix.cachix.org"
           ]
           ++ (mapAttrsToList (name: value: name) cfg.extra-substituters);
           trusted-public-keys = [
@@ -84,6 +85,7 @@ in
             "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
             "pi.cachix.org-1:lGeoGJaZ5ZDabuRzkcD5EBTNnDM4HJ1vqeOxlWk1Flk="
             "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+            "perles-nix.cachix.org-1:33DY5Dd6f0ESCPzpkqe3IsTvVlN5GzfafZwk7lrTzGI="
           ]
           ++ (mapAttrsToList (name: value: value.key) cfg.extra-substituters);
 
