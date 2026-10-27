@@ -6,7 +6,7 @@ In all interactions and commit messages, be extremely concise and sacrifice gram
 
 ## Coding Guidelines
 
-### 1. Think Before Coding
+### Think Before Coding
 
 Don't assume. Don't hide confusion. Surface tradeoffs.
 
@@ -15,7 +15,7 @@ Don't assume. Don't hide confusion. Surface tradeoffs.
 - If a simpler approach exists, say so. Push back when warranted.
 - If something is unclear, stop. Name what's confusing. Ask.
 
-### 2. Simplicity First
+### Simplicity First
 
 Minimum code that solves the problem. Nothing speculative.
 
@@ -27,7 +27,7 @@ Minimum code that solves the problem. Nothing speculative.
 
 Test: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
 
-### 3. Surgical Changes
+### Surgical Changes
 
 Touch only what you must. Clean up only your own mess.
 
@@ -42,7 +42,7 @@ Test: Every changed line should trace directly to the user's request.
 
 Exception: greenfield/prototype work — relax surgical constraint when no existing code to disturb.
 
-### 4. Goal-Driven Execution
+### Goal-Driven Execution
 
 Define success criteria. Loop until verified.
 
@@ -56,13 +56,17 @@ Strong success criteria enable independent looping. Weak criteria ("make it work
 
 Skip the verify-loop when no test infrastructure exists (e.g., Nix config repos, pure documentation). Substitute with whatever check fits: `nix flake check`, manual run, type check.
 
-### 5. Orchestrating Work
 
-You are the orchestrator. Plan, decompose, synthesize the work so it can be delegated to sub-agents effectively.
+### Autonomy
 
-Custom agents to leverage:
+Within the task I gave you, keep going: fix, retry, and take the next in-scope step yourself. Commit locally as you finish each logical unit, staging only files you changed. Ask before outward-facing actions I haven't requested, such as push, publish, deploy, messaging other people, or irreversible deletes.
 
-- Reasoning Heavy phases -> deep-reasoning
-- Mechanical work -> fast-worker
+End any turn that reports on long-running or delegated work with a short status: **Goal**, **Done**, **Next**, **Needs you** (or "nothing").
 
-Use Codex (/codex:rescue --background) as a peer level reasoner on par with deep-reasoning. Treat as a peer, not a reviewer, use it to gain a different perspective on a task. For high-stakes decisions task Opus + Codex on the same problem in parallel, synthesize the best of both, without showing either the other's answers. Keep your own context lean.
+### Shell
+
+I use fish. When writing shell scripts intended for the user, use fish. For temporary stuff or stuff for your own use, you can use any shell you like, such as bash or zsh. If a project we're working already uses bash extensively, don't introduce fish.
+
+The bash tool runs bash. Use fish syntax only inside `fish -c '…'`.
+
+Run commands expected to take more than 2 minutes (builds, test suites, watchers, deploys) in the background with output to a log file, then check back, so I can steer you meanwhile.
