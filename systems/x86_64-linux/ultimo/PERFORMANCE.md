@@ -3,6 +3,7 @@
 The largest confirmed limit is the slot that holds the Linux SSD.
 Move that drive to the faster slot before trying software changes for storage throughput.
 This requires physical access and a shutdown, not a Nix configuration change.
+For a fresh installation instead of a physical slot exchange, see the [ZFS migration plan](ZFS-MIGRATION.md).
 
 ## Observed baseline
 
