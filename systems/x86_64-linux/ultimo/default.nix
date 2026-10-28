@@ -87,8 +87,19 @@ with lib.modernage;
     RebootWatchdogSec = "10m";
   };
 
-  # SSD health maintenance
+  # SSD maintenance and health monitoring; see PERFORMANCE.md for slot limits.
   services.fstrim.enable = true;
+  services.smartd.enable = true;
+
+  # Record future hardware errors after corrected machine checks on this host.
+  hardware.rasdaemon.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    dmidecode
+    nvme-cli
+    pciutils
+    smartmontools
+  ];
 
   # DNS fallback: MagicDNS (100.100.100.100) stays primary, but when tailscaled
   # loses its upstream resolvers it SERVFAILs every query. glibc retries the next
