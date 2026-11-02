@@ -60,6 +60,9 @@ with lib.modernage;
     };
   };
 
+  # Keep the personal Rex service running without an interactive login.
+  users.users.aodhan.linger = true;
+
   # Always-on server mode
   powerManagement.enable = false;
   services.logind.settings.Login = {

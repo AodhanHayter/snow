@@ -65,6 +65,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    rex.url = "https://pkgs.superlogical.com/rex/nix/snapshot.tar.gz";
+
     # pi coding agent. nixpkgs intentionally not followed: upstream pins
     # unstable + bun2nix and pushes those exact builds to pi.cachix.org.
     pi-nix = {
@@ -195,6 +197,7 @@
       homes.modules = with inputs; [
         sops-nix.homeManagerModules.sops
         hunk.homeManagerModules.default
+        rex.homeManagerModules.default
         pi-nix.homeModules.default
         # home-manager defaults home.shell.enableNushellIntegration to true;
         # nushell unused here and pinned fzf < 0.73.0 trips its integration assertion.

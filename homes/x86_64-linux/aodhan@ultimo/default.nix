@@ -15,6 +15,7 @@ with lib.modernage;
     };
 
     hyprland = enabled;
+    services.rex = enabled;
 
     apps = {
       ghostty = enabled;
@@ -93,4 +94,6 @@ with lib.modernage;
       bun = enabled;
     };
   };
+
+  services.rex.tailscale.hostname = "ultimo-rex";
 }
