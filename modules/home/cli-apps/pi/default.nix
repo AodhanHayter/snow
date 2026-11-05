@@ -79,8 +79,10 @@ in
     enable = mkBoolOpt false "Whether or not to install and configure the pi coding agent.";
 
     provider = mkOpt types.str "anthropic" "Default pi provider.";
-    model = mkOpt (types.nullOr types.str) null "Default pi model id; null lets pi choose.";
-    thinkingLevel = mkOpt types.str "high" "Default pi thinking level.";
+    model =
+      mkOpt (types.nullOr types.str) "claude-opus-5-5"
+        "Default pi model id; null lets pi choose.";
+    thinkingLevel = mkOpt types.str "medium" "Default pi thinking level.";
     extensions = mkOpt (types.listOf types.path) [
     ] "Store-pinned extension sources passed to pi via --extension.";
 
