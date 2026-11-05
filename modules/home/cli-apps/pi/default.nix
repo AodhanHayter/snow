@@ -37,7 +37,7 @@ let
     # `model:` in frontmatter still win over defaultModel.
     subagents = {
       defaultModel = "anthropic/claude-opus-5-5";
-      defaultThinking = "high";
+      defaultThinking = "medium";
       agentOverrides = {
         scout = {
           model = "anthropic/claude-sonnet-5-5";
