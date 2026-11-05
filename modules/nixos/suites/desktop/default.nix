@@ -23,7 +23,6 @@ in
       };
 
       apps = {
-        brave = enabled;
         google-chrome = enabled;
         protonvpn = enabled;
       };
