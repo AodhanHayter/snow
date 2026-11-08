@@ -86,6 +86,12 @@
       url = "github:AodhanHayter/perles-nix";
     };
 
+    # autolith (Common Lisp agent). nixpkgs intentionally not followed: upstream
+    # pins nixpkgs to match its exact SBCL. llm-agents' copy is stale.
+    autolith = {
+      url = "github:lambda-symbolics/autolith";
+    };
+
     # Claude Code plugins/skills sources
     anthropics-skills = {
       url = "github:anthropics/skills";

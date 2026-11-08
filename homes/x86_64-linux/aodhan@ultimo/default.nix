@@ -29,6 +29,7 @@ with lib.modernage;
     cli-apps = {
       agent-browser = enabled;
       ast-grep = enabled;
+      autolith = enabled;
       fish = enabled;
       starship = enabled;
       zoxide = enabled;
