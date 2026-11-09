@@ -57,10 +57,6 @@ in
           end
         '';
 
-        aws_login = ''
-          saml2aws login --session-duration 43200 --username "ahayter@kyruus.com" --duo-mfa-option="Duo Push" --skip-prompt --force --role="arn:aws:iam::206670668379:role/kyruusone-engineer"
-        '';
-
         aws_env = ''
           set -gx AWS_ACCESS_KEY_ID (aws configure get default.aws_access_key_id)
           set -gx AWS_SECRET_ACCESS_KEY (aws configure get default.aws_secret_access_key)

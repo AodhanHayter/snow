@@ -35,9 +35,7 @@ in
         "ers/token" = { };
         "github/token" = { };
         "llm/gemini_api_key" = { };
-        "llm/gemini_api_key_kyruus" = { };
         "llm/anthropic_api_key" = { };
-        "llm/anthropic_api_key_kyruus" = { };
         "llm/groq_api_key" = { };
         "llm/jev_api_key" = { };
         "search/brave_api_key" = { };
