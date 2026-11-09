@@ -6,8 +6,8 @@ In all interactions and commit messages, be extremely concise and sacrifice gram
 
 ## Browser
 
-- Default to agent-browser (isolated, headless) for web pages, localhost apps, and QA.
-- Use the `browse` MCP (my real, logged-in browser) only when the task needs my sessions/logins, a 2FA/payment handoff, or a tab I lend you.
+- Default to the `browse` MCP (my real, logged-in browser) for any browser task.
+- Use agent-browser (isolated, headless) only for headless/isolated work: CI, untrusted sites, parallel subagents, or machines without browse connected.
 
 ## Coding Guidelines
 
