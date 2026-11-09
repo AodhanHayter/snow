@@ -147,13 +147,6 @@ in
             };
             flakeInput = inputs.anthropics-skills;
           };
-          "JuliusBrussee/caveman" = {
-            source = {
-              type = "github";
-              url = "JuliusBrussee/caveman";
-            };
-            flakeInput = inputs.caveman;
-          };
           "openai-codex" = {
             source = {
               type = "github";
@@ -168,12 +161,11 @@ in
       enabled = mkOption {
         type = types.attrsOf types.bool;
         default = agentConfig.mkEnabled agentConfig.commonPlugins "claude-plugins-official" // {
-          "caveman@caveman" = true;
           "codex@openai-codex" = true;
         };
         description = ''
           Canonical plugin set, in 'plugin-name@marketplace-name' form. Agent
-          modules translate the ids and drop what they cannot resolve.
+          modules drop what they cannot resolve.
         '';
       };
     };

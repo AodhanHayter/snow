@@ -70,45 +70,6 @@ let
 
   agentsFile = pkgs.writeText "codex-agents.md" shared.instructions;
 
-  # Upstream caveman dropped its codex-native marketplace manifest
-  # (.agents/plugins/marketplace.json) in 25d22f8; codex can't enumerate the
-  # claude-style manifest (plugin source "./"), so `codex plugin add` fails.
-  # Wrap the input and restore the manifest until upstream ships one again.
-  cavemanMarketplaceJson = pkgs.writeText "caveman-marketplace.json" (
-    builtins.toJSON {
-      name = "caveman-repo";
-      interface.displayName = "Caveman Repo";
-      plugins = [
-        {
-          name = "caveman";
-          source = {
-            source = "local";
-            path = "./plugins/caveman";
-          };
-          policy = {
-            installation = "AVAILABLE";
-            authentication = "ON_INSTALL";
-          };
-          category = "Productivity";
-        }
-      ];
-    }
-  );
-
-  cavemanCodexMarketplace = pkgs.runCommand "caveman-codex-marketplace" { } ''
-    mkdir -p $out/.agents/plugins
-    cp -R ${inputs.caveman}/plugins $out/plugins
-    cp ${cavemanMarketplaceJson} $out/.agents/plugins/marketplace.json
-  '';
-
-  codexMarketplaces =
-    cfg.plugins.marketplaces
-    // optionalAttrs (cfg.plugins.marketplaces ? "JuliusBrussee/caveman") {
-      "JuliusBrussee/caveman" = cfg.plugins.marketplaces."JuliusBrussee/caveman" // {
-        flakeInput = cavemanCodexMarketplace;
-      };
-    };
-
   codexConfig = recursiveUpdate {
     inherit (cfg) model personality;
     model_reasoning_effort = cfg.reasoningEffort;
@@ -116,7 +77,7 @@ let
       hooks = true;
       unified_exec = true;
     };
-    marketplaces = agentConfig.mkCodexMarketplaces codexMarketplaces;
+    marketplaces = agentConfig.mkCodexMarketplaces cfg.plugins.marketplaces;
     plugins = cfg.plugins.enabled;
     mcp_servers = mcp.asCodexFormat { inherit pkgs; };
     shell_environment_policy = {
@@ -137,9 +98,9 @@ let
   # `codex plugin add` always fails.
   unsupportedPlugins = [ "codex@openai-codex" ];
 
-  defaultPlugins = mapAttrs' (
-    id: _: nameValuePair (agentConfig.mkCodexPluginId id) { enabled = true; }
-  ) (filterAttrs (id: enabled: enabled && !elem id unsupportedPlugins) shared.plugins.enabled);
+  defaultPlugins = mapAttrs' (id: _: nameValuePair id { enabled = true; }) (
+    filterAttrs (id: enabled: enabled && !elem id unsupportedPlugins) shared.plugins.enabled
+  );
   pythonWithToml = pkgs.python3.withPackages (ps: [ ps.tomli-w ]);
   mergeCodexConfigScript = pkgs.writeText "merge-codex-config.py" ''
     import pathlib

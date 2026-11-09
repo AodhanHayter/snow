@@ -115,11 +115,6 @@
       flake = false;
     };
 
-    caveman = {
-      url = "github:JuliusBrussee/caveman";
-      flake = false;
-    };
-
     codex-plugin-cc = {
       url = "github:openai/codex-plugin-cc";
       flake = false;

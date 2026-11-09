@@ -57,11 +57,9 @@ let
   commonPlugins = [
     "plugin-dev"
     "playground"
-    "pr-review-toolkit"
     "claude-md-management"
     "code-simplifier"
     "commit-commands"
-    "feature-dev"
     "frontend-design"
   ];
 
@@ -114,22 +112,11 @@ in
         }
       ) (filterAttrs (_: m: m.flakeInput != null) marketplaces);
 
-    mkCodexMarketplaceName =
-      name: if name == "JuliusBrussee/caveman" then "caveman-repo" else getMarketplaceName name;
-
-    # Rewrite a canonical 'plugin@marketplace' id into codex's marketplace naming.
-    mkCodexPluginId =
-      id:
-      let
-        parts = splitString "@" id;
-      in
-      if length parts == 2 && elemAt parts 1 == "caveman" then "${head parts}@caveman-repo" else id;
-
     mkCodexMarketplaces =
       marketplaces:
       mapAttrs' (
         name: m:
-        nameValuePair (mkCodexMarketplaceName name) {
+        nameValuePair (getMarketplaceName name) {
           source_type =
             if m.flakeInput != null then
               "local"
