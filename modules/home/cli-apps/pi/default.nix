@@ -66,7 +66,12 @@ let
 
   # pi's built-in MCP reads the same mcpServers shape as Claude.
   mcpJson = pkgs.writeText "pi-mcp.json" (
-    builtins.toJSON { mcpServers = mcp.asAnthropicFormat { inherit pkgs; }; }
+    builtins.toJSON {
+      # browse is the default browser tool; codemode-only exposure hid it from the model.
+      mcpServers = recursiveUpdate (mcp.asAnthropicFormat { inherit pkgs; }) {
+        browse.exposure = "direct";
+      };
+    }
   );
   mcpMerge = pkgs.writeText "pi-mcp-merge.jq" ''
     .mcpServers as $u
