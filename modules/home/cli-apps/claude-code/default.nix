@@ -204,7 +204,7 @@ in
   config = mkIf cfg.enable {
     modernage.coding-agents.enable = true;
 
-    # commandsDir/agentsDir are only set when the shared module has them: the
+    # commandsDir is only set when the shared module has one: the
     # upstream option takes a path, and an empty (hence untracked) directory
     # never lands in the flake source.
     programs.claude-code = {
@@ -218,9 +218,6 @@ in
     }
     // optionalAttrs (shared.commandsDir != null) {
       inherit (shared) commandsDir;
-    }
-    // optionalAttrs (shared.agentsDir != null) {
-      inherit (shared) agentsDir;
     };
 
     # Symlink Nix-managed marketplaces + skills. Skills go through home.file

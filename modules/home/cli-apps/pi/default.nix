@@ -146,13 +146,6 @@ in
       };
     };
 
-    # pi-subagents only discovers user agents under ~/.pi/agent/agents;
-    # link the shared agent definitions there so deep-reasoner/fast-worker
-    # are runnable as pi subagents too.
-    home.file.".pi/agent/agents" = mkIf (shared.agentsDir != null) {
-      source = shared.agentsDir;
-    };
-
     # /mcp writes exposure/enable toggles back to mcp.json, so keep it a real
     # file instead of symlinking. Managed servers replace their entries,
     # keeping only the keys /mcp writes; other servers and keys are untouched.

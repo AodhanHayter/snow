@@ -1,7 +1,7 @@
 ##
 ## Agent-agnostic configuration shared by every coding agent (claude-code,
 ## codex-cli, pi, ...). Holds the concepts once — instructions, prompt
-## commands, subagents, skills, plugin marketplaces, env, bash guards — and
+## commands, skills, plugin marketplaces, env, bash guards — and
 ## materializes them under a neutral `resourceDir` that any agent can point
 ## at. Agent modules default their own options to these values, so per-agent
 ## overrides still work.
@@ -37,15 +37,11 @@ in
       cfg.instructionFiles
     ) "Global instruction text handed to every agent.";
 
-    # Both default to null when the directory is absent: an empty dir is not
+    # Defaults to null when the directory is absent: an empty dir is not
     # tracked by git, so it never makes it into the flake source.
     commandsDir = mkOpt (types.nullOr types.path) (
       if builtins.pathExists ./commands then ./commands else null
     ) "Directory of prompt/slash command definitions, or null for none.";
-
-    agentsDir = mkOpt (types.nullOr types.path) (
-      if builtins.pathExists ./agents then ./agents else null
-    ) "Directory of subagent definitions, or null for none.";
 
     skills = {
       # rex: stub from `rex skill setup`; defers to the installed CLI's guide.
@@ -173,9 +169,6 @@ in
       agentConfig.mkSkillFiles ".agents/skills" cfg.skills.resolved
       // optionalAttrs (cfg.commandsDir != null) {
         "${relDir}/commands".source = cfg.commandsDir;
-      }
-      // optionalAttrs (cfg.agentsDir != null) {
-        "${relDir}/agents".source = cfg.agentsDir;
       }
       // {
         "${relDir}/AGENTS.md".text = cfg.instructions;
