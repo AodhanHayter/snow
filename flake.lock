@@ -74,6 +74,18 @@
         "url": "ssh://git@github.com/AodhanHayter/berkeley-mono-nix"
       }
     },
+    "browse-release": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-iX/OO9baTuOVBCf08DghQecOzbPQb8bC8ZBDcLrbfD0=",
+        "type": "file",
+        "url": "https://anoma.ly/release/browse/cli/stable.json"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://anoma.ly/release/browse/cli/stable.json"
+      }
+    },
     "bun2nix": {
       "inputs": {
         "flake-parts": "flake-parts_4",
@@ -1562,6 +1574,7 @@
         "anthropics-skills": "anthropics-skills",
         "autolith": "autolith",
         "berkeley-mono": "berkeley-mono",
+        "browse-release": "browse-release",
         "caveman": "caveman",
         "claude-plugins-official": "claude-plugins-official",
         "codex-plugin-cc": "codex-plugin-cc",

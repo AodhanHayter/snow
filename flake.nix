@@ -67,6 +67,13 @@
 
     rex.url = "https://pkgs.superlogical.com/rex/nix/snapshot.tar.gz";
 
+    # browse stable-channel manifest (version + per-platform url/sha256);
+    # `nix flake update browse-release` bumps packages/browse.
+    browse-release = {
+      url = "file+https://anoma.ly/release/browse/cli/stable.json";
+      flake = false;
+    };
+
     # pi coding agent. nixpkgs intentionally not followed: upstream pins
     # unstable + bun2nix and pushes those exact builds to pi.cachix.org.
     pi-nix = {
