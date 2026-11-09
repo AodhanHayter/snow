@@ -192,7 +192,7 @@ Build a package: `nix build .#packages.<system>.<name>`
 
 This repository supports:
 - **x86_64-linux**: NixOS systems (apollo, atlas, hermes)
-- **aarch64-darwin**: macOS systems (ahayter-mbp, mac-mini, maximo)
+- **aarch64-darwin**: macOS systems (mac-mini, maximo)
 - **x86_64-install-iso**: Installation images
 
 Platform-specific modules are organized under respective directories, with Home Manager providing cross-platform user environment consistency.
