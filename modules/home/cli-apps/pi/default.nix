@@ -104,7 +104,6 @@ in
       "npm:@narumitw/pi-goal"
       "npm:@quintinshaw/pi-dynamic-workflows"
       "npm:pi-clarify"
-      "npm:pi-agent-browser-native"
       "npm:pi-mermaid"
       "npm:pi-hunk"
       "npm:pi-elixir"
