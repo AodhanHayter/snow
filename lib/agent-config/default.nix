@@ -55,11 +55,6 @@ let
   getMarketplaceName = name: last (splitString "/" name);
 
   commonPlugins = [
-    "plugin-dev"
-    "playground"
-    "claude-md-management"
-    "code-simplifier"
-    "commit-commands"
     "frontend-design"
   ];
 

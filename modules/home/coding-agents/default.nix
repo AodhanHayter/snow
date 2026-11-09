@@ -68,11 +68,6 @@ in
       sources = mkOption {
         type = types.attrsOf agentConfig.skillSourceModule;
         default = {
-          anthropics = {
-            src = inputs.anthropics-skills;
-            subdir = "skills";
-            names = [ ];
-          };
           mattpocock-engineering = {
             src = inputs.mattpocock-skills;
             subdir = "skills/engineering";
@@ -139,13 +134,6 @@ in
               url = "anthropics/claude-plugins-official";
             };
             flakeInput = inputs.claude-plugins-official;
-          };
-          "anthropics/skills" = {
-            source = {
-              type = "github";
-              url = "anthropics/skills";
-            };
-            flakeInput = inputs.anthropics-skills;
           };
           "openai-codex" = {
             source = {

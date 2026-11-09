@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "anthropics-skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1794004348,
-        "narHash": "sha256-dRCZrNarCCJFuvATgfW6qmwwVS5HGFXNVGOhbVZd7LA=",
-        "owner": "anthropics",
-        "repo": "skills",
-        "rev": "2c5958ecac7cee2b583967a2c4981d0f4a75c579",
-        "type": "github"
-      },
-      "original": {
-        "owner": "anthropics",
-        "repo": "skills",
-        "type": "github"
-      }
-    },
     "autolith": {
       "inputs": {
         "crane": "crane",
@@ -1555,7 +1539,6 @@
     },
     "root": {
       "inputs": {
-        "anthropics-skills": "anthropics-skills",
         "autolith": "autolith",
         "berkeley-mono": "berkeley-mono",
         "browse-release": "browse-release",
