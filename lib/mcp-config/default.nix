@@ -16,17 +16,6 @@ in
     # Claude/pi `mcpServers` shape.
     asAnthropicFormat = { pkgs }: servers pkgs;
 
-    asOpenCodeFormat =
-      { pkgs }:
-      mapAttrs (
-        _: server:
-        {
-          type = "local";
-          command = [ server.command ] ++ server.args or [ ];
-        }
-        // optionalAttrs (server ? env) { environment = server.env; }
-      ) (servers pkgs);
-
     # Codex only accepts these keys under [mcp_servers.<name>].
     asCodexFormat =
       { pkgs }:
