@@ -34,7 +34,6 @@ in
       secrets = {
         "ers/token" = { };
         "github/token" = { };
-        "llm/gemini_api_key" = { };
         "llm/anthropic_api_key" = { };
         "llm/groq_api_key" = { };
         "llm/jev_api_key" = { };
