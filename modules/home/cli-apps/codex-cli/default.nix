@@ -128,7 +128,6 @@ let
   } cfg.extraConfig;
 
   configToml = (pkgs.formats.toml { }).generate "codex-config.toml" codexConfig;
-  skillFiles = agentConfig.mkSkillFiles ".codex/skills" cfg.skills;
 
   # Plugins the shared set enables that codex cannot resolve.
   # computer-use@openai-bundled is likewise never enabled: as of codex 0.147.0
@@ -207,12 +206,6 @@ in
       };
     };
 
-    skills = mkOption {
-      type = types.attrsOf types.path;
-      default = shared.skills.resolved;
-      description = "Skills to symlink into ~/.codex/skills, as name -> directory.";
-    };
-
     extraConfig = mkOption {
       type = types.attrs;
       default = { };
@@ -229,7 +222,7 @@ in
       codex-acp
     ];
 
-    home.file = skillFiles;
+    # Skills: codex reads the shared ~/.agents/skills natively.
 
     home.activation.codexConfigSeed = config.lib.dag.entryAfter [ "writeBoundary" ] ''
       run mkdir -p "${homeDir}/.codex"

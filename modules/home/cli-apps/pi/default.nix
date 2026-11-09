@@ -25,9 +25,9 @@ let
     # twice fails with a tool name conflict.
     packages = cfg.packages;
 
-    # Shared agent resource tree: skills are the same SKILL.md format, and pi
+    # Shared skills live in ~/.agents/skills, which pi reads natively. Pi
     # prompt templates use the same frontmatter as the shared commands.
-    skills = [ "${shared.resourceDir}/skills" ];
+    skills = [ ];
     prompts = optional (shared.commandsDir != null) "${shared.resourceDir}/commands";
     enableSkillCommands = true;
 

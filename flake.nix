@@ -130,8 +130,8 @@
       flake = false;
     };
 
-    herdr-skill = {
-      url = "github:ogulcancelik/herdr";
+    cua = {
+      url = "github:trycua/cua";
       flake = false;
     };
 

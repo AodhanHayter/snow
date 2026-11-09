@@ -24,10 +24,9 @@ in
     enable = mkBoolOpt false "Whether to materialize the shared agent resource tree.";
 
     resourceDir = mkOpt types.str "${homeDir}/.config/coding-agents" ''
-      Agent-neutral directory holding the shared instructions, prompt commands
-      and skills. Agents that can read resources from an arbitrary path (pi)
-      point here; agents that only read their own home dir (claude, codex)
-      mirror these entries into it.
+      Agent-neutral directory holding the shared instructions and prompt
+      commands. Skills go to ~/.agents/skills instead, which pi and codex read
+      natively; claude mirrors them into ~/.claude/skills.
     '';
 
     instructionFiles = mkOpt (types.listOf types.path) [
@@ -49,13 +48,15 @@ in
     ) "Directory of subagent definitions, or null for none.";
 
     skills = {
+      # rex: stub from `rex skill setup`; defers to the installed CLI's guide.
+      # tldraw-offline: vendored from the tldraw offline app bundle; re-copy on
+      # app updates.
       local = mkOpt (types.attrsOf types.path) {
-        codex-computer-use = ./skills/codex-computer-use;
+        rex = ./skills/rex;
+        tldraw-offline = ./skills/tldraw-offline;
       } "Skills shipped in this repo, as name -> directory.";
 
       external = mkOpt (types.attrsOf types.path) {
-        herdr = "${inputs.herdr-skill}/skills/herdr";
-
         # Repo root is the skill itself (SKILL.md at top level).
         developer-documentation = "${inputs.developer-documentation-skill}";
 
@@ -79,15 +80,9 @@ in
               "diagnosing-bugs"
               "domain-modeling"
               "codebase-design"
-              "code-review"
-              "grill-with-docs"
-              "improve-codebase-architecture"
               "prototype"
               "research"
               "tdd"
-              "to-spec"
-              "to-tickets"
-              "wayfinder"
             ];
           };
           humanlayer = {
@@ -104,10 +99,19 @@ in
             src = inputs.mattpocock-skills;
             subdir = "skills/productivity";
             names = [
-              "grill-me"
               "grilling"
               "handoff"
-              "writing-great-skills"
+            ];
+          };
+          cua = {
+            src = inputs.cua;
+            subdir = "libs/cua/skills";
+            names = [
+              "cua-driver"
+              "cua-sandboxes"
+              "cua-spaces"
+              "cua-volume"
+              "gui-automation"
             ];
           };
         };
@@ -116,7 +120,7 @@ in
 
       resolved = mkOpt (types.attrsOf types.path) (
         cfg.skills.local // cfg.skills.external // agentConfig.mkSkillLinks cfg.skills.sources
-      ) "All skills, flattened to name -> directory. Agents mirror this into their own skills dir.";
+      ) "All skills, flattened to name -> directory. Linked into ~/.agents/skills.";
     };
 
     env = mkOpt (types.attrsOf types.str) {
@@ -185,7 +189,8 @@ in
 
   config = mkIf cfg.enable {
     home.file =
-      agentConfig.mkSkillFiles "${relDir}/skills" cfg.skills.resolved
+      # Per-skill links, so installer-managed skills can coexist in the dir.
+      agentConfig.mkSkillFiles ".agents/skills" cfg.skills.resolved
       // optionalAttrs (cfg.commandsDir != null) {
         "${relDir}/commands".source = cfg.commandsDir;
       }

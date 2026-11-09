@@ -321,6 +321,22 @@
         "type": "github"
       }
     },
+    "cua": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794241869,
+        "narHash": "sha256-UA26AYTgmsgYMnsRUmpHKno6aTgHOC6vlnpfApnvsoY=",
+        "owner": "trycua",
+        "repo": "cua",
+        "rev": "311d525ab705dcebdc82dceefa175c32d2da1e18",
+        "type": "github"
+      },
+      "original": {
+        "owner": "trycua",
+        "repo": "cua",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -876,22 +892,6 @@
         "owner": "senna-lang",
         "ref": "v0.5.13",
         "repo": "herdr-agent-usage",
-        "type": "github"
-      }
-    },
-    "herdr-skill": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1793278609,
-        "narHash": "sha256-0B58jR/v1vxbK7cwoq++SnOCsED0sHDkgqVMvsrjezE=",
-        "owner": "ogulcancelik",
-        "repo": "herdr",
-        "rev": "ee5bfb5041bb3e4a49d591c72308aae3c81ecdde",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ogulcancelik",
-        "repo": "herdr",
         "type": "github"
       }
     },
@@ -1578,6 +1578,7 @@
         "caveman": "caveman",
         "claude-plugins-official": "claude-plugins-official",
         "codex-plugin-cc": "codex-plugin-cc",
+        "cua": "cua",
         "darwin": "darwin",
         "deploy-rs": "deploy-rs",
         "determinate": "determinate",
@@ -1587,7 +1588,6 @@
         "disko": "disko",
         "ghostty": "ghostty_2",
         "herdr-agent-usage": "herdr-agent-usage",
-        "herdr-skill": "herdr-skill",
         "home-manager": "home-manager",
         "humanlayer-skills": "humanlayer-skills",
         "hunk": "hunk",
