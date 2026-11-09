@@ -4,6 +4,11 @@ In all interactions and commit messages, be extremely concise and sacrifice gram
 
 - Your primary method for interacting with GitHub should be the GitHub CLI.
 
+## Browser
+
+- Default to agent-browser (isolated, headless) for web pages, localhost apps, and QA.
+- Use the `browse` MCP (my real, logged-in browser) only when the task needs my sessions/logins, a 2FA/payment handoff, or a tab I lend you.
+
 ## Coding Guidelines
 
 ### Think Before Coding

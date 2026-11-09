@@ -5,6 +5,10 @@ with lib;
 let
   servers = pkgs: {
     nixos.command = "${pkgs.mcp-nixos}/bin/mcp-nixos";
+    browse = {
+      command = "${pkgs.modernage.browse}/bin/browse";
+      args = [ "mcp" ];
+    };
   };
 in
 {
