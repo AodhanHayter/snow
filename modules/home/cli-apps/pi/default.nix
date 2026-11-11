@@ -56,7 +56,7 @@ let
           thinking = "xhigh";
         };
         oracle = {
-          model = "anthropic/claude-fable-5-1";
+          model = "anthropic/claude-fable-5-2";
           thinking = "high";
         };
       };
