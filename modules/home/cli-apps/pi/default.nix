@@ -110,6 +110,16 @@ in
 
     settings = mkOpt types.attrs { } "Extra settings merged into ~/.pi/agent/settings.json.";
 
+    # Only managed keys are forced; /curator and the curator UI still write the rest.
+    webSearch = mkOpt types.attrs {
+      # Raw results, no curator window or summary approval.
+      workflow = "none";
+      # If the agent still asks for summary-review, print the URL instead of
+      # popping a window; the curator auto-submits on timeout.
+      autoOpenBrowser = false;
+      curatorTimeoutSeconds = 10;
+    } "pi-web-access settings merged into ~/.pi/agent/web-search.json.";
+
     subagentConfig = mkOpt types.attrs { } ''
       pi-subagents extension config written to
       ~/.pi/agent/extensions/subagent/config.json (concurrency, fleetView,
@@ -129,7 +139,12 @@ in
       # pi only discovers context files from cwd upwards plus
       # ~/.pi/agent/AGENTS.md, so ship the shared instructions via
       # --append-system-prompt instead.
-      rules = shared.instructions;
+      rules = shared.instructions + ''
+
+        ## Web search
+
+        - Omit `workflow` on `web_search` (or pass "none"). Never pass "summary-review" unless I ask to curate results.
+      '';
       inherit (cfg) extensions;
       settings = recursiveUpdate managedSettings cfg.settings;
 
@@ -153,6 +168,12 @@ in
       run mkdir -p "$(dirname "$target")"
       [ -f "$target" ] || run install -m 0600 ${mcpJson} "$target"
       run ${pkgs.bash}/bin/bash -c '${pkgs.jq}/bin/jq -f ${mcpMerge} "$1" --slurpfile m "$2" > "$1.tmp" && chmod 0600 "$1.tmp" && mv "$1.tmp" "$1"' _ "$target" ${mcpJson}
+    '';
+
+    home.activation.piWebSearchConfig = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+      target="${config.home.homeDirectory}/.pi/agent/web-search.json"
+      run mkdir -p "$(dirname "$target")"
+      run ${pkgs.bash}/bin/bash -c '[ -f "$1" ] || echo {} > "$1"; ${pkgs.jq}/bin/jq --argjson m "$2" ". * \$m" "$1" > "$1.tmp" && mv "$1.tmp" "$1"' _ "$target" ${escapeShellArg (builtins.toJSON cfg.webSearch)}
     '';
 
     home.file.".pi/agent/extensions/subagent/config.json" = mkIf (cfg.subagentConfig != { }) {
