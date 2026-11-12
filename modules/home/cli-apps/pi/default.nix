@@ -112,8 +112,8 @@ in
 
     # Only managed keys are forced; /curator and the curator UI still write the rest.
     webSearch = mkOpt types.attrs {
-      # Raw results, no curator window or summary approval.
-      workflow = "none";
+      # Model-generated summary, no curator window or approval.
+      workflow = "auto-summary";
       # If the agent still asks for summary-review, print the URL instead of
       # popping a window; the curator auto-submits on timeout.
       autoOpenBrowser = false;
@@ -143,7 +143,7 @@ in
 
         ## Web search
 
-        - Omit `workflow` on `web_search` (or pass "none"). Never pass "summary-review" unless I ask to curate results.
+        - Omit `workflow` on `web_search` (defaults to auto-summary). Never pass "summary-review" unless I ask to curate results.
       '';
       inherit (cfg) extensions;
       settings = recursiveUpdate managedSettings cfg.settings;
