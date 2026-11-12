@@ -102,7 +102,6 @@ in
       "npm:pi-context-view"
       "npm:@narumitw/pi-btw"
       "npm:@narumitw/pi-goal"
-      "npm:@quintinshaw/pi-dynamic-workflows"
       "npm:pi-clarify"
       "npm:pi-mermaid"
       "npm:pi-hunk"
