@@ -114,6 +114,7 @@ in
     webSearch = mkOpt types.attrs {
       # Model-generated summary, no curator window or approval.
       workflow = "auto-summary";
+      summaryModel = "anthropic/claude-sonnet-5-5";
       # If the agent still asks for summary-review, print the URL instead of
       # popping a window; the curator auto-submits on timeout.
       autoOpenBrowser = false;
