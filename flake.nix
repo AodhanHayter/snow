@@ -105,11 +105,6 @@
       flake = false;
     };
 
-    dev-browser = {
-      url = "github:SawyerHood/dev-browser";
-      flake = false;
-    };
-
     codex-plugin-cc = {
       url = "github:openai/codex-plugin-cc";
       flake = false;
@@ -148,11 +143,6 @@
     berkeley-mono = {
       url = "git+ssh://git@github.com/AodhanHayter/berkeley-mono-nix?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Pin nixd before nix→2.34 bump (nixos-25.11 only has up to nixComponents_2_33)
-    nixd = {
-      url = "github:nix-community/nixd/8ecf93d4d9";
     };
   };
 
