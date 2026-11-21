@@ -115,7 +115,7 @@ in
     };
 
     env = mkOpt (types.attrsOf types.str) {
-      CLAUDE_CODE_SUBAGENT_MODEL = "claude-sonnet-5";
+      CLAUDE_CODE_SUBAGENT_MODEL = "claude-sonnet-5-5";
       CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR = "1";
       CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
     } "Environment shared by every agent session.";

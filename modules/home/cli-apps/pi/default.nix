@@ -107,6 +107,7 @@ in
       "npm:pi-hunk"
       "npm:pi-elixir"
       "npm:pi-better"
+      "npm:@laboon85/pi-arxiv"
     ] "Extension sources pi installs itself into ~/.pi/agent/npm.";
 
     settings = mkOpt types.attrs { } "Extra settings merged into ~/.pi/agent/settings.json.";
